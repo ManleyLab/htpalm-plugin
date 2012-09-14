@@ -1,10 +1,7 @@
 /**
- * 
- * Karl Bellve
- * Biomedical Imaging Group
- * University of Massachusetts Medical School
- * Karl.Bellve@umassmed.edu
- * http://big.umassmed.edu/
+ * SpiralMosiaic - for HT PALM automation
+ * Based on Karl Belluve's BigWell plugin
+ * Author: Seamus Holden, EPFL, Switzerland
  *
  */
 
@@ -68,6 +65,7 @@ public class SpiralMosiaic{
 
    private void setupFOV(){
       //TODO Assign the positions here
+      
    }
    
    public double[] getFOVPos(int nFOV){
