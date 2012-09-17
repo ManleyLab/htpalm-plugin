@@ -7,8 +7,8 @@
 <!-- the Compile on Save feature is turned off for the project. -->
 <!-- You can turn off the Compile on Save (or Deploy on Save) setting -->
 <!-- in the project's Project Properties dialog box.-->
-<project name="testMMPlugin" default="default" basedir=".">
-    <description>Builds, tests, and runs the project testMMPlugin.</description>
+<project name="HTPALM" default="default" basedir=".">
+    <description>Builds, tests, and runs the project HTPALM.</description>
     <import file="nbproject/build-impl.xml"/>
 <!-- the jar file is copied from dist to the working directory of ImageJ -->
 
