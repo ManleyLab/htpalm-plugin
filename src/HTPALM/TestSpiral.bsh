@@ -1,0 +1,22 @@
+/**
+ *
+ * @author laboleb
+ */
+import HTPALM.SpiralMosaic;
+
+int nPos = 50;
+double xStart=10,yStart =15;
+double xStep=2,yStep=10;
+
+//Spiral testSpiral = new Spiral( nPos);
+SpiralMosaic testSpiral = new SpiralMosaic(xStart, yStart, xStep, yStep, nPos);
+for (int ii=0;ii<nPos; ii++){
+   double x,y;
+   x= testSpiral.getX(ii);
+   y= testSpiral.getY(ii);
+   System.out.println(x+" "+y);
+}
+
+
+
+
