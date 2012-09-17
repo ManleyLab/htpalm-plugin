@@ -14,11 +14,11 @@ public class SpiralMosiaic{
    private static final int NDIM = 2;
 	
    private double pos_start[] = new double[NDIM];
-   private double mosaicBox[] = new double[4]; 
+   private double xStep, yStep;
    private int nFOV_total, nFOV_current;
-   FOV[] FOVArray;
+   private FOV[] FOVArray;
 
-   class FOV{
+   private class FOV{
       private double[] pos = new double[NDIM];
       private Boolean skipFOV;
       FOV(){}
@@ -47,25 +47,47 @@ public class SpiralMosiaic{
            
    public SpiralMosiaic(){}
    
-   public void initialize(double posStart_X, double posStart_Y, double[] mosaicBox, int nFOV_total){
+
+   public SpiralMosiaic(double posStart_X, double posStart_Y, double xStep, double yStep, int nFOV_total){
+      this.initialize(posStart_X, posStart_Y, xStep,yStep, nFOV_total);
+   }
+   public SpiralMosiaic(double[] posStart, double xStep, double yStep, int nFOV_total){
+      this.initialize(posStart, xStep,yStep, nFOV_total);
+   }
+   
+   public void initialize(double posStart_X, double posStart_Y, double xStep, double yStep, int nFOV_total){
       double[] pos = new double[NDIM];
       pos[0] = posStart_X;
       pos[1] = posStart_Y;
-      this.initialize(pos, mosaicBox,nFOV_total);
+      this.initialize(pos, xStep, yStep,nFOV_total);
    }
 
-   public void initialize(double[] posStart, double[] mosaicBox, int nFOV_total){
+   public void initialize(double[] posStart, double xStep, double yStep, int nFOV_total){
       this.nFOV_total = nFOV_total;
       this.pos_start = posStart;
-      this.mosaicBox = mosaicBox;
+      this.xStep = xStep;
+      this.yStep = yStep;
       this.FOVArray = new FOV[nFOV_total];
 
       this.setupFOV();
    }
 
+   //Assign the positions here
    private void setupFOV(){
-      //TODO Assign the positions here
-      
+      double Xoffset, Yoffset,dX,dY;
+      Xoffset = this.pos_start[0];
+      Yoffset = this.pos_start[1];
+      dX = this.xStep;
+      dY = this.yStep;
+      double[] pos = new double[NDIM];
+
+      SpiralDouble spiral = new SpiralDouble( this.nFOV_total,Xoffset, Yoffset, dX,dY);
+      for (int ii = 0; ii<nFOV_total; ii++){
+         pos[1]= spiral.getXii(ii);
+         pos[2]= spiral.getYii(ii);
+         this.FOVArray[ii].setPos(pos);
+      }
+         
    }
    
    public double[] getFOVPos(int nFOV){
