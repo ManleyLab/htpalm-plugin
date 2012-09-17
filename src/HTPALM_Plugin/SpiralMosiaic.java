@@ -13,29 +13,35 @@ public class SpiralMosiaic{
    
    private static final int NDIM = 2;
 	
-   private double pos_start[] = new double[NDIM];
+   private double Xstart,Ystart;
    private double xStep, yStep;
    private int nFOV_total, nFOV_current;
    private FOV[] FOVArray;
 
    private class FOV{
-      private double[] pos = new double[NDIM];
+      private double X,Y;
       private Boolean skipFOV;
       FOV(){}
      
-      void initialize(double[] pos, Boolean skipFOV){
-         this.pos = pos;
+      void initialize(double X, double Y, Boolean skipFOV){
+         this.X=X;
+         this.Y=Y;
          this.skipFOV = skipFOV;
       }
       
-      void setPos(double[] pos){
-         this.pos = pos;
+      void setPos(double X, double Y){
+         this.X = X;
+         this.Y = Y;
       }
       
-      double[] getPos(){
-         return pos;
+      double getX(){
+         return X;
       }
 
+      double getY(){
+         return Y;
+      }
+      
       public Boolean getSkipFOV() {
          return skipFOV;
       }
@@ -48,23 +54,14 @@ public class SpiralMosiaic{
    public SpiralMosiaic(){}
    
 
-   public SpiralMosiaic(double posStart_X, double posStart_Y, double xStep, double yStep, int nFOV_total){
-      this.initialize(posStart_X, posStart_Y, xStep,yStep, nFOV_total);
-   }
-   public SpiralMosiaic(double[] posStart, double xStep, double yStep, int nFOV_total){
-      this.initialize(posStart, xStep,yStep, nFOV_total);
+   public SpiralMosiaic(double Xstart, double Ystart, double xStep, double yStep, int nFOV_total){
+      this.initialize(Xstart, Ystart, xStep,yStep, nFOV_total);
    }
    
-   public void initialize(double posStart_X, double posStart_Y, double xStep, double yStep, int nFOV_total){
-      double[] pos = new double[NDIM];
-      pos[0] = posStart_X;
-      pos[1] = posStart_Y;
-      this.initialize(pos, xStep, yStep,nFOV_total);
-   }
-
-   public void initialize(double[] posStart, double xStep, double yStep, int nFOV_total){
+   public void initialize(double Xstart, double Ystart, double xStep, double yStep, int nFOV_total){
       this.nFOV_total = nFOV_total;
-      this.pos_start = posStart;
+      this.Xstart= Xstart;
+      this.Ystart= Ystart;
       this.xStep = xStep;
       this.yStep = yStep;
       this.FOVArray = new FOV[nFOV_total];
@@ -75,23 +72,24 @@ public class SpiralMosiaic{
    //Assign the positions here
    private void setupFOV(){
       double Xoffset, Yoffset,dX,dY;
-      Xoffset = this.pos_start[0];
-      Yoffset = this.pos_start[1];
+      Xoffset = this.Xstart;
+      Yoffset = this.Ystart;
       dX = this.xStep;
       dY = this.yStep;
-      double[] pos = new double[NDIM];
 
-      SpiralDouble spiral = new SpiralDouble( this.nFOV_total,Xoffset, Yoffset, dX,dY);
+      Spiral spiral = new Spiral( this.nFOV_total,Xoffset, Yoffset, dX,dY);
       for (int ii = 0; ii<nFOV_total; ii++){
-         pos[1]= spiral.getXii(ii);
-         pos[2]= spiral.getYii(ii);
-         this.FOVArray[ii].setPos(pos);
+         this.FOVArray[ii].setPos(spiral.getX(ii),spiral.getY(ii));
       }
          
    }
    
-   public double[] getFOVPos(int nFOV){
-      return this.FOVArray[nFOV].getPos();
+   public double getX(int nFOV){
+      return this.FOVArray[nFOV].getX();
+   }
+
+   public double getY(int nFOV){
+      return this.FOVArray[nFOV].getY();
    }
 
    public void setSkipWell(int nFOV, Boolean skipVal){

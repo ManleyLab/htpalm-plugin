@@ -16,15 +16,16 @@ public class TestSpiral {
     */
    public static void main(String[] args) {
       int nPos = 50;
-      double[] posStart={10,15};
-      double dX=2,dY=10;
+      double Xstart=10,Ystart =15;
+      double xStep=2,yStep=10;
    
       //Spiral testSpiral = new Spiral( nPos);
-      SpiralMosiaic testSpiral = new SpiralMosiaic(posStart, dX,dY, nPos);
+      SpiralMosiaic testSpiral = new SpiralMosiaic(Xstart, Ystart, xStep, yStep, nPos);
       for (int ii=0;ii<nPos; ii++){
-         double[] pos;
-         pos = testSpiral.getFOVPos(ii);
-         System.out.println(pos[0]+" "+pos[1]);
+         double x,y;
+         x= testSpiral.getX(ii);
+         y= testSpiral.getY(ii);
+         System.out.println(x+" "+y);
       }
 
    }
