@@ -22,8 +22,26 @@ public class SpiralMosiaic{
       private double X,Y;
       private Boolean skipFOV;
       FOV(){}
+      FOV(double X, double Y, Boolean skipFOV){
+         this.initialize(X,Y,skipFOV);
+      }
+
+      /*
+       * Default setting of skip FOV is false
+       */
+      FOV(double X, double Y ){
+         this.initialize(X,Y);
+      }
      
-      void initialize(double X, double Y, Boolean skipFOV){
+      /*
+       * Default setting of skip FOV is false
+       */
+      final void initialize(double X, double Y){
+         Boolean skipFOV_default = false;
+         this.initialize(X, Y, skipFOV_default);
+      }
+      
+      final void initialize(double X, double Y, Boolean skipFOV){
          this.X=X;
          this.Y=Y;
          this.skipFOV = skipFOV;
@@ -58,7 +76,7 @@ public class SpiralMosiaic{
       this.initialize(Xstart, Ystart, xStep,yStep, nFOV_total);
    }
    
-   public void initialize(double Xstart, double Ystart, double xStep, double yStep, int nFOV_total){
+   public final void initialize(double Xstart, double Ystart, double xStep, double yStep, int nFOV_total){
       this.nFOV_total = nFOV_total;
       this.Xstart= Xstart;
       this.Ystart= Ystart;
@@ -79,7 +97,7 @@ public class SpiralMosiaic{
 
       Spiral spiral = new Spiral( this.nFOV_total,Xoffset, Yoffset, dX,dY);
       for (int ii = 0; ii<nFOV_total; ii++){
-         this.FOVArray[ii].setPos(spiral.getX(ii),spiral.getY(ii));
+         this.FOVArray[ii] = new FOV(spiral.getX(ii),spiral.getY(ii));
       }
          
    }
