@@ -18,7 +18,8 @@ public class HTPALM implements org.micromanager.api.MMPlugin {
    CMMCore core_;
    MMStudioMainFrame gui_;
    AcquisitionEngine acq_ ;
-
+   
+   HTPALMDialog dlg;
    
    @Override
    public void dispose() {
@@ -33,10 +34,10 @@ public class HTPALM implements org.micromanager.api.MMPlugin {
 
    @Override
    public void show() {
-      //if (dlg==null) {
-      //    dlg = new AutoLaseDialog(gui, false, this);
-      //}
-      //dlg.setVisible(true);
+      if (dlg==null) {
+          dlg = new HTPALMDialog(gui_, false, this);
+      }
+      dlg.setVisible(true);
    }
 
    @Override
