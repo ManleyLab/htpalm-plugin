@@ -4,10 +4,13 @@
  */
 package HTPALM;
 
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import mmcorej.CMMCore;
 import org.micromanager.MMStudioMainFrame;
 import org.micromanager.api.ScriptInterface;
 import org.micromanager.api.AcquisitionEngine;
+import org.micromanager.utils.MMScriptException;
 
 /**
  *
@@ -20,6 +23,33 @@ public class HTPALM implements org.micromanager.api.MMPlugin {
    AcquisitionEngine acq_ ;
    
    HTPALMDialog dlg;
+   
+   /****
+    * Temporary test code for runAcq
+    */
+   public void testRunAcq(){
+      //param
+      String camName =  "DCam";
+      
+      // file locations
+      String acqName = "test-acq";
+      String rootDirName = "F:/seamus/demoAcqFolder";
+      
+      int numFrames = 50;
+      double intervalMs = 0;
+      double exposure=100;
+      
+      gui_.closeAllAcquisitions();
+      try {
+         gui_.clearMessageWindow();
+      } catch (MMScriptException ex) {
+         Logger.getLogger(HTPALM.class.getName()).log(Level.SEVERE, null, ex);
+      }
+      
+      // Running this on Beanshell works ok
+      RunAcq.run(gui_,camName,acqName,rootDirName,numFrames,intervalMs,exposure); 
+   }
+
    
    @Override
    public void dispose() {
