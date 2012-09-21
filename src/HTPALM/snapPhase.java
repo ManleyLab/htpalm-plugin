@@ -4,9 +4,10 @@
  */
 package HTPALM;
 
-/*
- * @author Seamus Holden 
-*/
-class Debug {
-   public static final boolean DEBUG = false;
+/**
+ *
+ * @author Seamus Holden
+ */
+public class snapPhase {
+   
 }

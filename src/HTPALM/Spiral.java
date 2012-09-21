@@ -8,7 +8,7 @@ package HTPALM;
  *
  * @author laboleb
  */
-public class Spiral {
+class Spiral {
 
    private double[] X, Y;
    private double Xoffset, Yoffset, Xstep, Ystep;
@@ -57,9 +57,6 @@ public class Spiral {
             t = dXint;
             dXint = -dYint;
             dYint = t;
-            if (Debug.DEBUG){
-               System.out.println("dX "+ dXint+" dY "+dYint);
-            }
          }
       }
    }

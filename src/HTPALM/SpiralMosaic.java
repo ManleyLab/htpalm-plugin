@@ -7,7 +7,9 @@
 
 package HTPALM;
 
-
+/*
+ * @author Seamus Holden 
+*/
 public class SpiralMosaic{
    
    private static final int NDIM = 2;
