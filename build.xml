@@ -16,7 +16,7 @@
     <target name="-post-jar">
         <!-- Empty placeholder for easier customization. -->
         <!-- You can override this target in the ../build.xml file. -->
-        <echo message="--- KHK--- reached post-jar - basedir: ${basedir}" />
+        <echo message="--Copied MM plugin JAR to basedir: ${basedir}" />
 
         <copy file="${basedir}/${dist.jar}" toDir="${pluginsDir}" />
 

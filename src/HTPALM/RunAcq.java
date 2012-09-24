@@ -23,9 +23,9 @@ import org.micromanager.acquisition.MMAcquisition;
  */
  public class RunAcq extends Thread{
 
-   private static boolean acqRunning = false;    
+   private boolean acqRunning = false;    
 
-   public static void run(MMStudioMainFrame app, String camName, String acqName, String rootDirName, int numFrames, double intervalMs, double exposureTime){
+   public void run(MMStudioMainFrame app, String camName, String acqName, String rootDirName, int numFrames, double intervalMs, double exposureTime){
       
       acqRunning = true;
 
@@ -51,7 +51,7 @@ import org.micromanager.acquisition.MMAcquisition;
          //while(!acq_.isAcquisitionRunning())//wait until acq_ is started
          //{	Thread.sleep(50);}
          while(!acq_.isFinished())//wait until acq_ is finished
-         {	RunAcq.sleep(50);}  //WHY DOESNT THIS WORK!  
+         {	RunAcq.sleep(200);}  //WHY DOESNT THIS WORK!  
          
          //core_.waitForSystem();
          //gui_.message("Acq finished");
@@ -72,7 +72,7 @@ import org.micromanager.acquisition.MMAcquisition;
       acqRunning = false;
    }
 
-  public static boolean isRunning(){
+  public boolean isRunning(){
     return acqRunning;
   }
  

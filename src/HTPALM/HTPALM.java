@@ -28,26 +28,7 @@ public class HTPALM implements org.micromanager.api.MMPlugin {
     * Temporary test code for runAcq
     */
    public void testRunAcq(){
-      //param
-      String camName =  "DCam";
-      
-      // file locations
-      String acqName = "test-acq";
-      String rootDirName = "F:/seamus/demoAcqFolder";
-      
-      int numFrames = 50;
-      double intervalMs = 0;
-      double exposure=100;
-      
-      gui_.closeAllAcquisitions();
-      try {
-         gui_.clearMessageWindow();
-      } catch (MMScriptException ex) {
-         Logger.getLogger(HTPALM.class.getName()).log(Level.SEVERE, null, ex);
-      }
-      
-      // Running this on Beanshell works ok
-      RunAcq.run(gui_,camName,acqName,rootDirName,numFrames,intervalMs,exposure); 
+    
    }
 
    
