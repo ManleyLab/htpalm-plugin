@@ -28,7 +28,8 @@ public class HTPALM implements org.micromanager.api.MMPlugin {
     * Temporary test code for runAcq
     */
    public void testRunAcq(){
-    
+      Thread t = new Thread(new HTPALM_MainRunnable(core_,gui_,acq_));
+      t.start();
    }
 
    

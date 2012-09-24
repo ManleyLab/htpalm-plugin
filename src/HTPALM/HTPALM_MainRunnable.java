@@ -35,7 +35,7 @@ public class HTPALM_MainRunnable implements Runnable{
       String acqName = "test-acq";
       String rootDirName = "F:/seamus/demoAcqFolder";
       
-      int numFrames = 2;
+      int numFrames = 50;
       double intervalMs = 0;
       double exposure=100;
       
@@ -47,7 +47,6 @@ public class HTPALM_MainRunnable implements Runnable{
       }
       
       // Running this on Beanshell works ok
-      RunAcq runAcq = new RunAcq();
-      runAcq.run(gui_,camName,acqName,rootDirName,numFrames,intervalMs,exposure); 
+      RunAcq.run(gui_,camName,acqName,rootDirName,numFrames,intervalMs,exposure); 
    }
 }

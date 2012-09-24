@@ -21,14 +21,10 @@ import org.micromanager.acquisition.MMAcquisition;
  *
  * @author seamus.holden@epfl.ch
  */
- public class RunAcq extends Thread{
+ public class RunAcq {
 
-   private boolean acqRunning = false;    
-
-   public void run(MMStudioMainFrame app, String camName, String acqName, String rootDirName, int numFrames, double intervalMs, double exposureTime){
+   public static void run(MMStudioMainFrame app, String camName, String acqName, String rootDirName, int numFrames, double intervalMs, double exposureTime){ 
       
-      acqRunning = true;
-
       MMStudioMainFrame gui_ ;
       CMMCore core_ ;
       AcquisitionEngine acq_ ;
@@ -51,7 +47,7 @@ import org.micromanager.acquisition.MMAcquisition;
          //while(!acq_.isAcquisitionRunning())//wait until acq_ is started
          //{	Thread.sleep(50);}
          while(!acq_.isFinished())//wait until acq_ is finished
-         {	RunAcq.sleep(200);}  //WHY DOESNT THIS WORK!  
+         {	Thread.sleep(200);}  
          
          //core_.waitForSystem();
          //gui_.message("Acq finished");
@@ -69,11 +65,7 @@ import org.micromanager.acquisition.MMAcquisition;
          Logger.getLogger(RunAcq.class.getName()).log(Level.SEVERE, null, ex);
       }
 
-      acqRunning = false;
    }
 
-  public boolean isRunning(){
-    return acqRunning;
-  }
  
 }
