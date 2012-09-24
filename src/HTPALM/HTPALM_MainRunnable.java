@@ -47,6 +47,7 @@ public class HTPALM_MainRunnable implements Runnable{
       }
       
       // Running this on Beanshell works ok
-      RunAcq.run(gui_,camName,acqName,rootDirName,numFrames,intervalMs,exposure); 
+      boolean closeOnExit=true;
+      RunAcq.run(gui_,camName,acqName,rootDirName,numFrames,intervalMs,exposure,closeOnExit); 
    }
 }

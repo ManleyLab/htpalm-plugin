@@ -17,13 +17,15 @@ import mmcorej.CMMCore;
 import org.micromanager.utils.MMException;
 import org.micromanager.utils.ReportingUtils;
 import org.micromanager.acquisition.MMAcquisition;
+import java.util.regex.*;
+
 /**
  *
  * @author seamus.holden@epfl.ch
  */
  public class RunAcq {
 
-   public static void run(MMStudioMainFrame app, String camName, String acqName, String rootDirName, int numFrames, double intervalMs, double exposureTime){ 
+   public static void run(MMStudioMainFrame app, String camName, String acqName, String rootDirName, int numFrames, double intervalMs, double exposureTime, boolean closeOnExit){ 
       
       MMStudioMainFrame gui_ ;
       CMMCore core_ ;
@@ -38,24 +40,36 @@ import org.micromanager.acquisition.MMAcquisition;
       try{
          core_.setProperty("Core", "Camera", camName);
          core_.setProperty(camName,"Exposure",exposureTime);
+         
          acq_.setRootName(rootDirName);
          acq_.setFrames(numFrames,intervalMs);
          acq_.setUpdateLiveWindow(true);
          core_.waitForSystem();
+         String[] oldAcqNames=null, newAcqNames= null;
+         String currentAcqName=null;
+         oldAcqNames = gui_.getAcquisitionNames();
          acq_.acquire();
          
          //while(!acq_.isAcquisitionRunning())//wait until acq_ is started
          //{	Thread.sleep(50);}
-         while(!acq_.isFinished())//wait until acq_ is finished
-         {	Thread.sleep(200);}  
+         while(!acq_.isFinished()){
+            if (newAcqNames== null){ 
+               newAcqNames =gui_.getAcquisitionNames(); 
+               currentAcqName = RunAcq.getCurrentAcqName(newAcqNames,oldAcqNames);
+            }
+            Thread.sleep(200);
+         }  
          
-         //core_.waitForSystem();
-         //gui_.message("Acq finished");
-         ////gui_.refreshGUI();
+         
+         
+         core_.waitForSystem();
+         gui_.message("Acq finished");
          //RunAcq.sleep(1000);//give the PH cam time to sort itself out
-         //
-         //ImageWindow win = IJ.getImage().getWindow();
-         //win.close();//this closes the acquisition gui_ window
+         if (closeOnExit==true){
+            gui_.closeAcquisitionImage5D(currentAcqName);
+         }
+         gui_.refreshGUI();
+         
       }
       catch(InterruptedException e){}
       catch (MMException mex) {
@@ -67,5 +81,39 @@ import org.micromanager.acquisition.MMAcquisition;
 
    }
 
- 
+   //  find the acquisition name matching Acq_NN where NN is the largest number
+   private static String getCurrentAcqName(String[] newAcqNames, String[] oldAcqNames) throws Exception{
+      String currentAcqName =null;
+      int nOld,nNew,nCurrent,iCurrent;
+      nOld = oldAcqNames.length;
+      nNew = newAcqNames.length;
+      nCurrent=0;//number of new names
+      iCurrent = 0;
+      
+      //for each acq name in newAcqNames
+      for (int ii=0;ii<nNew;ii++){
+         //compare to all memebers of old acqNames, check if it existed before
+         int nMatches=0;
+         for (int jj=0;jj<nOld;jj++){
+            if (newAcqNames[ii].matches(oldAcqNames[jj])){
+               nMatches++;
+            }
+         }
+         if (nMatches==0){//if its new
+            nCurrent++;
+            iCurrent= ii;
+         }
+      }
+      
+      if (nCurrent ==0 ){
+         throw new Exception("Finding current acquisition name failed - no new names ");// throw runtime exception
+		}      
+		else if (nCurrent > 1){
+         throw new Exception("Finding current acquisition name failed - multiple new names ");// throw runtime exception
+		}
+      else {
+          currentAcqName = newAcqNames[iCurrent];
+ 		}           
+      return currentAcqName;
+   } 
 }
