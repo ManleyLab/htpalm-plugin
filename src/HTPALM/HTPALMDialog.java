@@ -31,12 +31,12 @@ public class HTPALMDialog extends javax.swing.JDialog {
     private void initComponents() {
 
         buttonGroup_LaserControl = new javax.swing.ButtonGroup();
-        jLabel_DialogName = new javax.swing.JLabel();
         jPanel_PosControl = new javax.swing.JPanel();
         jButton_GotoLastFov = new javax.swing.JButton();
         jButton_GotoNextFov = new javax.swing.JButton();
         jLabel2 = new javax.swing.JLabel();
         jLabel_CurrentFovNumber = new javax.swing.JLabel();
+        jButton3 = new javax.swing.JButton();
         jPanel_Initialize = new javax.swing.JPanel();
         jLabel3 = new javax.swing.JLabel();
         jLabel4 = new javax.swing.JLabel();
@@ -50,13 +50,6 @@ public class HTPALMDialog extends javax.swing.JDialog {
         jLabel_CurrentX = new javax.swing.JLabel();
         jButton_SetPosAsOrigin = new javax.swing.JButton();
         jLabel_CurrentY = new javax.swing.JLabel();
-        jButton_OpenInitOptions = new javax.swing.JButton();
-        jButton_Initialize = new javax.swing.JButton();
-        jPanel_Acquisition = new javax.swing.JPanel();
-        jButton_Acquire1FOV = new javax.swing.JButton();
-        jButton_AcquireAllFov = new javax.swing.JButton();
-        jButton_Pause = new javax.swing.JButton();
-        jButton_Abort = new javax.swing.JButton();
         jPanel_LaserControl = new javax.swing.JPanel();
         jPanel2 = new javax.swing.JPanel();
         jRadioButton_LaserControlManual = new javax.swing.JRadioButton();
@@ -70,13 +63,17 @@ public class HTPALMDialog extends javax.swing.JDialog {
         jPanel_BactDetection = new javax.swing.JPanel();
         jCheckBox_ExcludeBadFov = new javax.swing.JCheckBox();
         jButton_OpenBactConfig = new javax.swing.JButton();
+        jButton1 = new javax.swing.JButton();
+        jButton2 = new javax.swing.JButton();
+        jButton_AcquireAllFov = new javax.swing.JButton();
+        jButton_Abort = new javax.swing.JButton();
+        jButton_OpenInitOptions = new javax.swing.JButton();
+        jButton_Initialize = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
+        setTitle("HTPALM Control");
 
-        jLabel_DialogName.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
-        jLabel_DialogName.setText("HTPALM Control");
-
-        jPanel_PosControl.setBorder(javax.swing.BorderFactory.createTitledBorder("Position control"));
+        jPanel_PosControl.setBorder(javax.swing.BorderFactory.createTitledBorder("Manual control"));
 
         jButton_GotoLastFov.setText("<");
 
@@ -87,31 +84,47 @@ public class HTPALMDialog extends javax.swing.JDialog {
         jLabel_CurrentFovNumber.setHorizontalAlignment(javax.swing.SwingConstants.TRAILING);
         jLabel_CurrentFovNumber.setText("0");
 
+        jButton3.setText("Acquire 1 FOV");
+        jButton3.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton3ActionPerformed(evt);
+            }
+        });
+
         org.jdesktop.layout.GroupLayout jPanel_PosControlLayout = new org.jdesktop.layout.GroupLayout(jPanel_PosControl);
         jPanel_PosControl.setLayout(jPanel_PosControlLayout);
         jPanel_PosControlLayout.setHorizontalGroup(
             jPanel_PosControlLayout.createParallelGroup(org.jdesktop.layout.GroupLayout.LEADING)
             .add(jPanel_PosControlLayout.createSequentialGroup()
-                .add(86, 86, 86)
-                .add(jButton_GotoLastFov)
-                .addPreferredGap(org.jdesktop.layout.LayoutStyle.RELATED)
-                .add(jLabel2)
-                .addPreferredGap(org.jdesktop.layout.LayoutStyle.RELATED)
-                .add(jLabel_CurrentFovNumber, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, 29, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(org.jdesktop.layout.LayoutStyle.UNRELATED)
-                .add(jButton_GotoNextFov)
-                .addContainerGap(org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .add(jPanel_PosControlLayout.createParallelGroup(org.jdesktop.layout.GroupLayout.LEADING)
+                    .add(jPanel_PosControlLayout.createSequentialGroup()
+                        .add(29, 29, 29)
+                        .add(jButton_GotoLastFov)
+                        .addPreferredGap(org.jdesktop.layout.LayoutStyle.RELATED)
+                        .add(jLabel2)
+                        .addPreferredGap(org.jdesktop.layout.LayoutStyle.RELATED)
+                        .add(jLabel_CurrentFovNumber, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, 29, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(org.jdesktop.layout.LayoutStyle.UNRELATED)
+                        .add(jButton_GotoNextFov)
+                        .add(0, 0, Short.MAX_VALUE))
+                    .add(org.jdesktop.layout.GroupLayout.TRAILING, jPanel_PosControlLayout.createSequentialGroup()
+                        .addContainerGap(org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .add(jButton3)))
+                .addContainerGap())
         );
         jPanel_PosControlLayout.setVerticalGroup(
             jPanel_PosControlLayout.createParallelGroup(org.jdesktop.layout.GroupLayout.LEADING)
-            .add(jPanel_PosControlLayout.createParallelGroup(org.jdesktop.layout.GroupLayout.BASELINE)
-                .add(jButton_GotoLastFov)
-                .add(jButton_GotoNextFov)
-                .add(jLabel2)
-                .add(jLabel_CurrentFovNumber))
+            .add(jPanel_PosControlLayout.createSequentialGroup()
+                .add(jPanel_PosControlLayout.createParallelGroup(org.jdesktop.layout.GroupLayout.BASELINE)
+                    .add(jButton_GotoLastFov)
+                    .add(jButton_GotoNextFov)
+                    .add(jLabel2)
+                    .add(jLabel_CurrentFovNumber))
+                .addPreferredGap(org.jdesktop.layout.LayoutStyle.RELATED, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .add(jButton3))
         );
 
-        jPanel_Initialize.setBorder(javax.swing.BorderFactory.createTitledBorder("Initialization"));
+        jPanel_Initialize.setBorder(javax.swing.BorderFactory.createTitledBorder("Mosaic setup"));
 
         jLabel3.setText("Start position:");
 
@@ -156,50 +169,41 @@ public class HTPALMDialog extends javax.swing.JDialog {
         jLabel_CurrentY.setHorizontalAlignment(javax.swing.SwingConstants.TRAILING);
         jLabel_CurrentY.setText("00.00");
 
-        jButton_OpenInitOptions.setText("Options");
-
-        jButton_Initialize.setText("Initialize acquisition!");
-        jButton_Initialize.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton_InitializeActionPerformed(evt);
-            }
-        });
-
         org.jdesktop.layout.GroupLayout jPanel_InitializeLayout = new org.jdesktop.layout.GroupLayout(jPanel_Initialize);
         jPanel_Initialize.setLayout(jPanel_InitializeLayout);
         jPanel_InitializeLayout.setHorizontalGroup(
             jPanel_InitializeLayout.createParallelGroup(org.jdesktop.layout.GroupLayout.LEADING)
+            .add(jPanel_InitializeLayout.createParallelGroup(org.jdesktop.layout.GroupLayout.LEADING)
+                .add(jPanel_InitializeLayout.createSequentialGroup()
+                    .add(99, 99, 99)
+                    .add(jButton_SetStartAsCurrentPos, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .add(jPanel_InitializeLayout.createSequentialGroup()
+                    .add(102, 102, 102)
+                    .add(jButton_SetPosAsOrigin, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
             .add(jPanel_InitializeLayout.createSequentialGroup()
                 .add(11, 11, 11)
+                .add(jLabel9)
+                .addPreferredGap(org.jdesktop.layout.LayoutStyle.UNRELATED)
+                .add(jLabel10)
+                .add(10, 10, 10)
+                .add(jLabel_CurrentX, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, 43, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(org.jdesktop.layout.LayoutStyle.UNRELATED)
+                .add(jLabel11)
+                .addPreferredGap(org.jdesktop.layout.LayoutStyle.UNRELATED)
+                .add(jLabel_CurrentY, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, 43, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE))
+            .add(jPanel_InitializeLayout.createSequentialGroup()
+                .addContainerGap()
                 .add(jPanel_InitializeLayout.createParallelGroup(org.jdesktop.layout.GroupLayout.LEADING)
                     .add(jLabel3)
                     .add(jPanel_InitializeLayout.createSequentialGroup()
-                        .add(jLabel9)
+                        .add(91, 91, 91)
+                        .add(jLabel4)
                         .addPreferredGap(org.jdesktop.layout.LayoutStyle.UNRELATED)
-                        .add(jPanel_InitializeLayout.createParallelGroup(org.jdesktop.layout.GroupLayout.LEADING, false)
-                            .add(jPanel_InitializeLayout.createSequentialGroup()
-                                .add(jLabel10)
-                                .add(10, 10, 10)
-                                .add(jLabel_CurrentX, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, 43, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE)
-                                .addPreferredGap(org.jdesktop.layout.LayoutStyle.UNRELATED)
-                                .add(jLabel11, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                            .add(jPanel_InitializeLayout.createSequentialGroup()
-                                .add(jLabel4)
-                                .addPreferredGap(org.jdesktop.layout.LayoutStyle.UNRELATED)
-                                .add(jTextField_StartX, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, 43, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE)
-                                .addPreferredGap(org.jdesktop.layout.LayoutStyle.UNRELATED)
-                                .add(jLabel5)))
+                        .add(jTextField_StartX, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, 43, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(org.jdesktop.layout.LayoutStyle.UNRELATED)
-                        .add(jPanel_InitializeLayout.createParallelGroup(org.jdesktop.layout.GroupLayout.LEADING)
-                            .add(jLabel_CurrentY, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, 43, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE)
-                            .add(jTextField_StartY, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, 43, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE))))
-                .add(18, 18, 18)
-                .add(jPanel_InitializeLayout.createParallelGroup(org.jdesktop.layout.GroupLayout.LEADING)
-                    .add(jButton_SetPosAsOrigin, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .add(jButton_SetStartAsCurrentPos, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .add(jButton_OpenInitOptions, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .add(jButton_Initialize, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                .add(2, 2, 2))
+                        .add(jLabel5)
+                        .addPreferredGap(org.jdesktop.layout.LayoutStyle.UNRELATED)
+                        .add(jTextField_StartY, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, 43, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE))))
         );
         jPanel_InitializeLayout.setVerticalGroup(
             jPanel_InitializeLayout.createParallelGroup(org.jdesktop.layout.GroupLayout.LEADING)
@@ -208,67 +212,19 @@ public class HTPALMDialog extends javax.swing.JDialog {
                     .add(jLabel9)
                     .add(jLabel10)
                     .add(jLabel11)
-                    .add(jButton_SetPosAsOrigin)
                     .add(jLabel_CurrentX)
                     .add(jLabel_CurrentY))
+                .addPreferredGap(org.jdesktop.layout.LayoutStyle.RELATED)
+                .add(jButton_SetPosAsOrigin)
                 .addPreferredGap(org.jdesktop.layout.LayoutStyle.UNRELATED)
                 .add(jPanel_InitializeLayout.createParallelGroup(org.jdesktop.layout.GroupLayout.BASELINE)
                     .add(jLabel3)
                     .add(jLabel4)
                     .add(jTextField_StartX, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE)
                     .add(jLabel5)
-                    .add(jTextField_StartY, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE)
-                    .add(jButton_SetStartAsCurrentPos))
-                .addPreferredGap(org.jdesktop.layout.LayoutStyle.RELATED)
-                .add(jButton_OpenInitOptions)
-                .addPreferredGap(org.jdesktop.layout.LayoutStyle.RELATED)
-                .add(jButton_Initialize))
-        );
-
-        jPanel_Acquisition.setBorder(javax.swing.BorderFactory.createTitledBorder("Acquisition control"));
-
-        jButton_Acquire1FOV.setText("Acquire 1 FOV");
-
-        jButton_AcquireAllFov.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
-        jButton_AcquireAllFov.setText("Acquire all FOVs");
-
-        jButton_Pause.setText("Pause after current FOV");
-        jButton_Pause.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton_PauseActionPerformed(evt);
-            }
-        });
-
-        jButton_Abort.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
-        jButton_Abort.setText("Abort all acquisitions");
-
-        org.jdesktop.layout.GroupLayout jPanel_AcquisitionLayout = new org.jdesktop.layout.GroupLayout(jPanel_Acquisition);
-        jPanel_Acquisition.setLayout(jPanel_AcquisitionLayout);
-        jPanel_AcquisitionLayout.setHorizontalGroup(
-            jPanel_AcquisitionLayout.createParallelGroup(org.jdesktop.layout.GroupLayout.LEADING)
-            .add(org.jdesktop.layout.GroupLayout.TRAILING, jPanel_AcquisitionLayout.createSequentialGroup()
-                .add(63, 63, 63)
-                .add(jPanel_AcquisitionLayout.createParallelGroup(org.jdesktop.layout.GroupLayout.LEADING)
-                    .add(org.jdesktop.layout.GroupLayout.TRAILING, jButton_Pause, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .add(org.jdesktop.layout.GroupLayout.TRAILING, jPanel_AcquisitionLayout.createSequentialGroup()
-                        .add(1, 1, 1)
-                        .add(jButton_Acquire1FOV, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
-                .addPreferredGap(org.jdesktop.layout.LayoutStyle.RELATED)
-                .add(jPanel_AcquisitionLayout.createParallelGroup(org.jdesktop.layout.GroupLayout.LEADING)
-                    .add(org.jdesktop.layout.GroupLayout.TRAILING, jButton_Abort, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .add(org.jdesktop.layout.GroupLayout.TRAILING, jButton_AcquireAllFov, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                .addContainerGap())
-        );
-        jPanel_AcquisitionLayout.setVerticalGroup(
-            jPanel_AcquisitionLayout.createParallelGroup(org.jdesktop.layout.GroupLayout.LEADING)
-            .add(org.jdesktop.layout.GroupLayout.TRAILING, jPanel_AcquisitionLayout.createSequentialGroup()
-                .add(jPanel_AcquisitionLayout.createParallelGroup(org.jdesktop.layout.GroupLayout.LEADING)
-                    .add(jButton_Acquire1FOV, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .add(jButton_AcquireAllFov, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                .addPreferredGap(org.jdesktop.layout.LayoutStyle.RELATED)
-                .add(jPanel_AcquisitionLayout.createParallelGroup(org.jdesktop.layout.GroupLayout.LEADING)
-                    .add(jButton_Pause, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .add(jButton_Abort, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
+                    .add(jTextField_StartY, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE))
+                .add(4, 4, 4)
+                .add(jButton_SetStartAsCurrentPos))
         );
 
         jPanel_LaserControl.setBorder(javax.swing.BorderFactory.createTitledBorder("Laser control"));
@@ -390,7 +346,7 @@ public class HTPALMDialog extends javax.swing.JDialog {
             .add(jPanel_BactDetectionLayout.createSequentialGroup()
                 .addContainerGap()
                 .add(jCheckBox_ExcludeBadFov)
-                .addPreferredGap(org.jdesktop.layout.LayoutStyle.RELATED, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addPreferredGap(org.jdesktop.layout.LayoutStyle.RELATED, 13, Short.MAX_VALUE)
                 .add(jButton_OpenBactConfig)
                 .addContainerGap())
         );
@@ -401,45 +357,85 @@ public class HTPALMDialog extends javax.swing.JDialog {
                 .add(jButton_OpenBactConfig))
         );
 
+        jButton1.setText("Load...");
+
+        jButton2.setText("Save as...");
+
+        jButton_AcquireAllFov.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
+        jButton_AcquireAllFov.setText("Acquire all!");
+
+        jButton_Abort.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
+        jButton_Abort.setText("Abort all");
+
+        jButton_OpenInitOptions.setText("Options");
+        jButton_OpenInitOptions.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton_OpenInitOptionsActionPerformed(evt);
+            }
+        });
+
+        jButton_Initialize.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
+        jButton_Initialize.setText("Initialize!");
+        jButton_Initialize.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton_InitializeActionPerformed(evt);
+            }
+        });
+
         org.jdesktop.layout.GroupLayout layout = new org.jdesktop.layout.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(org.jdesktop.layout.GroupLayout.LEADING)
             .add(layout.createSequentialGroup()
                 .addContainerGap()
-                .add(layout.createParallelGroup(org.jdesktop.layout.GroupLayout.LEADING, false)
-                    .add(jLabel_DialogName)
-                    .add(jPanel_Initialize, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .add(jPanel_PosControl, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .add(jPanel_LaserControl, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .add(jPanel_BactDetection, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .add(jPanel_Acquisition, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                .addContainerGap(org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .add(layout.createParallelGroup(org.jdesktop.layout.GroupLayout.LEADING)
+                    .add(layout.createParallelGroup(org.jdesktop.layout.GroupLayout.TRAILING, false)
+                        .add(org.jdesktop.layout.GroupLayout.LEADING, layout.createSequentialGroup()
+                            .add(layout.createParallelGroup(org.jdesktop.layout.GroupLayout.LEADING, false)
+                                .add(jPanel_Initialize, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .add(jPanel_PosControl, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                            .addPreferredGap(org.jdesktop.layout.LayoutStyle.RELATED)
+                            .add(layout.createParallelGroup(org.jdesktop.layout.GroupLayout.LEADING, false)
+                                .add(jButton2, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .add(jButton1, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .add(jButton_AcquireAllFov, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .add(jButton_Abort, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .add(jButton_OpenInitOptions, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .add(jButton_Initialize, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, 95, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE)))
+                        .add(org.jdesktop.layout.GroupLayout.LEADING, jPanel_LaserControl, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .add(jPanel_BactDetection, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE))
+                .add(0, 11, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(org.jdesktop.layout.GroupLayout.LEADING)
             .add(layout.createSequentialGroup()
                 .addContainerGap()
-                .add(jLabel_DialogName)
+                .add(layout.createParallelGroup(org.jdesktop.layout.GroupLayout.TRAILING, false)
+                    .add(layout.createSequentialGroup()
+                        .add(jButton_Initialize)
+                        .addPreferredGap(org.jdesktop.layout.LayoutStyle.RELATED)
+                        .add(jButton_AcquireAllFov)
+                        .addPreferredGap(org.jdesktop.layout.LayoutStyle.RELATED)
+                        .add(jButton_Abort)
+                        .addPreferredGap(org.jdesktop.layout.LayoutStyle.RELATED, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .add(jButton_OpenInitOptions))
+                    .add(jPanel_Initialize, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(org.jdesktop.layout.LayoutStyle.RELATED)
-                .add(jPanel_Initialize, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE)
-                .add(4, 4, 4)
-                .add(jPanel_PosControl, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(org.jdesktop.layout.LayoutStyle.UNRELATED)
+                .add(layout.createParallelGroup(org.jdesktop.layout.GroupLayout.TRAILING)
+                    .add(org.jdesktop.layout.GroupLayout.LEADING, layout.createSequentialGroup()
+                        .add(jButton1)
+                        .addPreferredGap(org.jdesktop.layout.LayoutStyle.RELATED)
+                        .add(jButton2)
+                        .addPreferredGap(org.jdesktop.layout.LayoutStyle.RELATED))
+                    .add(jPanel_PosControl, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE))
                 .add(jPanel_LaserControl, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(org.jdesktop.layout.LayoutStyle.RELATED)
                 .add(jPanel_BactDetection, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(org.jdesktop.layout.LayoutStyle.RELATED)
-                .add(jPanel_Acquisition, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addContainerGap(17, Short.MAX_VALUE))
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
-
-   private void jButton_PauseActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton_PauseActionPerformed
-      // TODO add your handling code here:
-   }//GEN-LAST:event_jButton_PauseActionPerformed
 
    private void jTextField_StartXActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextField_StartXActionPerformed
       // TODO add your handling code here:
@@ -469,10 +465,20 @@ public class HTPALMDialog extends javax.swing.JDialog {
       // TODO add your handling code here:
    }//GEN-LAST:event_jCheckBox_ExcludeBadFovActionPerformed
 
+   private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
+      // TODO add your handling code here:
+   }//GEN-LAST:event_jButton3ActionPerformed
+
+   private void jButton_OpenInitOptionsActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton_OpenInitOptionsActionPerformed
+      // TODO add your handling code here:
+   }//GEN-LAST:event_jButton_OpenInitOptionsActionPerformed
+
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.ButtonGroup buttonGroup_LaserControl;
+    private javax.swing.JButton jButton1;
+    private javax.swing.JButton jButton2;
+    private javax.swing.JButton jButton3;
     private javax.swing.JButton jButton_Abort;
-    private javax.swing.JButton jButton_Acquire1FOV;
     private javax.swing.JButton jButton_AcquireAllFov;
     private javax.swing.JButton jButton_GotoLastFov;
     private javax.swing.JButton jButton_GotoNextFov;
@@ -480,7 +486,6 @@ public class HTPALMDialog extends javax.swing.JDialog {
     private javax.swing.JButton jButton_OpenAutoLase;
     private javax.swing.JButton jButton_OpenBactConfig;
     private javax.swing.JButton jButton_OpenInitOptions;
-    private javax.swing.JButton jButton_Pause;
     private javax.swing.JButton jButton_SetPosAsOrigin;
     private javax.swing.JButton jButton_SetStartAsCurrentPos;
     private javax.swing.JCheckBox jCheckBox_ExcludeBadFov;
@@ -496,10 +501,8 @@ public class HTPALMDialog extends javax.swing.JDialog {
     private javax.swing.JLabel jLabel_CurrentFovNumber;
     private javax.swing.JLabel jLabel_CurrentX;
     private javax.swing.JLabel jLabel_CurrentY;
-    private javax.swing.JLabel jLabel_DialogName;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JPanel jPanel3;
-    private javax.swing.JPanel jPanel_Acquisition;
     private javax.swing.JPanel jPanel_BactDetection;
     private javax.swing.JPanel jPanel_Initialize;
     private javax.swing.JPanel jPanel_LaserControl;
