@@ -6,7 +6,14 @@ package HTPALM;
 
 // use the simple framework to allow easy generation of POJO xml config file
 import java.io.File;
-import org.simpleframework.xml.*;
+import java.lang.reflect.InvocationTargetException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import org.apache.commons.beanutils.BeanUtils;
+import org.micromanager.utils.ReportingUtils;
+import org.simpleframework.xml.Default;
+import org.simpleframework.xml.Serializer;
+import org.simpleframework.xml.core.Persister;
 
 /**
  * All the configuration options for required to run HTPALM. 
@@ -42,7 +49,7 @@ public class ConfigurationOptions {
       File f = new File(configPath);
       //try to load the default settings
       if (f.exists()){
-         
+         loadConfig(configPath);
       }
       else{
       //if they dont exist, use these default settings, and save them:
@@ -54,11 +61,29 @@ public class ConfigurationOptions {
    }
 
    private void loadConfig(String fpath){
-      
+      File f = new File(fpath);
+      Serializer serializer = new Persister();
+      ConfigurationOptions config;
+      try {
+         config = serializer.read(ConfigurationOptions.class,f);
+         BeanUtils.copyProperties(this,config);//copy the properties of config into the this
+      } catch (IllegalAccessException ex) {
+         Logger.getLogger(ConfigurationOptions.class.getName()).log(Level.SEVERE, null, ex);
+      } catch (InvocationTargetException ex) {
+         Logger.getLogger(ConfigurationOptions.class.getName()).log(Level.SEVERE, null, ex);
+      } catch (Exception ex) {
+         ReportingUtils.logError(ex, "Failed to load HTPALM configuration");
+      }
    }
 
    private void saveConfig(String fpath){
-      
+      File f = new File(fpath);
+      Serializer serializer = new Persister();
+      try {
+         serializer.write(this,f);
+      } catch (Exception ex) {
+         ReportingUtils.logError(ex, "Failed to save HTPALM configuration");
+      }
    }
 
    private void assignDefaultConfig(){
