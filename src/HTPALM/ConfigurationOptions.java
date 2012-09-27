@@ -6,6 +6,7 @@ package HTPALM;
 
 // use the simple framework to allow easy generation of POJO xml config file
 import java.io.File;
+import java.io.IOException;
 import java.lang.reflect.InvocationTargetException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -22,6 +23,7 @@ import org.simpleframework.xml.core.Persister;
 @Default
 public class ConfigurationOptions {
    
+   static final String configPath = "HTPALM_Config.xml";
    //Mosaic config
    double mosaicStartPosX_, mosaicStartPosY_, mosaicStepSizeX_, mosaicStepSizeY_;
    //Laser config
@@ -45,22 +47,21 @@ public class ConfigurationOptions {
    
 
    private void loadDefaultConfig(){
-      String configPath = "HTPALM_Config.xml";
       File f = new File(configPath);
+      
       //try to load the default settings
       if (f.exists()){
          loadConfig(configPath);
       }
       else{
       //if they dont exist, use these default settings, and save them:
-         ConfigurationOptions config = new ConfigurationOptions();
-         config.assignDefaultConfig();
-         config.saveConfig(configPath);
+         assignDefaultConfig();
+         saveConfig(configPath);
       }
       
    }
 
-   private void loadConfig(String fpath){
+   public void loadConfig(String fpath){
       File f = new File(fpath);
       Serializer serializer = new Persister();
       ConfigurationOptions config;
@@ -76,7 +77,7 @@ public class ConfigurationOptions {
       }
    }
 
-   private void saveConfig(String fpath){
+   public void saveConfig(String fpath){
       File f = new File(fpath);
       Serializer serializer = new Persister();
       try {
