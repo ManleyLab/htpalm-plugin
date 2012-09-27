@@ -21,6 +21,8 @@ public class HTPALM implements org.micromanager.api.MMPlugin {
    CMMCore core_;
    MMStudioMainFrame gui_;
    AcquisitionEngine acq_ ;
+   //this stores all the HTPALM config options
+   ConfigurationOptions config_=null;
    
    HTPALMDialog dlg;
    
@@ -46,8 +48,12 @@ public class HTPALM implements org.micromanager.api.MMPlugin {
 
    @Override
    public void show() {
+      if (config_==null){
+         config_ = new ConfigurationOptions();
+      }
+         
       if (dlg==null) {
-          dlg = new HTPALMDialog(gui_, false, this);
+          dlg = new HTPALMDialog(gui_,config_, false, this);
       }
       dlg.setVisible(true);
    }

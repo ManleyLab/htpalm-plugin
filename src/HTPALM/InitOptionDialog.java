@@ -13,7 +13,7 @@ public class InitOptionDialog extends javax.swing.JDialog {
    /**
     * Creates new form InitOptionDialog
     */
-   public InitOptionDialog(java.awt.Frame parent, boolean modal) {
+   public InitOptionDialog(java.awt.Frame parent, ConfigurationOptions config_,boolean modal) {
       super(parent, modal);
       initComponents();
    }

@@ -4,23 +4,35 @@
  */
 package HTPALM;
 
+import org.micromanager.MMStudioMainFrame;
+
 /**
  *
  * @author seamus.holden@epfl.ch
  */
 public class HTPALMDialog extends javax.swing.JDialog {
 
-   HTPALM htpalm;
+   HTPALM htpalm =null;
+   ConfigurationOptions config_=null;
+   InitOptionDialog initOptionDlg_ = null;
+   MMStudioMainFrame gui_;
    /**
     * Creates new form HTPALMDialog
     */
-   public HTPALMDialog(java.awt.Frame parent, boolean modal, HTPALM htpalm) {
+   public HTPALMDialog(java.awt.Frame parent, ConfigurationOptions config_, boolean modal, HTPALM htpalm) {
       super(parent, modal);
       initComponents();
 
       this.htpalm = htpalm;
+      this.config_ = config_;
+      gui_ = (MMStudioMainFrame) parent;
+
+      loadDefaultSettings();
    }
 
+   private void loadDefaultSettings(){
+      //TODO set everything as per config_
+   }
    /**
     * This method is called from within the constructor to initialize the form.
     * WARNING: Do NOT modify this code. The content of this method is always
@@ -438,11 +450,11 @@ public class HTPALMDialog extends javax.swing.JDialog {
     }// </editor-fold>//GEN-END:initComponents
 
    private void jTextField_StartXActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextField_StartXActionPerformed
-      // TODO add your handling code here:
+      config_.mosaicStartPosX_ = Double.parseDouble(jTextField_StartX.getText());
    }//GEN-LAST:event_jTextField_StartXActionPerformed
 
    private void jTextField_StartYActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextField_StartYActionPerformed
-      // TODO add your handling code here:
+      config_.mosaicStartPosY_ = Double.parseDouble(jTextField_StartY.getText());
    }//GEN-LAST:event_jTextField_StartYActionPerformed
 
    private void jButton_SetPosAsOriginActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton_SetPosAsOriginActionPerformed
@@ -454,7 +466,16 @@ public class HTPALMDialog extends javax.swing.JDialog {
    }//GEN-LAST:event_jButton_InitializeActionPerformed
 
    private void jRadioButton_LaserControlManualActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jRadioButton_LaserControlManualActionPerformed
-      // TODO add your handling code here:
+      if (jRadioButton_LaserControlManual.isSelected()){
+         config_.laserControlIsAutomatic_ = false;
+      }
+      else if (jRadioButton_LaserControlAuto.isSelected()){
+         config_.laserControlIsAutomatic_ = true;
+      }
+      else{
+         throw new RuntimeException("Unexpected radiobutton state");
+      }
+         
    }//GEN-LAST:event_jRadioButton_LaserControlManualActionPerformed
 
    private void jButton_OpenAutoLaseActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton_OpenAutoLaseActionPerformed
@@ -462,7 +483,7 @@ public class HTPALMDialog extends javax.swing.JDialog {
    }//GEN-LAST:event_jButton_OpenAutoLaseActionPerformed
 
    private void jCheckBox_ExcludeBadFovActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jCheckBox_ExcludeBadFovActionPerformed
-      // TODO add your handling code here:
+      config_.fovAnalysis_excludeBadFov_ = jCheckBox_ExcludeBadFov.isSelected();
    }//GEN-LAST:event_jCheckBox_ExcludeBadFovActionPerformed
 
    private void jButton_Acqiure1FovActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton_Acqiure1FovActionPerformed
@@ -470,7 +491,9 @@ public class HTPALMDialog extends javax.swing.JDialog {
    }//GEN-LAST:event_jButton_Acqiure1FovActionPerformed
 
    private void jButton_OpenInitOptionsActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton_OpenInitOptionsActionPerformed
-      // TODO add your handling code here:
+      boolean modal = true;
+      initOptionDlg_= new InitOptionDialog(gui_,config_, modal );
+      initOptionDlg_.setVisible(true);
    }//GEN-LAST:event_jButton_OpenInitOptionsActionPerformed
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
