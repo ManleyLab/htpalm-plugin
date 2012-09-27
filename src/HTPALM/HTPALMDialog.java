@@ -4,6 +4,11 @@
  */
 package HTPALM;
 
+import java.io.File;
+import java.io.IOException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import javax.swing.JFileChooser;
 import org.micromanager.MMStudioMainFrame;
 
 /**
@@ -12,14 +17,14 @@ import org.micromanager.MMStudioMainFrame;
  */
 public class HTPALMDialog extends javax.swing.JDialog {
 
-   HTPALM htpalm =null;
+   HTPALM_MMPlugin htpalm =null;
    ConfigurationOptions config_=null;
    InitOptionDialog initOptionDlg_ = null;
    MMStudioMainFrame gui_;
    /**
     * Creates new form HTPALMDialog
     */
-   public HTPALMDialog(java.awt.Frame parent, ConfigurationOptions config_, boolean modal, HTPALM htpalm) {
+   public HTPALMDialog(java.awt.Frame parent, ConfigurationOptions config_, boolean modal, HTPALM_MMPlugin htpalm) {
       super(parent, modal);
       initComponents();
 
@@ -27,12 +32,45 @@ public class HTPALMDialog extends javax.swing.JDialog {
       this.config_ = config_;
       gui_ = (MMStudioMainFrame) parent;
 
-      loadDefaultSettings();
+      reloadSettings();
    }
 
-   private void loadDefaultSettings(){
-      //TODO set everything as per config_
+   private void reloadSettings(){
+      jTextField_StartX.setText(Double.toString(config_.mosaicStartPosX_));
+      jTextField_StartY.setText(Double.toString(config_.mosaicStartPosY_));
+      setStateLaserControlRadioGroup(config_.laserControlIsAutomatic_);
+      jTextField_ExcitationPowerNumber.setText(Double.toString(config_.laserManualExPower_));
+      jTextField_ActivationPowerNumber.setText(Double.toString(config_.laserManualActPower_));
+      jCheckBox_ExcludeBadFov.setSelected(config_.fovAnalysis_excludeBadFov_);
    }
+   
+   private void setStateLaserControlRadioGroup(boolean laserControlIsAutomatic){
+      if (laserControlIsAutomatic){
+         jRadioButton_LaserControlManual.setSelected(false);
+         jRadioButton_LaserControlAuto.setSelected(true);
+      }
+      else{
+         jRadioButton_LaserControlManual.setSelected(true);
+         jRadioButton_LaserControlAuto.setSelected(false);
+      }
+   }
+
+   private boolean getStateLaserControlRadioGroup(){
+      boolean laserControlIsAutomatic;
+      if (jRadioButton_LaserControlManual.isSelected()){
+         laserControlIsAutomatic = false;
+      }
+      else if (jRadioButton_LaserControlAuto.isSelected()){
+         laserControlIsAutomatic = true;
+      }
+      else{
+         throw new RuntimeException("Unexpected radiobutton state");
+      }
+
+      return laserControlIsAutomatic;
+      
+   }
+      
    /**
     * This method is called from within the constructor to initialize the form.
     * WARNING: Do NOT modify this code. The content of this method is always
@@ -110,6 +148,11 @@ public class HTPALMDialog extends javax.swing.JDialog {
         });
 
         jButton_SetStartAsCurrentPos.setText("Use current position");
+        jButton_SetStartAsCurrentPos.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton_SetStartAsCurrentPosActionPerformed(evt);
+            }
+        });
 
         jLabel_CurrentPos.setText("Current position:");
 
@@ -191,8 +234,18 @@ public class HTPALMDialog extends javax.swing.JDialog {
         jPanel_ManualControl.setBorder(javax.swing.BorderFactory.createTitledBorder("Manual control"));
 
         jButton_GotoLastFov.setText("<");
+        jButton_GotoLastFov.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton_GotoLastFovActionPerformed(evt);
+            }
+        });
 
         jButton_GotoNextFov.setText(">");
+        jButton_GotoNextFov.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton_GotoNextFovActionPerformed(evt);
+            }
+        });
 
         jLabel_CurrentFovLabel.setText("Current FOV:");
 
@@ -255,6 +308,18 @@ public class HTPALMDialog extends javax.swing.JDialog {
 
         jLabel_ExcitationPowerLabel.setText("Excitation power:");
 
+        jTextField_ActivationPowerNumber.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jTextField_ActivationPowerNumberActionPerformed(evt);
+            }
+        });
+
+        jTextField_ExcitationPowerNumber.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jTextField_ExcitationPowerNumberActionPerformed(evt);
+            }
+        });
+
         org.jdesktop.layout.GroupLayout jPanel2Layout = new org.jdesktop.layout.GroupLayout(jPanel2);
         jPanel2.setLayout(jPanel2Layout);
         jPanel2Layout.setHorizontalGroup(
@@ -296,6 +361,11 @@ public class HTPALMDialog extends javax.swing.JDialog {
 
         buttonGroup_LaserControl.add(jRadioButton_LaserControlAuto);
         jRadioButton_LaserControlAuto.setText("Automatic (TODO!)");
+        jRadioButton_LaserControlAuto.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jRadioButton_LaserControlAutoActionPerformed(evt);
+            }
+        });
 
         jButton_OpenAutoLase.setText("Open Autolase");
         jButton_OpenAutoLase.addActionListener(new java.awt.event.ActionListener() {
@@ -350,6 +420,11 @@ public class HTPALMDialog extends javax.swing.JDialog {
         });
 
         jButton_OpenBactConfig.setText("Configure");
+        jButton_OpenBactConfig.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton_OpenBactConfigActionPerformed(evt);
+            }
+        });
 
         org.jdesktop.layout.GroupLayout jPanel_BactDetectionLayout = new org.jdesktop.layout.GroupLayout(jPanel_BactDetection);
         jPanel_BactDetection.setLayout(jPanel_BactDetectionLayout);
@@ -379,9 +454,19 @@ public class HTPALMDialog extends javax.swing.JDialog {
 
         jButton_AcquireAllFov.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
         jButton_AcquireAllFov.setText("Acquire all!");
+        jButton_AcquireAllFov.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton_AcquireAllFovActionPerformed(evt);
+            }
+        });
 
         jButton_Abort.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
         jButton_Abort.setText("Abort all");
+        jButton_Abort.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton_AbortActionPerformed(evt);
+            }
+        });
 
         jButton_OpenInitOptions.setText("Options");
         jButton_OpenInitOptions.addActionListener(new java.awt.event.ActionListener() {
@@ -391,8 +476,18 @@ public class HTPALMDialog extends javax.swing.JDialog {
         });
 
         jButton_LoadSettings.setText("Load...");
+        jButton_LoadSettings.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton_LoadSettingsActionPerformed(evt);
+            }
+        });
 
         jButton_SaveSettings.setText("Save as...");
+        jButton_SaveSettings.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton_SaveSettingsActionPerformed(evt);
+            }
+        });
 
         org.jdesktop.layout.GroupLayout layout = new org.jdesktop.layout.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -466,16 +561,7 @@ public class HTPALMDialog extends javax.swing.JDialog {
    }//GEN-LAST:event_jButton_InitializeActionPerformed
 
    private void jRadioButton_LaserControlManualActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jRadioButton_LaserControlManualActionPerformed
-      if (jRadioButton_LaserControlManual.isSelected()){
-         config_.laserControlIsAutomatic_ = false;
-      }
-      else if (jRadioButton_LaserControlAuto.isSelected()){
-         config_.laserControlIsAutomatic_ = true;
-      }
-      else{
-         throw new RuntimeException("Unexpected radiobutton state");
-      }
-         
+      config_.laserControlIsAutomatic_ = getStateLaserControlRadioGroup();
    }//GEN-LAST:event_jRadioButton_LaserControlManualActionPerformed
 
    private void jButton_OpenAutoLaseActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton_OpenAutoLaseActionPerformed
@@ -495,6 +581,82 @@ public class HTPALMDialog extends javax.swing.JDialog {
       initOptionDlg_= new InitOptionDialog(gui_,config_, modal );
       initOptionDlg_.setVisible(true);
    }//GEN-LAST:event_jButton_OpenInitOptionsActionPerformed
+
+   private void jButton_SetStartAsCurrentPosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton_SetStartAsCurrentPosActionPerformed
+      // TODO add your handling code here:
+   }//GEN-LAST:event_jButton_SetStartAsCurrentPosActionPerformed
+
+   private void jButton_GotoNextFovActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton_GotoNextFovActionPerformed
+      // TODO add your handling code here:
+   }//GEN-LAST:event_jButton_GotoNextFovActionPerformed
+
+   private void jButton_GotoLastFovActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton_GotoLastFovActionPerformed
+      // TODO add your handling code here:
+   }//GEN-LAST:event_jButton_GotoLastFovActionPerformed
+
+   private void jButton_OpenBactConfigActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton_OpenBactConfigActionPerformed
+      // TODO add your handling code here:
+   }//GEN-LAST:event_jButton_OpenBactConfigActionPerformed
+
+   private void jButton_AcquireAllFovActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton_AcquireAllFovActionPerformed
+      // TODO add your handling code here:
+   }//GEN-LAST:event_jButton_AcquireAllFovActionPerformed
+
+   private void jButton_AbortActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton_AbortActionPerformed
+      // TODO add your handling code here:
+   }//GEN-LAST:event_jButton_AbortActionPerformed
+
+   private void jButton_LoadSettingsActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton_LoadSettingsActionPerformed
+      //open
+      JFileChooser fileCh = new JFileChooser();
+      fileCh.addChoosableFileFilter(new XmlFilter());
+      int returnVal = fileCh.showOpenDialog(this);
+      
+      if (returnVal == JFileChooser.APPROVE_OPTION) {
+         try {
+            File file = fileCh.getSelectedFile();
+            System.out.println("Load: " + file.getCanonicalPath());
+            config_.loadConfig(file.getName());
+            reloadSettings();//update config_
+         } catch (IOException ex) {
+            Logger.getLogger(HTPALMDialog.class.getName()).log(Level.SEVERE, null, ex);
+         }
+      } else {
+         //DO NOTHING - file load cancelled by user
+      }
+   }//GEN-LAST:event_jButton_LoadSettingsActionPerformed
+
+   private void jButton_SaveSettingsActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton_SaveSettingsActionPerformed
+      //save
+      JFileChooser fileCh = new JFileChooser();
+      fileCh.addChoosableFileFilter(new XmlFilter());
+      int returnVal = fileCh.showSaveDialog(this);
+      
+      if (returnVal == JFileChooser.APPROVE_OPTION) {
+         try {
+            File file = fileCh.getSelectedFile();
+            reloadSettings();//update config_
+            System.out.println("Save as" + file.getCanonicalPath());//DEBUG
+            config_.saveConfig(file.getName());
+         } catch (IOException ex) {
+            Logger.getLogger(HTPALMDialog.class.getName()).log(Level.SEVERE, null, ex);
+         }
+      } else {
+         //DO NOTHING - file load cancelled by user
+      }
+   }//GEN-LAST:event_jButton_SaveSettingsActionPerformed
+
+   private void jRadioButton_LaserControlAutoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jRadioButton_LaserControlAutoActionPerformed
+      config_.laserControlIsAutomatic_ = getStateLaserControlRadioGroup();
+   }//GEN-LAST:event_jRadioButton_LaserControlAutoActionPerformed
+
+   private void jTextField_ActivationPowerNumberActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextField_ActivationPowerNumberActionPerformed
+      config_.laserManualActPower_=Double.parseDouble(jTextField_ActivationPowerNumber.getText());
+   }//GEN-LAST:event_jTextField_ActivationPowerNumberActionPerformed
+
+   private void jTextField_ExcitationPowerNumberActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextField_ExcitationPowerNumberActionPerformed
+      config_.laserManualExPower_=Double.parseDouble(jTextField_ExcitationPowerNumber.getText());
+   }//GEN-LAST:event_jTextField_ExcitationPowerNumberActionPerformed
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.ButtonGroup buttonGroup_LaserControl;

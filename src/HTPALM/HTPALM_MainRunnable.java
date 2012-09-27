@@ -43,7 +43,7 @@ public class HTPALM_MainRunnable implements Runnable{
       try {
          gui_.clearMessageWindow();
       } catch (MMScriptException ex) {
-         Logger.getLogger(HTPALM.class.getName()).log(Level.SEVERE, null, ex);
+         Logger.getLogger(HTPALM_MMPlugin.class.getName()).log(Level.SEVERE, null, ex);
       }
       
       // Running this on Beanshell works ok

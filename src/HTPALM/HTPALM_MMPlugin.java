@@ -16,27 +16,31 @@ import org.micromanager.utils.MMScriptException;
  *
  * @author seamus.holden@epfl.ch
  */
-public class HTPALM implements org.micromanager.api.MMPlugin {
+public class HTPALM_MMPlugin implements org.micromanager.api.MMPlugin {
 
+   public static String menuName = "HTPALM";
+   public static String tooltipDescription= "Automatic PALM acquisition plugin";
+           
    CMMCore core_;
    MMStudioMainFrame gui_;
    AcquisitionEngine acq_ ;
-   //this stores all the HTPALM config options
+   //this stores all the HTPALM_MMPlugin config options
    ConfigurationOptions config_=null;
    
    HTPALMDialog dlg;
    
-   /****
-    * Temporary test code for runAcq
-    */
-   public void testRunAcq(){
-      Thread t = new Thread(new HTPALM_MainRunnable(core_,gui_,acq_));
-      t.start();
-   }
+   ///****
+   // * Temporary test code for runAcq
+   // */
+   //public void testRunAcq(){
+   //   Thread t = new Thread(new HTPALM_MainRunnable(core_,gui_,acq_));
+   //   t.start();
+   //}
 
    
    @Override
    public void dispose() {
+      //TODO
    }
 
    @Override

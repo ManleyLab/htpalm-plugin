@@ -205,6 +205,9 @@
           <Properties>
             <Property name="text" type="java.lang.String" value="Use current position"/>
           </Properties>
+          <Events>
+            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jButton_SetStartAsCurrentPosActionPerformed"/>
+          </Events>
         </Component>
         <Component class="javax.swing.JLabel" name="jLabel_CurrentPos">
           <Properties>
@@ -297,11 +300,17 @@
           <Properties>
             <Property name="text" type="java.lang.String" value="&lt;"/>
           </Properties>
+          <Events>
+            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jButton_GotoLastFovActionPerformed"/>
+          </Events>
         </Component>
         <Component class="javax.swing.JButton" name="jButton_GotoNextFov">
           <Properties>
             <Property name="text" type="java.lang.String" value="&gt;"/>
           </Properties>
+          <Events>
+            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jButton_GotoNextFovActionPerformed"/>
+          </Events>
         </Component>
         <Component class="javax.swing.JLabel" name="jLabel_CurrentFovLabel">
           <Properties>
@@ -437,8 +446,14 @@
               </Properties>
             </Component>
             <Component class="javax.swing.JTextField" name="jTextField_ActivationPowerNumber">
+              <Events>
+                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jTextField_ActivationPowerNumberActionPerformed"/>
+              </Events>
             </Component>
             <Component class="javax.swing.JTextField" name="jTextField_ExcitationPowerNumber">
+              <Events>
+                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jTextField_ExcitationPowerNumberActionPerformed"/>
+              </Events>
             </Component>
           </SubComponents>
         </Container>
@@ -478,6 +493,9 @@
                 </Property>
                 <Property name="text" type="java.lang.String" value="Automatic (TODO!)"/>
               </Properties>
+              <Events>
+                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jRadioButton_LaserControlAutoActionPerformed"/>
+              </Events>
             </Component>
             <Component class="javax.swing.JButton" name="jButton_OpenAutoLase">
               <Properties>
@@ -534,6 +552,9 @@
           <Properties>
             <Property name="text" type="java.lang.String" value="Configure"/>
           </Properties>
+          <Events>
+            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jButton_OpenBactConfigActionPerformed"/>
+          </Events>
         </Component>
       </SubComponents>
     </Container>
@@ -555,6 +576,9 @@
         </Property>
         <Property name="text" type="java.lang.String" value="Acquire all!"/>
       </Properties>
+      <Events>
+        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jButton_AcquireAllFovActionPerformed"/>
+      </Events>
     </Component>
     <Component class="javax.swing.JButton" name="jButton_Abort">
       <Properties>
@@ -563,6 +587,9 @@
         </Property>
         <Property name="text" type="java.lang.String" value="Abort all"/>
       </Properties>
+      <Events>
+        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jButton_AbortActionPerformed"/>
+      </Events>
     </Component>
     <Component class="javax.swing.JButton" name="jButton_OpenInitOptions">
       <Properties>
@@ -576,11 +603,17 @@
       <Properties>
         <Property name="text" type="java.lang.String" value="Load..."/>
       </Properties>
+      <Events>
+        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jButton_LoadSettingsActionPerformed"/>
+      </Events>
     </Component>
     <Component class="javax.swing.JButton" name="jButton_SaveSettings">
       <Properties>
         <Property name="text" type="java.lang.String" value="Save as..."/>
       </Properties>
+      <Events>
+        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jButton_SaveSettingsActionPerformed"/>
+      </Events>
     </Component>
   </SubComponents>
 </Form>

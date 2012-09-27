@@ -6,7 +6,6 @@ package HTPALM;
 
 // use the simple framework to allow easy generation of POJO xml config file
 import java.io.File;
-import java.io.IOException;
 import java.lang.reflect.InvocationTargetException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -73,7 +72,7 @@ public class ConfigurationOptions {
       } catch (InvocationTargetException ex) {
          Logger.getLogger(ConfigurationOptions.class.getName()).log(Level.SEVERE, null, ex);
       } catch (Exception ex) {
-         ReportingUtils.logError(ex, "Failed to load HTPALM configuration");
+         ReportingUtils.logError(ex, "Failed to load HTPALM configuration file");
       }
    }
 
@@ -83,7 +82,7 @@ public class ConfigurationOptions {
       try {
          serializer.write(this,f);
       } catch (Exception ex) {
-         ReportingUtils.logError(ex, "Failed to save HTPALM configuration");
+         ReportingUtils.logError(ex, "Failed to save HTPALM configuration file");
       }
    }
 
