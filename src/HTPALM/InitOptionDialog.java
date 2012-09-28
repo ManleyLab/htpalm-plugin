@@ -544,6 +544,7 @@ public class InitOptionDialog extends javax.swing.JDialog {
    }//GEN-LAST:event_jButton_CancelActionPerformed
 
    private void jButton_ApplyActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton_ApplyActionPerformed
+      updateSettings();
       updateConfig();
    }//GEN-LAST:event_jButton_ApplyActionPerformed
 
