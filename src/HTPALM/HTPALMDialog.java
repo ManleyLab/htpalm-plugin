@@ -1,18 +1,23 @@
 
 package HTPALM;
 
+import java.awt.geom.Point2D;
 import java.io.File;
 import java.io.IOException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JFileChooser;
 import org.micromanager.MMStudioMainFrame;
+import org.micromanager.api.MMListenerInterface;
+import mmcorej.CMMCore;
+import org.micromanager.utils.MMScriptException;
+import org.micromanager.utils.ReportingUtils;
 
 /**
  *
  * @author seamus.holden@epfl.ch
  */
-public class HTPALMDialog extends javax.swing.JDialog {
+public class HTPALMDialog extends javax.swing.JDialog implements MMListenerInterface{
 
    //TODO: Make current position / current FOV update automatically
    //TODO: Add nFov config parameter
@@ -27,12 +32,13 @@ public class HTPALMDialog extends javax.swing.JDialog {
    public HTPALMDialog(java.awt.Frame parent, boolean modal, ConfigurationOptions config_, HardwareControl control_, HTPALM_MMPlugin htpalm) {
       super(parent, modal);
       initComponents();
-
+      
       this.htpalm = htpalm;
       this.config_ = config_;
       this.control_ = control_;
       gui_ = (MMStudioMainFrame) parent;
-
+      gui_.addMMBackgroundListener(this);// make the background the right colour
+      gui_.addMMListener(this);// MM will alert the dialog when it does stuff
       reloadSettings();
    }
 
@@ -43,6 +49,15 @@ public class HTPALMDialog extends javax.swing.JDialog {
       jTextField_ExcitationPowerNumber.setText(Double.toString(config_.laserManualExPower_));
       jTextField_ActivationPowerNumber.setText(Double.toString(config_.laserManualActPower_));
       jCheckBox_ExcludeBadFov.setSelected(config_.fovAnalysis_excludeBadFov_);
+      //update currentpos x, current pos y
+      Point2D.Double posXY;
+      try {
+         posXY = gui_.getXYStagePosition();
+         jLabel_CurrentX.setText(Double.toString(posXY.x));
+         jLabel_CurrentY.setText(Double.toString(posXY.y));
+      } catch (MMScriptException ex) {
+         ReportingUtils.logError(ex, "Unable to get stage position");
+      }
    }
    private void updateSettings(){
       config_.mosaicStartPosX_ = Double.parseDouble(jTextField_StartX.getText());
@@ -568,7 +583,7 @@ public class HTPALMDialog extends javax.swing.JDialog {
 
    private void jButton_InitializeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton_InitializeActionPerformed
       updateSettings();
-      control_.initializeAcquisition();
+      control_.initializeAcquisition(config_);
    }//GEN-LAST:event_jButton_InitializeActionPerformed
 
    private void jRadioButton_LaserControlManualActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jRadioButton_LaserControlManualActionPerformed
@@ -595,8 +610,7 @@ public class HTPALMDialog extends javax.swing.JDialog {
    }//GEN-LAST:event_jButton_OpenInitOptionsActionPerformed
 
    private void jButton_SetStartAsCurrentPosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton_SetStartAsCurrentPosActionPerformed
-      config_.mosaicStartPosX_ = control_.getCurrentX();
-      config_.mosaicStartPosY_ = control_.getCurrentY();
+      updateSettings();
       jTextField_StartX.setText(Double.toString(config_.mosaicStartPosX_));
       jTextField_StartY.setText(Double.toString(config_.mosaicStartPosY_));
    }//GEN-LAST:event_jButton_SetStartAsCurrentPosActionPerformed
@@ -720,4 +734,29 @@ public class HTPALMDialog extends javax.swing.JDialog {
     private javax.swing.JTextField jTextField_StartX;
     private javax.swing.JTextField jTextField_StartY;
     // End of variables declaration//GEN-END:variables
+
+   public void propertiesChangedAlert() {
+      //TODO
+   }
+
+   public void propertyChangedAlert(String device, String property, String value) {
+      //TODO
+   }
+
+   public void configGroupChangedAlert(String groupName, String newConfig) {
+      //TODO
+   }
+
+   public void pixelSizeChangedAlert(double newPixelSizeUm) {
+      //TODO
+   }
+
+   public void stagePositionChangedAlert(String deviceName, double pos) {
+      //TODO
+   }
+
+   public void xyStagePositionChanged(String deviceName, double xPos, double yPos) {
+      jLabel_CurrentX.setText(Double.toString(xPos));
+      jLabel_CurrentY.setText(Double.toString(yPos));
+   }
 }

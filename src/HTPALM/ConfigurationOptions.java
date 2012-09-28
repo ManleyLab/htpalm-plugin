@@ -48,7 +48,7 @@ public class ConfigurationOptions {
    }
    
 
-   private void loadDefaultConfig(){
+   public void loadDefaultConfig(){
       File f = new File(configPathDefault_);
       //try to load the default settings
       if (f.exists()){
