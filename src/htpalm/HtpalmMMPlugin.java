@@ -16,7 +16,7 @@ import org.micromanager.utils.MMScriptException;
  *
  * @author seamus.holden@epfl.ch
  */
-public class TempMMPlugin implements org.micromanager.api.MMPlugin {
+public class HtpalmMMPlugin implements org.micromanager.api.MMPlugin {
 
    public static String menuName = "HTPALM";
    public static String tooltipDescription= "Automatic PALM acquisition plugin";
@@ -24,9 +24,9 @@ public class TempMMPlugin implements org.micromanager.api.MMPlugin {
    CMMCore core_;
    MMStudioMainFrame gui_;
    AcquisitionEngine acq_ ;
-   //this stores all the TempMMPlugin config options
+   //this stores all the HtpalmMMPlugin config options
    ConfigurationOptions config_=null;
-   TempDialog dlg=null;
+   HtpalmDialog dlg=null;
    HardwareControl control_=null;
    
    ///****
@@ -62,7 +62,7 @@ public class TempMMPlugin implements org.micromanager.api.MMPlugin {
       }
          
       if (dlg==null) {
-          dlg = new TempDialog(gui_,false,config_,control_,  this);
+          dlg = new HtpalmDialog(gui_,false,config_,control_,  this);
       }
       dlg.setVisible(true);
    }

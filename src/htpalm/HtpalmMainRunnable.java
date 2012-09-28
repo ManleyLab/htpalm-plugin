@@ -15,13 +15,13 @@ import org.micromanager.utils.MMScriptException;
  *
  * @author seamus.holden@epfl.ch
  */
-public class TempMainRunnable implements Runnable{
+public class HtpalmMainRunnable implements Runnable{
    
    CMMCore core_;
    MMStudioMainFrame gui_;
    AcquisitionEngine acq_ ;
    
-   TempMainRunnable(CMMCore core_, MMStudioMainFrame gui_, AcquisitionEngine acq_){
+   HtpalmMainRunnable(CMMCore core_, MMStudioMainFrame gui_, AcquisitionEngine acq_){
       this.core_ = core_;
       this.gui_=gui_;
       this.acq_ =acq_;
@@ -43,7 +43,7 @@ public class TempMainRunnable implements Runnable{
       try {
          gui_.clearMessageWindow();
       } catch (MMScriptException ex) {
-         Logger.getLogger(TempMMPlugin.class.getName()).log(Level.SEVERE, null, ex);
+         Logger.getLogger(HtpalmMMPlugin.class.getName()).log(Level.SEVERE, null, ex);
       }
       
       // Running this on Beanshell works ok
