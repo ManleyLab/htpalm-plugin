@@ -44,6 +44,7 @@ public class InitOptionDialog extends javax.swing.JDialog {
    private void reloadSettings(){
       jTextField_StepSizeX.setText(Double.toString(newConfig_.mosaicStepSizeX_));
       jTextField_StepSizeY.setText(Double.toString(newConfig_.mosaicStepSizeY_));
+      jTextField_MosaicNFov.setText(Integer.toString(newConfig_.mosaicNFov));
       jTextField_AcqFolderName.setText(newConfig_.fileAcqFolder_);
       jTextField_BaseFileName.setText(newConfig_.fileBaseName_);
       jTextField_EmccdCamName.setText(newConfig_.camEmccdName_);
@@ -64,6 +65,7 @@ public class InitOptionDialog extends javax.swing.JDialog {
    private void updateSettings(){
       newConfig_.mosaicStepSizeX_= Double.parseDouble(jTextField_StepSizeX.getText());
       newConfig_.mosaicStepSizeY_= Double.parseDouble(jTextField_StepSizeY.getText());
+      newConfig_.mosaicNFov = Integer.parseInt(jTextField_MosaicNFov.getText());
       newConfig_.fileAcqFolder_ = jTextField_AcqFolderName.getText();
       newConfig_.fileBaseName_ = jTextField_BaseFileName.getText();
       newConfig_.camEmccdName_ = jTextField_EmccdCamName.getText();
@@ -107,6 +109,8 @@ public class InitOptionDialog extends javax.swing.JDialog {
         jTextField_StepSizeX = new javax.swing.JTextField();
         jLabel_StepSizeY = new javax.swing.JLabel();
         jTextField_StepSizeY = new javax.swing.JTextField();
+        jLabel_MosaicNFov = new javax.swing.JLabel();
+        jTextField_MosaicNFov = new javax.swing.JTextField();
         jPanel3 = new javax.swing.JPanel();
         jLabel_AcqFolderName = new javax.swing.JLabel();
         jLabel_BaseFileName = new javax.swing.JLabel();
@@ -162,13 +166,22 @@ public class InitOptionDialog extends javax.swing.JDialog {
             }
         });
 
+        jLabel_MosaicNFov.setText("Number of FOV:");
+        jLabel_MosaicNFov.setToolTipText("Number of fields of view to be acquired");
+
+        jTextField_MosaicNFov.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jTextField_MosaicNFovActionPerformed(evt);
+            }
+        });
+
         org.jdesktop.layout.GroupLayout jPanel1Layout = new org.jdesktop.layout.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
             jPanel1Layout.createParallelGroup(org.jdesktop.layout.GroupLayout.LEADING)
             .add(jPanel1Layout.createSequentialGroup()
                 .addContainerGap()
-                .add(jPanel1Layout.createParallelGroup(org.jdesktop.layout.GroupLayout.LEADING)
+                .add(jPanel1Layout.createParallelGroup(org.jdesktop.layout.GroupLayout.LEADING, false)
                     .add(jPanel1Layout.createSequentialGroup()
                         .add(jLabel_StepSizeX)
                         .addPreferredGap(org.jdesktop.layout.LayoutStyle.UNRELATED)
@@ -176,7 +189,11 @@ public class InitOptionDialog extends javax.swing.JDialog {
                     .add(jPanel1Layout.createSequentialGroup()
                         .add(jLabel_StepSizeY)
                         .addPreferredGap(org.jdesktop.layout.LayoutStyle.UNRELATED)
-                        .add(jTextField_StepSizeY, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, 45, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE)))
+                        .add(jTextField_StepSizeY, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, 45, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE))
+                    .add(jPanel1Layout.createSequentialGroup()
+                        .add(jLabel_MosaicNFov)
+                        .addPreferredGap(org.jdesktop.layout.LayoutStyle.RELATED, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .add(jTextField_MosaicNFov, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, 45, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE)))
                 .addContainerGap(208, Short.MAX_VALUE))
         );
         jPanel1Layout.setVerticalGroup(
@@ -190,7 +207,11 @@ public class InitOptionDialog extends javax.swing.JDialog {
                 .add(jPanel1Layout.createParallelGroup(org.jdesktop.layout.GroupLayout.BASELINE)
                     .add(jLabel_StepSizeY)
                     .add(jTextField_StepSizeY, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(169, Short.MAX_VALUE))
+                .addPreferredGap(org.jdesktop.layout.LayoutStyle.RELATED)
+                .add(jPanel1Layout.createParallelGroup(org.jdesktop.layout.GroupLayout.BASELINE)
+                    .add(jLabel_MosaicNFov)
+                    .add(jTextField_MosaicNFov, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE))
+                .addContainerGap(143, Short.MAX_VALUE))
         );
 
         jTabbedPane_Settings.addTab("Mosaic settings", jPanel1);
@@ -642,6 +663,10 @@ public class InitOptionDialog extends javax.swing.JDialog {
       newConfig_.phLampTtlName_ = jTextField_PhLampTtlName.getText();
    }//GEN-LAST:event_jTextField_PhLampTtlNameActionPerformed
 
+   private void jTextField_MosaicNFovActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextField_MosaicNFovActionPerformed
+      newConfig_.mosaicNFov = Integer.parseInt(jTextField_MosaicNFov.getText());
+   }//GEN-LAST:event_jTextField_MosaicNFovActionPerformed
+
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton jButton_Apply;
     private javax.swing.JButton jButton_BrowseAcqFolder;
@@ -658,6 +683,7 @@ public class InitOptionDialog extends javax.swing.JDialog {
     private javax.swing.JLabel jLabel_ExcitationDacName;
     private javax.swing.JLabel jLabel_ExcitationTtlName;
     private javax.swing.JLabel jLabel_LaserShutterTtlName;
+    private javax.swing.JLabel jLabel_MosaicNFov;
     private javax.swing.JLabel jLabel_PhCamDelayTime;
     private javax.swing.JLabel jLabel_PhCamName;
     private javax.swing.JLabel jLabel_PhExposureTime;
@@ -678,6 +704,7 @@ public class InitOptionDialog extends javax.swing.JDialog {
     private javax.swing.JTextField jTextField_ExcitationDacName;
     private javax.swing.JTextField jTextField_ExcitationTtlName;
     private javax.swing.JTextField jTextField_LaserShutterTtlName;
+    private javax.swing.JTextField jTextField_MosaicNFov;
     private javax.swing.JTextField jTextField_PhCamDelayTime;
     private javax.swing.JTextField jTextField_PhCamName;
     private javax.swing.JTextField jTextField_PhExposureTime;

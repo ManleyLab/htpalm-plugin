@@ -24,6 +24,7 @@ public class ConfigurationOptions {
    
    //Mosaic config
    double mosaicStartPosX_, mosaicStartPosY_, mosaicStepSizeX_, mosaicStepSizeY_;
+   int mosaicNFov;
    //Laser config
    double laserManualExPower_, laserManualActPower_;
    boolean laserControlIsAutomatic_;
@@ -97,16 +98,17 @@ public class ConfigurationOptions {
       mosaicStartPosY_=0.0;
       mosaicStepSizeX_=0.0;
       mosaicStepSizeY_=0.0;
+      mosaicNFov = 100;
       //Laser config
       laserManualExPower_ = 3.0;
       laserManualActPower_ = 0.3;
       laserControlIsAutomatic_ = false;
-      laserExDacName_= "\"AOTF-DAC1\",\"Volts\"";
-      laserExTtlName_= "\"AOTF-Switch\",\"TTL1\"";
-      laserActDacName_= "\"AOTF-DAC3\",\"Volts\"";
-      laserActTtlName_= "\"AOTF-Switch\",\"TTL3\"";
-      laserShutterTtlName_ = "\"TTL-Switch\",\"TTL2\"";
-      phLampTtlName_= "\"TTL-Switch\",\"TTL3\"";
+      laserExDacName_= "AOTF-DAC1,Volts";
+      laserExTtlName_= "AOTF-Switch,TTL1";
+      laserActDacName_= "AOTF-DAC3,Volts";
+      laserActTtlName_= "AOTF-Switch,TTL3";
+      laserShutterTtlName_ = "TTL-Switch,TTL2";
+      phLampTtlName_= "TTL-Switch,TTL3";
       //FOV analysis/segmenation config        
       fovAnalysis_excludeBadFov_ = false;
       //Camera config
