@@ -26,8 +26,8 @@ public class HTPALM_MMPlugin implements org.micromanager.api.MMPlugin {
    AcquisitionEngine acq_ ;
    //this stores all the HTPALM_MMPlugin config options
    ConfigurationOptions config_=null;
-   
-   HTPALMDialog dlg;
+   HTPALMDialog dlg=null;
+   HardwareControl control_=null;
    
    ///****
    // * Temporary test code for runAcq
@@ -56,9 +56,13 @@ public class HTPALM_MMPlugin implements org.micromanager.api.MMPlugin {
          config_ = new ConfigurationOptions();
          config_.initialize();
       }
+
+      if (control_==null){
+         control_= new HardwareControl(gui_);
+      }
          
       if (dlg==null) {
-          dlg = new HTPALMDialog(gui_,config_, false, this);
+          dlg = new HTPALMDialog(gui_,false,config_,control_,  this);
       }
       dlg.setVisible(true);
    }

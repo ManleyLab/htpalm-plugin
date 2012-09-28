@@ -14,19 +14,23 @@ import org.micromanager.MMStudioMainFrame;
  */
 public class HTPALMDialog extends javax.swing.JDialog {
 
+   //TODO: Make current position / current FOV update automatically
+   //TODO: Add nFov config parameter
    HTPALM_MMPlugin htpalm =null;
    ConfigurationOptions config_=null;
    InitOptionDialog initOptionDlg_ = null;
+   HardwareControl control_ = null;
    MMStudioMainFrame gui_;
    /**
     * Creates new form HTPALMDialog
     */
-   public HTPALMDialog(java.awt.Frame parent, ConfigurationOptions config_, boolean modal, HTPALM_MMPlugin htpalm) {
+   public HTPALMDialog(java.awt.Frame parent, boolean modal, ConfigurationOptions config_, HardwareControl control_, HTPALM_MMPlugin htpalm) {
       super(parent, modal);
       initComponents();
 
       this.htpalm = htpalm;
       this.config_ = config_;
+      this.control_ = control_;
       gui_ = (MMStudioMainFrame) parent;
 
       reloadSettings();
@@ -39,6 +43,15 @@ public class HTPALMDialog extends javax.swing.JDialog {
       jTextField_ExcitationPowerNumber.setText(Double.toString(config_.laserManualExPower_));
       jTextField_ActivationPowerNumber.setText(Double.toString(config_.laserManualActPower_));
       jCheckBox_ExcludeBadFov.setSelected(config_.fovAnalysis_excludeBadFov_);
+   }
+   private void updateSettings(){
+      config_.mosaicStartPosX_ = Double.parseDouble(jTextField_StartX.getText());
+      config_.mosaicStartPosY_ = Double.parseDouble(jTextField_StartY.getText());
+      config_.laserControlIsAutomatic_ = getStateLaserControlRadioGroup();
+      config_.fovAnalysis_excludeBadFov_ = jCheckBox_ExcludeBadFov.isSelected();
+      config_.laserManualActPower_=Double.parseDouble(jTextField_ActivationPowerNumber.getText());
+      config_.laserManualExPower_=Double.parseDouble(jTextField_ExcitationPowerNumber.getText());
+   
    }
    
    private void setStateLaserControlRadioGroup(boolean laserControlIsAutomatic){
@@ -92,7 +105,7 @@ public class HTPALMDialog extends javax.swing.JDialog {
         jButton_SetPosAsOrigin = new javax.swing.JButton();
         jLabel_CurrentY = new javax.swing.JLabel();
         jPanel_ManualControl = new javax.swing.JPanel();
-        jButton_GotoLastFov = new javax.swing.JButton();
+        jButton_GotoPrevFov = new javax.swing.JButton();
         jButton_GotoNextFov = new javax.swing.JButton();
         jLabel_CurrentFovLabel = new javax.swing.JLabel();
         jLabel_CurrentFovNumber = new javax.swing.JLabel();
@@ -230,10 +243,10 @@ public class HTPALMDialog extends javax.swing.JDialog {
 
         jPanel_ManualControl.setBorder(javax.swing.BorderFactory.createTitledBorder("Manual control"));
 
-        jButton_GotoLastFov.setText("<");
-        jButton_GotoLastFov.addActionListener(new java.awt.event.ActionListener() {
+        jButton_GotoPrevFov.setText("<");
+        jButton_GotoPrevFov.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton_GotoLastFovActionPerformed(evt);
+                jButton_GotoPrevFovActionPerformed(evt);
             }
         });
 
@@ -264,7 +277,7 @@ public class HTPALMDialog extends javax.swing.JDialog {
                 .add(jPanel_ManualControlLayout.createParallelGroup(org.jdesktop.layout.GroupLayout.LEADING)
                     .add(jPanel_ManualControlLayout.createSequentialGroup()
                         .add(29, 29, 29)
-                        .add(jButton_GotoLastFov)
+                        .add(jButton_GotoPrevFov)
                         .addPreferredGap(org.jdesktop.layout.LayoutStyle.RELATED)
                         .add(jLabel_CurrentFovLabel)
                         .addPreferredGap(org.jdesktop.layout.LayoutStyle.RELATED)
@@ -281,7 +294,7 @@ public class HTPALMDialog extends javax.swing.JDialog {
             jPanel_ManualControlLayout.createParallelGroup(org.jdesktop.layout.GroupLayout.LEADING)
             .add(jPanel_ManualControlLayout.createSequentialGroup()
                 .add(jPanel_ManualControlLayout.createParallelGroup(org.jdesktop.layout.GroupLayout.BASELINE)
-                    .add(jButton_GotoLastFov)
+                    .add(jButton_GotoPrevFov)
                     .add(jButton_GotoNextFov)
                     .add(jLabel_CurrentFovLabel)
                     .add(jLabel_CurrentFovNumber))
@@ -550,11 +563,12 @@ public class HTPALMDialog extends javax.swing.JDialog {
    }//GEN-LAST:event_jTextField_StartYActionPerformed
 
    private void jButton_SetPosAsOriginActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton_SetPosAsOriginActionPerformed
-      // TODO add your handling code here:
+      control_.setCurrentPosAsOrigin();
    }//GEN-LAST:event_jButton_SetPosAsOriginActionPerformed
 
    private void jButton_InitializeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton_InitializeActionPerformed
-      // TODO add your handling code here:
+      updateSettings();
+      control_.initializeAcquisition();
    }//GEN-LAST:event_jButton_InitializeActionPerformed
 
    private void jRadioButton_LaserControlManualActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jRadioButton_LaserControlManualActionPerformed
@@ -570,7 +584,8 @@ public class HTPALMDialog extends javax.swing.JDialog {
    }//GEN-LAST:event_jCheckBox_ExcludeBadFovActionPerformed
 
    private void jButton_Acqiure1FovActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton_Acqiure1FovActionPerformed
-      // TODO add your handling code here:
+      updateSettings();
+      control_.acquire1Fov();
    }//GEN-LAST:event_jButton_Acqiure1FovActionPerformed
 
    private void jButton_OpenInitOptionsActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton_OpenInitOptionsActionPerformed
@@ -580,27 +595,34 @@ public class HTPALMDialog extends javax.swing.JDialog {
    }//GEN-LAST:event_jButton_OpenInitOptionsActionPerformed
 
    private void jButton_SetStartAsCurrentPosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton_SetStartAsCurrentPosActionPerformed
-      // TODO add your handling code here:
+      config_.mosaicStartPosX_ = control_.getCurrentX();
+      config_.mosaicStartPosY_ = control_.getCurrentY();
+      jTextField_StartX.setText(Double.toString(config_.mosaicStartPosX_));
+      jTextField_StartY.setText(Double.toString(config_.mosaicStartPosY_));
    }//GEN-LAST:event_jButton_SetStartAsCurrentPosActionPerformed
 
    private void jButton_GotoNextFovActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton_GotoNextFovActionPerformed
-      // TODO add your handling code here:
+      updateSettings();
+      control_.gotoNextFov();
    }//GEN-LAST:event_jButton_GotoNextFovActionPerformed
 
-   private void jButton_GotoLastFovActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton_GotoLastFovActionPerformed
-      // TODO add your handling code here:
-   }//GEN-LAST:event_jButton_GotoLastFovActionPerformed
+   private void jButton_GotoPrevFovActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton_GotoPrevFovActionPerformed
+      updateSettings();
+      control_.gotoPrevFov();
+   }//GEN-LAST:event_jButton_GotoPrevFovActionPerformed
 
    private void jButton_OpenBactConfigActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton_OpenBactConfigActionPerformed
       // TODO add your handling code here:
    }//GEN-LAST:event_jButton_OpenBactConfigActionPerformed
 
    private void jButton_AcquireAllFovActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton_AcquireAllFovActionPerformed
-      // TODO add your handling code here:
+      updateSettings();
+      control_.acquire1Fov();
    }//GEN-LAST:event_jButton_AcquireAllFovActionPerformed
 
    private void jButton_AbortActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton_AbortActionPerformed
-      // TODO add your handling code here:
+      updateSettings();
+      control_.acquireAll();
    }//GEN-LAST:event_jButton_AbortActionPerformed
 
    private void jButton_LoadSettingsActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton_LoadSettingsActionPerformed
@@ -662,8 +684,8 @@ public class HTPALMDialog extends javax.swing.JDialog {
     private javax.swing.JButton jButton_Abort;
     private javax.swing.JButton jButton_Acqiure1Fov;
     private javax.swing.JButton jButton_AcquireAllFov;
-    private javax.swing.JButton jButton_GotoLastFov;
     private javax.swing.JButton jButton_GotoNextFov;
+    private javax.swing.JButton jButton_GotoPrevFov;
     private javax.swing.JButton jButton_Initialize;
     private javax.swing.JButton jButton_LoadSettings;
     private javax.swing.JButton jButton_OpenAutoLase;

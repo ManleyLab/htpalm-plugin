@@ -262,7 +262,7 @@
                   <Group type="103" groupAlignment="0" attributes="0">
                       <Group type="102" alignment="0" attributes="0">
                           <EmptySpace min="-2" pref="29" max="-2" attributes="0"/>
-                          <Component id="jButton_GotoLastFov" min="-2" max="-2" attributes="0"/>
+                          <Component id="jButton_GotoPrevFov" min="-2" max="-2" attributes="0"/>
                           <EmptySpace max="-2" attributes="0"/>
                           <Component id="jLabel_CurrentFovLabel" min="-2" max="-2" attributes="0"/>
                           <EmptySpace max="-2" attributes="0"/>
@@ -284,7 +284,7 @@
           <Group type="103" groupAlignment="0" attributes="0">
               <Group type="102" attributes="0">
                   <Group type="103" groupAlignment="3" attributes="0">
-                      <Component id="jButton_GotoLastFov" alignment="3" min="-2" max="-2" attributes="0"/>
+                      <Component id="jButton_GotoPrevFov" alignment="3" min="-2" max="-2" attributes="0"/>
                       <Component id="jButton_GotoNextFov" alignment="3" min="-2" max="-2" attributes="0"/>
                       <Component id="jLabel_CurrentFovLabel" alignment="3" min="-2" max="-2" attributes="0"/>
                       <Component id="jLabel_CurrentFovNumber" alignment="3" min="-2" max="-2" attributes="0"/>
@@ -296,12 +296,12 @@
         </DimensionLayout>
       </Layout>
       <SubComponents>
-        <Component class="javax.swing.JButton" name="jButton_GotoLastFov">
+        <Component class="javax.swing.JButton" name="jButton_GotoPrevFov">
           <Properties>
             <Property name="text" type="java.lang.String" value="&lt;"/>
           </Properties>
           <Events>
-            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jButton_GotoLastFovActionPerformed"/>
+            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jButton_GotoPrevFovActionPerformed"/>
           </Events>
         </Component>
         <Component class="javax.swing.JButton" name="jButton_GotoNextFov">
