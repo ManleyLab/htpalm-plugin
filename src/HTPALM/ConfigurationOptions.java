@@ -6,11 +6,11 @@ package HTPALM;
 
 // use the simple framework to allow easy generation of POJO xml config file
 import java.io.File;
+import java.io.IOException;
 import java.lang.reflect.InvocationTargetException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import org.apache.commons.beanutils.BeanUtils;
-import org.micromanager.utils.ReportingUtils;
 import org.simpleframework.xml.Default;
 import org.simpleframework.xml.Serializer;
 import org.simpleframework.xml.core.Persister;
@@ -40,14 +40,23 @@ public class ConfigurationOptions {
    //File config
    String fileAcqFolder_, fileBaseName_;
    
-   ConfigurationOptions(){
+   public ConfigurationOptions(){
+   }
+
+   
+   public void initialize(){
+      System.out.println("Hello config options");
       this.loadDefaultConfig();
    }
    
 
    private void loadDefaultConfig(){
       File f = new File(configPath);
-      
+      try {
+         System.out.println("Default config path: "+ f.getCanonicalPath());
+      } catch (IOException ex) {
+         Logger.getLogger(ConfigurationOptions.class.getName()).log(Level.SEVERE, null, ex);
+      }
       //try to load the default settings
       if (f.exists()){
          loadConfig(configPath);
@@ -72,7 +81,7 @@ public class ConfigurationOptions {
       } catch (InvocationTargetException ex) {
          Logger.getLogger(ConfigurationOptions.class.getName()).log(Level.SEVERE, null, ex);
       } catch (Exception ex) {
-         ReportingUtils.logError(ex, "Failed to load HTPALM configuration file");
+         Logger.getLogger(ConfigurationOptions.class.getName()).log(Level.SEVERE, null, ex);
       }
    }
 
@@ -82,7 +91,7 @@ public class ConfigurationOptions {
       try {
          serializer.write(this,f);
       } catch (Exception ex) {
-         ReportingUtils.logError(ex, "Failed to save HTPALM configuration file");
+         Logger.getLogger(ConfigurationOptions.class.getName()).log(Level.SEVERE, null, ex);
       }
    }
 

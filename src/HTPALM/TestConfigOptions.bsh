@@ -1,3 +1,0 @@
-import HTPALM.ConfigurationOptions;
-
-ConfigurationOptions config = new ConfigurationOptions();
