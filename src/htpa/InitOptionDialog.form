@@ -1,0 +1,589 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+
+<Form version="1.3" maxVersion="1.8" type="org.netbeans.modules.form.forminfo.JDialogFormInfo">
+  <Properties>
+    <Property name="defaultCloseOperation" type="int" value="2"/>
+    <Property name="title" type="java.lang.String" value="HTPALM options"/>
+  </Properties>
+  <SyntheticProperties>
+    <SyntheticProperty name="formSizePolicy" type="int" value="1"/>
+  </SyntheticProperties>
+  <AuxValues>
+    <AuxValue name="FormSettings_autoResourcing" type="java.lang.Integer" value="0"/>
+    <AuxValue name="FormSettings_autoSetComponentName" type="java.lang.Boolean" value="false"/>
+    <AuxValue name="FormSettings_generateFQN" type="java.lang.Boolean" value="true"/>
+    <AuxValue name="FormSettings_generateMnemonicsCode" type="java.lang.Boolean" value="false"/>
+    <AuxValue name="FormSettings_i18nAutoMode" type="java.lang.Boolean" value="false"/>
+    <AuxValue name="FormSettings_layoutCodeTarget" type="java.lang.Integer" value="2"/>
+    <AuxValue name="FormSettings_listenerGenerationStyle" type="java.lang.Integer" value="0"/>
+    <AuxValue name="FormSettings_variablesLocal" type="java.lang.Boolean" value="false"/>
+    <AuxValue name="FormSettings_variablesModifier" type="java.lang.Integer" value="2"/>
+  </AuxValues>
+
+  <Layout>
+    <DimensionLayout dim="0">
+      <Group type="103" groupAlignment="0" attributes="0">
+          <Group type="102" attributes="0">
+              <EmptySpace max="-2" attributes="0"/>
+              <Group type="103" groupAlignment="0" max="-2" attributes="0">
+                  <Group type="102" attributes="0">
+                      <Component id="jButton_SaveSettingsAsDefault" min="-2" max="-2" attributes="0"/>
+                      <EmptySpace max="32767" attributes="0"/>
+                      <Component id="jButton_Ok" min="-2" max="-2" attributes="0"/>
+                      <EmptySpace max="-2" attributes="0"/>
+                      <Component id="jButton_Apply" min="-2" max="-2" attributes="0"/>
+                      <EmptySpace max="-2" attributes="0"/>
+                      <Component id="jButton_Cancel" min="-2" max="-2" attributes="0"/>
+                  </Group>
+                  <Component id="jTabbedPane_Settings" min="-2" pref="359" max="-2" attributes="0"/>
+              </Group>
+              <EmptySpace max="32767" attributes="0"/>
+          </Group>
+      </Group>
+    </DimensionLayout>
+    <DimensionLayout dim="1">
+      <Group type="103" groupAlignment="0" attributes="0">
+          <Group type="102" alignment="0" attributes="0">
+              <EmptySpace max="-2" attributes="0"/>
+              <Component id="jTabbedPane_Settings" max="32767" attributes="0"/>
+              <EmptySpace max="-2" attributes="0"/>
+              <Group type="103" groupAlignment="3" attributes="0">
+                  <Component id="jButton_Apply" alignment="3" min="-2" max="-2" attributes="0"/>
+                  <Component id="jButton_Cancel" alignment="3" min="-2" max="-2" attributes="0"/>
+                  <Component id="jButton_Ok" alignment="3" min="-2" max="-2" attributes="0"/>
+                  <Component id="jButton_SaveSettingsAsDefault" alignment="3" min="-2" max="-2" attributes="0"/>
+              </Group>
+              <EmptySpace min="-2" pref="12" max="-2" attributes="0"/>
+          </Group>
+      </Group>
+    </DimensionLayout>
+  </Layout>
+  <SubComponents>
+    <Container class="javax.swing.JTabbedPane" name="jTabbedPane_Settings">
+
+      <Layout class="org.netbeans.modules.form.compat2.layouts.support.JTabbedPaneSupportLayout"/>
+      <SubComponents>
+        <Container class="javax.swing.JPanel" name="jPanel1">
+          <Constraints>
+            <Constraint layoutClass="org.netbeans.modules.form.compat2.layouts.support.JTabbedPaneSupportLayout" value="org.netbeans.modules.form.compat2.layouts.support.JTabbedPaneSupportLayout$JTabbedPaneConstraintsDescription">
+              <JTabbedPaneConstraints tabName="Mosaic settings">
+                <Property name="tabTitle" type="java.lang.String" value="Mosaic settings"/>
+              </JTabbedPaneConstraints>
+            </Constraint>
+          </Constraints>
+
+          <Layout>
+            <DimensionLayout dim="0">
+              <Group type="103" groupAlignment="0" attributes="0">
+                  <Group type="102" attributes="0">
+                      <EmptySpace max="-2" attributes="0"/>
+                      <Group type="103" groupAlignment="0" max="-2" attributes="0">
+                          <Group type="102" alignment="0" attributes="0">
+                              <Component id="jLabel_StepSizeX" min="-2" max="-2" attributes="0"/>
+                              <EmptySpace type="unrelated" max="-2" attributes="0"/>
+                              <Component id="jTextField_StepSizeX" min="-2" pref="45" max="-2" attributes="0"/>
+                          </Group>
+                          <Group type="102" alignment="0" attributes="0">
+                              <Component id="jLabel_StepSizeY" min="-2" max="-2" attributes="0"/>
+                              <EmptySpace type="unrelated" max="-2" attributes="0"/>
+                              <Component id="jTextField_StepSizeY" min="-2" pref="45" max="-2" attributes="0"/>
+                          </Group>
+                          <Group type="102" alignment="0" attributes="0">
+                              <Component id="jLabel_MosaicNFov" min="-2" max="-2" attributes="0"/>
+                              <EmptySpace max="32767" attributes="0"/>
+                              <Component id="jTextField_MosaicNFov" min="-2" pref="45" max="-2" attributes="0"/>
+                          </Group>
+                      </Group>
+                      <EmptySpace pref="208" max="32767" attributes="0"/>
+                  </Group>
+              </Group>
+            </DimensionLayout>
+            <DimensionLayout dim="1">
+              <Group type="103" groupAlignment="0" attributes="0">
+                  <Group type="102" alignment="0" attributes="0">
+                      <EmptySpace max="-2" attributes="0"/>
+                      <Group type="103" groupAlignment="3" attributes="0">
+                          <Component id="jLabel_StepSizeX" alignment="3" min="-2" max="-2" attributes="0"/>
+                          <Component id="jTextField_StepSizeX" alignment="3" min="-2" max="-2" attributes="0"/>
+                      </Group>
+                      <EmptySpace max="-2" attributes="0"/>
+                      <Group type="103" groupAlignment="3" attributes="0">
+                          <Component id="jLabel_StepSizeY" alignment="3" min="-2" max="-2" attributes="0"/>
+                          <Component id="jTextField_StepSizeY" alignment="3" min="-2" max="-2" attributes="0"/>
+                      </Group>
+                      <EmptySpace max="-2" attributes="0"/>
+                      <Group type="103" groupAlignment="3" attributes="0">
+                          <Component id="jLabel_MosaicNFov" alignment="3" min="-2" max="-2" attributes="0"/>
+                          <Component id="jTextField_MosaicNFov" alignment="3" min="-2" max="-2" attributes="0"/>
+                      </Group>
+                      <EmptySpace pref="143" max="32767" attributes="0"/>
+                  </Group>
+              </Group>
+            </DimensionLayout>
+          </Layout>
+          <SubComponents>
+            <Component class="javax.swing.JLabel" name="jLabel_StepSizeX">
+              <Properties>
+                <Property name="text" type="java.lang.String" value="Step size X (um):"/>
+              </Properties>
+            </Component>
+            <Component class="javax.swing.JTextField" name="jTextField_StepSizeX">
+              <Events>
+                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jTextField_StepSizeXActionPerformed"/>
+              </Events>
+            </Component>
+            <Component class="javax.swing.JLabel" name="jLabel_StepSizeY">
+              <Properties>
+                <Property name="text" type="java.lang.String" value="Step size Y (um):"/>
+              </Properties>
+            </Component>
+            <Component class="javax.swing.JTextField" name="jTextField_StepSizeY">
+              <Events>
+                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jTextField_StepSizeYActionPerformed"/>
+              </Events>
+            </Component>
+            <Component class="javax.swing.JLabel" name="jLabel_MosaicNFov">
+              <Properties>
+                <Property name="text" type="java.lang.String" value="Number of FOV:"/>
+                <Property name="toolTipText" type="java.lang.String" value="Number of fields of view to be acquired"/>
+              </Properties>
+            </Component>
+            <Component class="javax.swing.JTextField" name="jTextField_MosaicNFov">
+              <Events>
+                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jTextField_MosaicNFovActionPerformed"/>
+              </Events>
+            </Component>
+          </SubComponents>
+        </Container>
+        <Container class="javax.swing.JPanel" name="jPanel3">
+          <Constraints>
+            <Constraint layoutClass="org.netbeans.modules.form.compat2.layouts.support.JTabbedPaneSupportLayout" value="org.netbeans.modules.form.compat2.layouts.support.JTabbedPaneSupportLayout$JTabbedPaneConstraintsDescription">
+              <JTabbedPaneConstraints tabName="File locations">
+                <Property name="tabTitle" type="java.lang.String" value="File locations"/>
+              </JTabbedPaneConstraints>
+            </Constraint>
+          </Constraints>
+
+          <Layout>
+            <DimensionLayout dim="0">
+              <Group type="103" groupAlignment="0" attributes="0">
+                  <Group type="102" attributes="0">
+                      <EmptySpace min="-2" max="-2" attributes="0"/>
+                      <Group type="103" groupAlignment="0" attributes="0">
+                          <Group type="102" alignment="0" attributes="0">
+                              <Component id="jLabel_AcqFolderName" min="-2" max="-2" attributes="0"/>
+                              <EmptySpace min="1" pref="4" max="32767" attributes="0"/>
+                          </Group>
+                          <Group type="102" alignment="0" attributes="0">
+                              <Component id="jLabel_BaseFileName" min="-2" max="-2" attributes="0"/>
+                              <EmptySpace min="0" pref="0" max="32767" attributes="0"/>
+                          </Group>
+                      </Group>
+                      <Group type="103" groupAlignment="0" attributes="0">
+                          <Component id="jTextField_BaseFileName" alignment="1" max="32767" attributes="0"/>
+                          <Component id="jTextField_AcqFolderName" alignment="1" pref="197" max="32767" attributes="0"/>
+                      </Group>
+                      <EmptySpace max="-2" attributes="0"/>
+                      <Component id="jButton_BrowseAcqFolder" min="-2" pref="41" max="-2" attributes="0"/>
+                      <EmptySpace max="-2" attributes="0"/>
+                  </Group>
+              </Group>
+            </DimensionLayout>
+            <DimensionLayout dim="1">
+              <Group type="103" groupAlignment="0" attributes="0">
+                  <Group type="102" alignment="0" attributes="0">
+                      <EmptySpace max="-2" attributes="0"/>
+                      <Group type="103" groupAlignment="3" attributes="0">
+                          <Component id="jLabel_AcqFolderName" alignment="3" min="-2" max="-2" attributes="0"/>
+                          <Component id="jTextField_AcqFolderName" alignment="3" min="-2" max="-2" attributes="0"/>
+                          <Component id="jButton_BrowseAcqFolder" alignment="3" min="-2" max="-2" attributes="0"/>
+                      </Group>
+                      <EmptySpace max="-2" attributes="0"/>
+                      <Group type="103" groupAlignment="3" attributes="0">
+                          <Component id="jLabel_BaseFileName" alignment="3" min="-2" max="-2" attributes="0"/>
+                          <Component id="jTextField_BaseFileName" alignment="3" min="-2" max="-2" attributes="0"/>
+                      </Group>
+                      <EmptySpace pref="166" max="32767" attributes="0"/>
+                  </Group>
+              </Group>
+            </DimensionLayout>
+          </Layout>
+          <SubComponents>
+            <Component class="javax.swing.JLabel" name="jLabel_AcqFolderName">
+              <Properties>
+                <Property name="text" type="java.lang.String" value="Acquisition folder:"/>
+              </Properties>
+            </Component>
+            <Component class="javax.swing.JLabel" name="jLabel_BaseFileName">
+              <Properties>
+                <Property name="text" type="java.lang.String" value="Base file name:"/>
+              </Properties>
+            </Component>
+            <Component class="javax.swing.JTextField" name="jTextField_BaseFileName">
+              <Properties>
+                <Property name="horizontalAlignment" type="int" value="11"/>
+              </Properties>
+              <Events>
+                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jTextField_BaseFileNameActionPerformed"/>
+              </Events>
+            </Component>
+            <Component class="javax.swing.JTextField" name="jTextField_AcqFolderName">
+              <Properties>
+                <Property name="horizontalAlignment" type="int" value="11"/>
+              </Properties>
+              <Events>
+                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jTextField_AcqFolderNameActionPerformed"/>
+              </Events>
+            </Component>
+            <Component class="javax.swing.JButton" name="jButton_BrowseAcqFolder">
+              <Properties>
+                <Property name="text" type="java.lang.String" value="..."/>
+                <Property name="toolTipText" type="java.lang.String" value="Browse"/>
+              </Properties>
+              <Events>
+                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jButton_BrowseAcqFolderActionPerformed"/>
+              </Events>
+            </Component>
+          </SubComponents>
+        </Container>
+        <Container class="javax.swing.JPanel" name="jPanel4">
+          <Constraints>
+            <Constraint layoutClass="org.netbeans.modules.form.compat2.layouts.support.JTabbedPaneSupportLayout" value="org.netbeans.modules.form.compat2.layouts.support.JTabbedPaneSupportLayout$JTabbedPaneConstraintsDescription">
+              <JTabbedPaneConstraints tabName="Camera settings">
+                <Property name="tabTitle" type="java.lang.String" value="Camera settings"/>
+              </JTabbedPaneConstraints>
+            </Constraint>
+          </Constraints>
+
+          <Layout>
+            <DimensionLayout dim="0">
+              <Group type="103" groupAlignment="0" attributes="0">
+                  <Group type="102" alignment="0" attributes="0">
+                      <EmptySpace max="-2" attributes="0"/>
+                      <Group type="103" groupAlignment="0" attributes="0">
+                          <Component id="jLabel_EmccdCamName" alignment="0" min="-2" max="-2" attributes="0"/>
+                          <Component id="jLabel_EmccdExposureTime" alignment="0" min="-2" max="-2" attributes="0"/>
+                          <Component id="jLabel_PhCamName" alignment="0" min="-2" max="-2" attributes="0"/>
+                          <Component id="jLabel_PhExposureTime" alignment="0" min="-2" max="-2" attributes="0"/>
+                          <Component id="jLabel_PhCamDelayTime" alignment="0" min="-2" max="-2" attributes="0"/>
+                      </Group>
+                      <EmptySpace min="-2" pref="65" max="-2" attributes="0"/>
+                      <Group type="103" groupAlignment="0" attributes="0">
+                          <Component id="jTextField_EmccdCamName" alignment="1" max="32767" attributes="0"/>
+                          <Component id="jTextField_EmccdExposureTime" alignment="1" max="32767" attributes="0"/>
+                          <Component id="jTextField_PhCamName" alignment="1" max="32767" attributes="0"/>
+                          <Component id="jTextField_PhExposureTime" alignment="1" max="32767" attributes="0"/>
+                          <Component id="jTextField_PhCamDelayTime" alignment="1" max="32767" attributes="0"/>
+                      </Group>
+                      <EmptySpace max="-2" attributes="0"/>
+                  </Group>
+                  <Group type="102" attributes="0">
+                      <EmptySpace min="20" pref="20" max="-2" attributes="0"/>
+                      <Component id="jCheckBox_ConvertPhExposureMsToSec" min="-2" max="-2" attributes="0"/>
+                      <EmptySpace min="127" pref="127" max="-2" attributes="0"/>
+                  </Group>
+              </Group>
+            </DimensionLayout>
+            <DimensionLayout dim="1">
+              <Group type="103" groupAlignment="0" attributes="0">
+                  <Group type="102" alignment="0" attributes="0">
+                      <EmptySpace max="-2" attributes="0"/>
+                      <Group type="103" groupAlignment="3" attributes="0">
+                          <Component id="jLabel_EmccdCamName" alignment="3" min="-2" max="-2" attributes="0"/>
+                          <Component id="jTextField_EmccdCamName" alignment="3" min="-2" max="-2" attributes="0"/>
+                      </Group>
+                      <EmptySpace max="-2" attributes="0"/>
+                      <Group type="103" groupAlignment="3" attributes="0">
+                          <Component id="jLabel_EmccdExposureTime" alignment="3" min="-2" max="-2" attributes="0"/>
+                          <Component id="jTextField_EmccdExposureTime" alignment="3" min="-2" max="-2" attributes="0"/>
+                      </Group>
+                      <EmptySpace max="-2" attributes="0"/>
+                      <Group type="103" groupAlignment="3" attributes="0">
+                          <Component id="jLabel_PhCamName" alignment="3" min="-2" max="-2" attributes="0"/>
+                          <Component id="jTextField_PhCamName" alignment="3" min="-2" max="-2" attributes="0"/>
+                      </Group>
+                      <EmptySpace max="-2" attributes="0"/>
+                      <Group type="103" groupAlignment="3" attributes="0">
+                          <Component id="jLabel_PhExposureTime" alignment="3" min="-2" max="-2" attributes="0"/>
+                          <Component id="jTextField_PhExposureTime" alignment="3" min="-2" max="-2" attributes="0"/>
+                      </Group>
+                      <EmptySpace max="-2" attributes="0"/>
+                      <Group type="103" groupAlignment="3" attributes="0">
+                          <Component id="jLabel_PhCamDelayTime" alignment="3" min="-2" max="-2" attributes="0"/>
+                          <Component id="jTextField_PhCamDelayTime" alignment="3" min="-2" max="-2" attributes="0"/>
+                      </Group>
+                      <EmptySpace type="unrelated" max="-2" attributes="0"/>
+                      <Component id="jCheckBox_ConvertPhExposureMsToSec" min="-2" max="-2" attributes="0"/>
+                      <EmptySpace pref="61" max="32767" attributes="0"/>
+                  </Group>
+              </Group>
+            </DimensionLayout>
+          </Layout>
+          <SubComponents>
+            <Component class="javax.swing.JLabel" name="jLabel_EmccdCamName">
+              <Properties>
+                <Property name="text" type="java.lang.String" value="EMCCD camera name:"/>
+              </Properties>
+            </Component>
+            <Component class="javax.swing.JLabel" name="jLabel_EmccdExposureTime">
+              <Properties>
+                <Property name="text" type="java.lang.String" value="EMCCD exposure (ms):"/>
+              </Properties>
+            </Component>
+            <Component class="javax.swing.JLabel" name="jLabel_PhCamName">
+              <Properties>
+                <Property name="text" type="java.lang.String" value="PH camera name:"/>
+              </Properties>
+            </Component>
+            <Component class="javax.swing.JLabel" name="jLabel_PhExposureTime">
+              <Properties>
+                <Property name="text" type="java.lang.String" value="PH exposure time (ms):"/>
+              </Properties>
+            </Component>
+            <Component class="javax.swing.JLabel" name="jLabel_PhCamDelayTime">
+              <Properties>
+                <Property name="text" type="java.lang.String" value="PH delay time (ms):"/>
+                <Property name="toolTipText" type="java.lang.String" value="Time to wait after PH acquisition"/>
+              </Properties>
+            </Component>
+            <Component class="javax.swing.JCheckBox" name="jCheckBox_ConvertPhExposureMsToSec">
+              <Properties>
+                <Property name="text" type="java.lang.String" value="Convert PH exposure time to seconds"/>
+                <Property name="toolTipText" type="java.lang.String" value="Workaround to correct for TISCam bug"/>
+              </Properties>
+              <Events>
+                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jCheckBox_ConvertPhExposureMsToSecActionPerformed"/>
+              </Events>
+            </Component>
+            <Component class="javax.swing.JTextField" name="jTextField_EmccdCamName">
+              <Properties>
+                <Property name="horizontalAlignment" type="int" value="11"/>
+              </Properties>
+              <Events>
+                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jTextField_EmccdCamNameActionPerformed"/>
+              </Events>
+            </Component>
+            <Component class="javax.swing.JTextField" name="jTextField_EmccdExposureTime">
+              <Properties>
+                <Property name="horizontalAlignment" type="int" value="11"/>
+              </Properties>
+              <Events>
+                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jTextField_EmccdExposureTimeActionPerformed"/>
+              </Events>
+            </Component>
+            <Component class="javax.swing.JTextField" name="jTextField_PhCamName">
+              <Properties>
+                <Property name="horizontalAlignment" type="int" value="11"/>
+              </Properties>
+              <Events>
+                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jTextField_PhCamNameActionPerformed"/>
+              </Events>
+            </Component>
+            <Component class="javax.swing.JTextField" name="jTextField_PhExposureTime">
+              <Properties>
+                <Property name="horizontalAlignment" type="int" value="11"/>
+              </Properties>
+              <Events>
+                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jTextField_PhExposureTimeActionPerformed"/>
+              </Events>
+            </Component>
+            <Component class="javax.swing.JTextField" name="jTextField_PhCamDelayTime">
+              <Properties>
+                <Property name="horizontalAlignment" type="int" value="11"/>
+              </Properties>
+              <Events>
+                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jTextField_PhCamDelayTimeActionPerformed"/>
+              </Events>
+            </Component>
+          </SubComponents>
+        </Container>
+        <Container class="javax.swing.JPanel" name="jPanel2">
+          <Constraints>
+            <Constraint layoutClass="org.netbeans.modules.form.compat2.layouts.support.JTabbedPaneSupportLayout" value="org.netbeans.modules.form.compat2.layouts.support.JTabbedPaneSupportLayout$JTabbedPaneConstraintsDescription">
+              <JTabbedPaneConstraints tabName="Lasers &amp; shutters">
+                <Property name="tabTitle" type="java.lang.String" value="Lasers &amp; shutters"/>
+              </JTabbedPaneConstraints>
+            </Constraint>
+          </Constraints>
+
+          <Layout>
+            <DimensionLayout dim="0">
+              <Group type="103" groupAlignment="0" attributes="0">
+                  <Group type="102" attributes="0">
+                      <EmptySpace min="-2" max="-2" attributes="0"/>
+                      <Group type="103" groupAlignment="0" attributes="0">
+                          <Component id="jLabel_ExcitationDacName" alignment="0" min="-2" max="-2" attributes="0"/>
+                          <Component id="jLabel_ExcitationTtlName" alignment="0" min="-2" max="-2" attributes="0"/>
+                          <Component id="jLabel_ActivationDacName" alignment="0" min="-2" max="-2" attributes="0"/>
+                          <Component id="jLabel_ActivationTtlName" alignment="0" min="-2" max="-2" attributes="0"/>
+                          <Component id="jLabel_LaserShutterTtlName" alignment="0" min="-2" max="-2" attributes="0"/>
+                          <Component id="jLabel_PhLampTtlName" alignment="0" min="-2" max="-2" attributes="0"/>
+                      </Group>
+                      <EmptySpace type="separate" min="-2" max="-2" attributes="0"/>
+                      <Group type="103" groupAlignment="0" attributes="0">
+                          <Component id="jTextField_ExcitationDacName" alignment="1" max="32767" attributes="0"/>
+                          <Component id="jTextField_ExcitationTtlName" alignment="1" max="32767" attributes="0"/>
+                          <Component id="jTextField_ActivationDacName" alignment="1" max="32767" attributes="0"/>
+                          <Component id="jTextField_ActivationTtlName" alignment="1" max="32767" attributes="0"/>
+                          <Component id="jTextField_LaserShutterTtlName" alignment="1" pref="157" max="32767" attributes="0"/>
+                          <Component id="jTextField_PhLampTtlName" alignment="1" pref="157" max="32767" attributes="0"/>
+                      </Group>
+                      <EmptySpace min="-2" max="-2" attributes="0"/>
+                  </Group>
+              </Group>
+            </DimensionLayout>
+            <DimensionLayout dim="1">
+              <Group type="103" groupAlignment="0" attributes="0">
+                  <Group type="102" alignment="0" attributes="0">
+                      <EmptySpace max="-2" attributes="0"/>
+                      <Group type="103" groupAlignment="3" attributes="0">
+                          <Component id="jLabel_ExcitationDacName" alignment="3" min="-2" max="-2" attributes="0"/>
+                          <Component id="jTextField_ExcitationDacName" alignment="3" min="-2" max="-2" attributes="0"/>
+                      </Group>
+                      <EmptySpace max="-2" attributes="0"/>
+                      <Group type="103" groupAlignment="3" attributes="0">
+                          <Component id="jLabel_ExcitationTtlName" alignment="3" min="-2" max="-2" attributes="0"/>
+                          <Component id="jTextField_ExcitationTtlName" alignment="3" min="-2" max="-2" attributes="0"/>
+                      </Group>
+                      <EmptySpace max="-2" attributes="0"/>
+                      <Group type="103" groupAlignment="3" attributes="0">
+                          <Component id="jLabel_ActivationDacName" alignment="3" min="-2" max="-2" attributes="0"/>
+                          <Component id="jTextField_ActivationDacName" alignment="3" min="-2" max="-2" attributes="0"/>
+                      </Group>
+                      <EmptySpace max="-2" attributes="0"/>
+                      <Group type="103" groupAlignment="3" attributes="0">
+                          <Component id="jLabel_ActivationTtlName" alignment="3" min="-2" max="-2" attributes="0"/>
+                          <Component id="jTextField_ActivationTtlName" alignment="3" min="-2" max="-2" attributes="0"/>
+                      </Group>
+                      <EmptySpace max="-2" attributes="0"/>
+                      <Group type="103" groupAlignment="3" attributes="0">
+                          <Component id="jLabel_LaserShutterTtlName" alignment="3" min="-2" max="-2" attributes="0"/>
+                          <Component id="jTextField_LaserShutterTtlName" alignment="3" min="-2" max="-2" attributes="0"/>
+                      </Group>
+                      <EmptySpace max="-2" attributes="0"/>
+                      <Group type="103" groupAlignment="3" attributes="0">
+                          <Component id="jLabel_PhLampTtlName" alignment="3" min="-2" max="-2" attributes="0"/>
+                          <Component id="jTextField_PhLampTtlName" alignment="3" min="-2" max="-2" attributes="0"/>
+                      </Group>
+                      <EmptySpace pref="65" max="32767" attributes="0"/>
+                  </Group>
+              </Group>
+            </DimensionLayout>
+          </Layout>
+          <SubComponents>
+            <Component class="javax.swing.JLabel" name="jLabel_ExcitationDacName">
+              <Properties>
+                <Property name="text" type="java.lang.String" value="Excitation laser DAC Name:"/>
+              </Properties>
+            </Component>
+            <Component class="javax.swing.JLabel" name="jLabel_ExcitationTtlName">
+              <Properties>
+                <Property name="text" type="java.lang.String" value="Excitation laser TTL Name:"/>
+              </Properties>
+            </Component>
+            <Component class="javax.swing.JLabel" name="jLabel_ActivationDacName">
+              <Properties>
+                <Property name="text" type="java.lang.String" value="Photoactivation laser DAC Name:"/>
+              </Properties>
+            </Component>
+            <Component class="javax.swing.JLabel" name="jLabel_ActivationTtlName">
+              <Properties>
+                <Property name="text" type="java.lang.String" value="Photoactivation laser TTL Name:"/>
+              </Properties>
+            </Component>
+            <Component class="javax.swing.JLabel" name="jLabel_LaserShutterTtlName">
+              <Properties>
+                <Property name="text" type="java.lang.String" value="Laser shutter TTL name:"/>
+              </Properties>
+            </Component>
+            <Component class="javax.swing.JLabel" name="jLabel_PhLampTtlName">
+              <Properties>
+                <Property name="text" type="java.lang.String" value="PH lamp TTL name:"/>
+              </Properties>
+            </Component>
+            <Component class="javax.swing.JTextField" name="jTextField_ExcitationDacName">
+              <Properties>
+                <Property name="horizontalAlignment" type="int" value="11"/>
+              </Properties>
+              <Events>
+                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jTextField_ExcitationDacNameActionPerformed"/>
+              </Events>
+            </Component>
+            <Component class="javax.swing.JTextField" name="jTextField_ExcitationTtlName">
+              <Properties>
+                <Property name="horizontalAlignment" type="int" value="11"/>
+              </Properties>
+              <Events>
+                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jTextField_ExcitationTtlNameActionPerformed"/>
+              </Events>
+            </Component>
+            <Component class="javax.swing.JTextField" name="jTextField_ActivationDacName">
+              <Properties>
+                <Property name="horizontalAlignment" type="int" value="11"/>
+              </Properties>
+              <Events>
+                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jTextField_ActivationDacNameActionPerformed"/>
+              </Events>
+            </Component>
+            <Component class="javax.swing.JTextField" name="jTextField_ActivationTtlName">
+              <Properties>
+                <Property name="horizontalAlignment" type="int" value="11"/>
+              </Properties>
+              <Events>
+                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jTextField_ActivationTtlNameActionPerformed"/>
+              </Events>
+            </Component>
+            <Component class="javax.swing.JTextField" name="jTextField_LaserShutterTtlName">
+              <Properties>
+                <Property name="horizontalAlignment" type="int" value="11"/>
+              </Properties>
+              <Events>
+                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jTextField_LaserShutterTtlNameActionPerformed"/>
+              </Events>
+            </Component>
+            <Component class="javax.swing.JTextField" name="jTextField_PhLampTtlName">
+              <Properties>
+                <Property name="horizontalAlignment" type="int" value="11"/>
+              </Properties>
+              <Events>
+                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jTextField_PhLampTtlNameActionPerformed"/>
+              </Events>
+            </Component>
+          </SubComponents>
+        </Container>
+      </SubComponents>
+    </Container>
+    <Component class="javax.swing.JButton" name="jButton_Apply">
+      <Properties>
+        <Property name="text" type="java.lang.String" value="Apply"/>
+      </Properties>
+      <Events>
+        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jButton_ApplyActionPerformed"/>
+      </Events>
+    </Component>
+    <Component class="javax.swing.JButton" name="jButton_Cancel">
+      <Properties>
+        <Property name="text" type="java.lang.String" value="Cancel"/>
+      </Properties>
+      <Events>
+        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jButton_CancelActionPerformed"/>
+      </Events>
+    </Component>
+    <Component class="javax.swing.JButton" name="jButton_Ok">
+      <Properties>
+        <Property name="text" type="java.lang.String" value="OK"/>
+      </Properties>
+      <Events>
+        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jButton_OkActionPerformed"/>
+      </Events>
+    </Component>
+    <Component class="javax.swing.JButton" name="jButton_SaveSettingsAsDefault">
+      <Properties>
+        <Property name="text" type="java.lang.String" value="Set as default"/>
+      </Properties>
+      <Events>
+        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jButton_SaveSettingsAsDefaultActionPerformed"/>
+      </Events>
+    </Component>
+  </SubComponents>
+</Form>
