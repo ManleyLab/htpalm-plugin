@@ -54,6 +54,7 @@ public class HTPALM_MMPlugin implements org.micromanager.api.MMPlugin {
    public void show() {
       if (config_==null){
          config_ = new ConfigurationOptions();
+         config_.initialize();
       }
          
       if (dlg==null) {

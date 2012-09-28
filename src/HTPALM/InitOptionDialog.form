@@ -24,22 +24,20 @@
     <DimensionLayout dim="0">
       <Group type="103" groupAlignment="0" attributes="0">
           <Group type="102" attributes="0">
-              <Group type="103" groupAlignment="0" attributes="0">
-                  <Group type="102" alignment="1" attributes="0">
-                      <EmptySpace min="0" pref="0" max="32767" attributes="0"/>
+              <EmptySpace max="-2" attributes="0"/>
+              <Group type="103" groupAlignment="0" max="-2" attributes="0">
+                  <Group type="102" attributes="0">
+                      <Component id="jButton_SaveSettingsAsDefault" min="-2" max="-2" attributes="0"/>
+                      <EmptySpace max="32767" attributes="0"/>
                       <Component id="jButton_Ok" min="-2" max="-2" attributes="0"/>
                       <EmptySpace max="-2" attributes="0"/>
                       <Component id="jButton_Apply" min="-2" max="-2" attributes="0"/>
                       <EmptySpace max="-2" attributes="0"/>
                       <Component id="jButton_Cancel" min="-2" max="-2" attributes="0"/>
                   </Group>
-                  <Group type="102" alignment="0" attributes="0">
-                      <EmptySpace max="-2" attributes="0"/>
-                      <Component id="jTabbedPane_Settings" min="-2" pref="359" max="-2" attributes="0"/>
-                      <EmptySpace min="0" pref="15" max="32767" attributes="0"/>
-                  </Group>
+                  <Component id="jTabbedPane_Settings" min="-2" pref="359" max="-2" attributes="0"/>
               </Group>
-              <EmptySpace max="-2" attributes="0"/>
+              <EmptySpace max="32767" attributes="0"/>
           </Group>
       </Group>
     </DimensionLayout>
@@ -53,6 +51,7 @@
                   <Component id="jButton_Apply" alignment="3" min="-2" max="-2" attributes="0"/>
                   <Component id="jButton_Cancel" alignment="3" min="-2" max="-2" attributes="0"/>
                   <Component id="jButton_Ok" alignment="3" min="-2" max="-2" attributes="0"/>
+                  <Component id="jButton_SaveSettingsAsDefault" alignment="3" min="-2" max="-2" attributes="0"/>
               </Group>
               <EmptySpace min="-2" pref="12" max="-2" attributes="0"/>
           </Group>
@@ -119,6 +118,9 @@
               </Properties>
             </Component>
             <Component class="javax.swing.JTextField" name="jTextField_StepSizeX">
+              <Events>
+                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jTextField_StepSizeXActionPerformed"/>
+              </Events>
             </Component>
             <Component class="javax.swing.JLabel" name="jLabel_StepSizeY">
               <Properties>
@@ -126,6 +128,9 @@
               </Properties>
             </Component>
             <Component class="javax.swing.JTextField" name="jTextField_StepSizeY">
+              <Events>
+                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jTextField_StepSizeYActionPerformed"/>
+              </Events>
             </Component>
           </SubComponents>
         </Container>
@@ -325,6 +330,9 @@
                 <Property name="text" type="java.lang.String" value="Convert PH exposure time to seconds"/>
                 <Property name="toolTipText" type="java.lang.String" value="Workaround to correct for TISCam bug"/>
               </Properties>
+              <Events>
+                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jCheckBox_ConvertPhExposureMsToSecActionPerformed"/>
+              </Events>
             </Component>
             <Component class="javax.swing.JTextField" name="jTextField_EmccdCamName">
               <Properties>
@@ -484,26 +492,41 @@
               <Properties>
                 <Property name="horizontalAlignment" type="int" value="11"/>
               </Properties>
+              <Events>
+                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jTextField_ExcitationTtlNameActionPerformed"/>
+              </Events>
             </Component>
             <Component class="javax.swing.JTextField" name="jTextField_ActivationDacName">
               <Properties>
                 <Property name="horizontalAlignment" type="int" value="11"/>
               </Properties>
+              <Events>
+                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jTextField_ActivationDacNameActionPerformed"/>
+              </Events>
             </Component>
             <Component class="javax.swing.JTextField" name="jTextField_ActivationTtlName">
               <Properties>
                 <Property name="horizontalAlignment" type="int" value="11"/>
               </Properties>
+              <Events>
+                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jTextField_ActivationTtlNameActionPerformed"/>
+              </Events>
             </Component>
             <Component class="javax.swing.JTextField" name="jTextField_LaserShutterTtlName">
               <Properties>
                 <Property name="horizontalAlignment" type="int" value="11"/>
               </Properties>
+              <Events>
+                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jTextField_LaserShutterTtlNameActionPerformed"/>
+              </Events>
             </Component>
             <Component class="javax.swing.JTextField" name="jTextField_PhLampTtlName">
               <Properties>
                 <Property name="horizontalAlignment" type="int" value="11"/>
               </Properties>
+              <Events>
+                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jTextField_PhLampTtlNameActionPerformed"/>
+              </Events>
             </Component>
           </SubComponents>
         </Container>
@@ -529,6 +552,17 @@
       <Properties>
         <Property name="text" type="java.lang.String" value="OK"/>
       </Properties>
+      <Events>
+        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jButton_OkActionPerformed"/>
+      </Events>
+    </Component>
+    <Component class="javax.swing.JButton" name="jButton_SaveSettingsAsDefault">
+      <Properties>
+        <Property name="text" type="java.lang.String" value="Set as default"/>
+      </Properties>
+      <Events>
+        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jButton_SaveSettingsAsDefaultActionPerformed"/>
+      </Events>
     </Component>
   </SubComponents>
 </Form>

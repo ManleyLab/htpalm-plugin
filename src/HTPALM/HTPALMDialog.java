@@ -615,8 +615,9 @@ public class HTPALMDialog extends javax.swing.JDialog {
       if (returnVal == JFileChooser.APPROVE_OPTION) {
          try {
             File file = fileCh.getSelectedFile();
+            file = XmlFilter.makeXml(file);
             System.out.println("Load: " + file.getCanonicalPath());
-            config_.loadConfig(file.getName());
+            config_.loadConfig(file.getCanonicalPath());
             reloadSettings();//update config_
          } catch (IOException ex) {
             Logger.getLogger(HTPALMDialog.class.getName()).log(Level.SEVERE, null, ex);
@@ -635,9 +636,10 @@ public class HTPALMDialog extends javax.swing.JDialog {
       if (returnVal == JFileChooser.APPROVE_OPTION) {
          try {
             File file = fileCh.getSelectedFile();
+            file = XmlFilter.makeXml(file);
             reloadSettings();//update config_
             System.out.println("Save as" + file.getCanonicalPath());//DEBUG
-            config_.saveConfig(file.getName());
+            config_.saveConfig(file.getCanonicalPath());
          } catch (IOException ex) {
             Logger.getLogger(HTPALMDialog.class.getName()).log(Level.SEVERE, null, ex);
          }

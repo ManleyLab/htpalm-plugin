@@ -22,14 +22,16 @@ import org.simpleframework.xml.core.Persister;
 @Default
 public class ConfigurationOptions {
    
-   static final String configPath = "HTPALM_Config.xml";
+   static final String configPathDefault_ = "HTPALM_Config.xml";
+
+   
    //Mosaic config
    double mosaicStartPosX_, mosaicStartPosY_, mosaicStepSizeX_, mosaicStepSizeY_;
    //Laser config
    double laserManualExPower_, laserManualActPower_;
    boolean laserControlIsAutomatic_;
    String laserExDacName_, laserExTtlName_;
-   private String laserActDacName_;
+   String laserActDacName_;
    String  laserActTtlName_, laserShutterTtlName_,phLampTtlName_;
    //FOV analysis/segmenation config        
    boolean fovAnalysis_excludeBadFov_;
@@ -45,26 +47,20 @@ public class ConfigurationOptions {
 
    
    public void initialize(){
-      System.out.println("Hello config options");
       this.loadDefaultConfig();
    }
    
 
    private void loadDefaultConfig(){
-      File f = new File(configPath);
-      try {
-         System.out.println("Default config path: "+ f.getCanonicalPath());
-      } catch (IOException ex) {
-         Logger.getLogger(ConfigurationOptions.class.getName()).log(Level.SEVERE, null, ex);
-      }
+      File f = new File(configPathDefault_);
       //try to load the default settings
       if (f.exists()){
-         loadConfig(configPath);
+         loadConfig(configPathDefault_);
       }
       else{
       //if they dont exist, use these default settings, and save them:
          assignDefaultConfig();
-         saveConfig(configPath);
+         saveConfig(configPathDefault_);
       }
       
    }
@@ -95,6 +91,10 @@ public class ConfigurationOptions {
       }
    }
 
+   public void saveConfig(){// if no path is supplied use default path
+      saveConfig(configPathDefault_);
+   }
+   
    private void assignDefaultConfig(){
       mosaicStartPosX_=0.0;
       mosaicStartPosY_=0.0;
@@ -125,7 +125,13 @@ public class ConfigurationOptions {
    }
 
    //Just the getters and setters below here
-
+   
+   /**
+    * @return the configPathDefault_
+    */
+   public static String getDefaultConfigPath() {
+      return configPathDefault_;
+   }
    /**
     * @return the mosaicStartPosX_
     */
