@@ -21,11 +21,12 @@ public class HtpalmDialog extends javax.swing.JDialog implements MMListenerInter
 
    //TODO: Make current position / current FOV update automatically
    //TODO: Add nFov config parameter
-   HtpalmMMPlugin htpalm =null;
-   ConfigurationOptions config_=null;
-   InitOptionDialog initOptionDlg_ = null;
-   HardwareControl control_ = null;
-   MMStudioMainFrame gui_;
+   private HtpalmMMPlugin htpalm =null;
+   private ConfigurationOptions config_=null;
+   private InitOptionDialog initOptionDlg_ = null;
+   private HardwareControl control_ = null;
+   private MMStudioMainFrame gui_;
+   private boolean isInitialized_ = false;
    /**
     * Creates new form HtpalmDialog
     */
@@ -59,6 +60,9 @@ public class HtpalmDialog extends javax.swing.JDialog implements MMListenerInter
          jLabel_CurrentY.setText(yString);
       } catch (MMScriptException ex) {
          ReportingUtils.logError(ex, "Unable to get stage position");
+      }
+      if (isInitialized_){
+         jLabel_CurrentFovNumber.setText(Integer.toString(control_.getCurrentFovNum()));
       }
    }
    private void updateSettings(){
@@ -586,6 +590,7 @@ public class HtpalmDialog extends javax.swing.JDialog implements MMListenerInter
    private void jButton_InitializeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton_InitializeActionPerformed
       updateSettings();
       control_.initializeAcquisition(config_);
+      isInitialized_ = true;
    }//GEN-LAST:event_jButton_InitializeActionPerformed
 
    private void jRadioButton_LaserControlManualActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jRadioButton_LaserControlManualActionPerformed
@@ -627,11 +632,14 @@ public class HtpalmDialog extends javax.swing.JDialog implements MMListenerInter
    private void jButton_GotoNextFovActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton_GotoNextFovActionPerformed
       updateSettings();
       control_.gotoNextFov();
+      jLabel_CurrentFovNumber.setText(Integer.toString(control_.getCurrentFovNum()));
    }//GEN-LAST:event_jButton_GotoNextFovActionPerformed
 
    private void jButton_GotoPrevFovActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton_GotoPrevFovActionPerformed
       updateSettings();
       control_.gotoPrevFov();
+      jLabel_CurrentFovNumber.setText(Integer.toString(control_.getCurrentFovNum()));
+      
    }//GEN-LAST:event_jButton_GotoPrevFovActionPerformed
 
    private void jButton_OpenBactConfigActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton_OpenBactConfigActionPerformed

@@ -11,12 +11,10 @@ package htpalm;
  * @author Seamus Holden 
 */
 public class SpiralMosaic{
-   
-   private static final int NDIM = 2;
 	
    private double Xstart,Ystart;
    private double xStep, yStep;
-   private int nFOV_total, nFOV_current;
+   private int nFOV_total;
    private FOV[] FOVArray;
 
    public SpiralMosaic(){}
