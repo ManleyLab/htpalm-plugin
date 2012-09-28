@@ -1,7 +1,4 @@
-/*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
- */
+
 package HTPALM;
 
 // use the simple framework to allow easy generation of POJO xml config file
