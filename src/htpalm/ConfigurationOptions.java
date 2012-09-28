@@ -1,5 +1,5 @@
 
-package htpa;
+package htpalm;
 
 // use the simple framework to allow easy generation of POJO xml config file
 import java.io.File;
