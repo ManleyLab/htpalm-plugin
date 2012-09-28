@@ -47,7 +47,7 @@ public class InitOptionDialog extends javax.swing.JDialog {
       jTextField_AcqFolderName.setText(newConfig_.fileAcqFolder_);
       jTextField_BaseFileName.setText(newConfig_.fileBaseName_);
       jTextField_EmccdCamName.setText(newConfig_.camEmccdName_);
-      
+      jTextField_EmccdExposureTime.setText(Double.toString(newConfig_.camEmccdExposureMs_));
       jTextField_PhCamName.setText(newConfig_.camPhName_);
       jTextField_PhExposureTime.setText(Double.toString(newConfig_.camPhExposureMs_));
       jTextField_PhCamDelayTime.setText(Double.toString(newConfig_.camPhDelayMs_));
@@ -61,9 +61,31 @@ public class InitOptionDialog extends javax.swing.JDialog {
       
    }
 
+   private void updateSettings(){
+      newConfig_.mosaicStepSizeX_= Double.parseDouble(jTextField_StepSizeX.getText());
+      newConfig_.mosaicStepSizeY_= Double.parseDouble(jTextField_StepSizeY.getText());
+      newConfig_.fileAcqFolder_ = jTextField_AcqFolderName.getText();
+      newConfig_.fileBaseName_ = jTextField_BaseFileName.getText();
+      newConfig_.camEmccdName_ = jTextField_EmccdCamName.getText();
+      newConfig_.camEmccdExposureMs_ = Double.parseDouble(jTextField_EmccdExposureTime.getText());
+      newConfig_.camPhName_ = jTextField_PhCamName.getText(); 
+      newConfig_.camPhExposureMs_= Double.parseDouble(jTextField_PhExposureTime.getText());
+      newConfig_.camPhDelayMs_= Double.parseDouble(jTextField_PhCamDelayTime.getText());
+      newConfig_.camConvertPhExposureToSec_ = jCheckBox_ConvertPhExposureMsToSec.isSelected();
+      newConfig_.laserExDacName_ = jTextField_ExcitationDacName.getText();
+      newConfig_.laserExTtlName_ = jTextField_ExcitationTtlName.getText();
+      newConfig_.laserActDacName_ = jTextField_ActivationDacName.getText();
+      newConfig_.laserActTtlName_ = jTextField_ActivationTtlName.getText();
+      newConfig_.laserShutterTtlName_ = jTextField_LaserShutterTtlName.getText();
+      newConfig_.phLampTtlName_ = jTextField_PhLampTtlName.getText();
+   }
+
+   /*
+    *  Copy the properties of newConfig_ into config_
+    */
    private void updateConfig(){
       try {
-         BeanUtils.copyProperties(config_,newConfig_);//copy the properties of newConfig_ into config 
+         BeanUtils.copyProperties(config_,newConfig_);//copy the properties of newConfig_ into config_
       } catch (IllegalAccessException ex) {
          ReportingUtils.logError(ex, "Failed to make copy of settings");
       } catch (InvocationTargetException ex) {
@@ -585,11 +607,12 @@ public class InitOptionDialog extends javax.swing.JDialog {
    }//GEN-LAST:event_jTextField_StepSizeYActionPerformed
 
    private void jButton_SaveSettingsAsDefaultActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton_SaveSettingsAsDefaultActionPerformed
-      updateConfig();
-      config_.saveConfig();
+      updateSettings();
+      newConfig_.saveConfig();
    }//GEN-LAST:event_jButton_SaveSettingsAsDefaultActionPerformed
 
    private void jButton_OkActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton_OkActionPerformed
+      updateSettings();
       updateConfig();
       dispose();
    }//GEN-LAST:event_jButton_OkActionPerformed
