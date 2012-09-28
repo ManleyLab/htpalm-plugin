@@ -9,9 +9,9 @@ import java.util.logging.Logger;
 import javax.swing.JFileChooser;
 import org.micromanager.MMStudioMainFrame;
 import org.micromanager.api.MMListenerInterface;
-import mmcorej.CMMCore;
 import org.micromanager.utils.MMScriptException;
 import org.micromanager.utils.ReportingUtils;
+        
 
 /**
  *
@@ -43,8 +43,8 @@ public class HTPALMDialog extends javax.swing.JDialog implements MMListenerInter
    }
 
    private void reloadSettings(){
-      jTextField_StartX.setText(Double.toString(config_.mosaicStartPosX_));
-      jTextField_StartY.setText(Double.toString(config_.mosaicStartPosY_));
+      jTextField_StartX.setText(String.format("%.2f", config_.mosaicStartPosX_));
+      jTextField_StartY.setText(String.format("%.2f", config_.mosaicStartPosY_));
       setStateLaserControlRadioGroup(config_.laserControlIsAutomatic_);
       jTextField_ExcitationPowerNumber.setText(Double.toString(config_.laserManualExPower_));
       jTextField_ActivationPowerNumber.setText(Double.toString(config_.laserManualActPower_));
@@ -53,8 +53,10 @@ public class HTPALMDialog extends javax.swing.JDialog implements MMListenerInter
       Point2D.Double posXY;
       try {
          posXY = gui_.getXYStagePosition();
-         jLabel_CurrentX.setText(Double.toString(posXY.x));
-         jLabel_CurrentY.setText(Double.toString(posXY.y));
+         String xString = String.format("%.2f", posXY.x);
+         String yString = String.format("%.2f", posXY.y);
+         jLabel_CurrentX.setText(xString);
+         jLabel_CurrentY.setText(yString);
       } catch (MMScriptException ex) {
          ReportingUtils.logError(ex, "Unable to get stage position");
       }
@@ -611,8 +613,15 @@ public class HTPALMDialog extends javax.swing.JDialog implements MMListenerInter
 
    private void jButton_SetStartAsCurrentPosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton_SetStartAsCurrentPosActionPerformed
       updateSettings();
-      jTextField_StartX.setText(Double.toString(config_.mosaicStartPosX_));
-      jTextField_StartY.setText(Double.toString(config_.mosaicStartPosY_));
+      try {
+         Point2D.Double posXY;
+         posXY = gui_.getXYStagePosition();
+         config_.mosaicStartPosX_ = posXY.x;
+         config_.mosaicStartPosY_ = posXY.y;
+         reloadSettings();//this will update the jLabel_CurrentX,Y text fields
+      } catch (MMScriptException ex) {
+         ReportingUtils.logError(ex, "Unable to get stage position");
+      }
    }//GEN-LAST:event_jButton_SetStartAsCurrentPosActionPerformed
 
    private void jButton_GotoNextFovActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton_GotoNextFovActionPerformed
@@ -756,7 +765,9 @@ public class HTPALMDialog extends javax.swing.JDialog implements MMListenerInter
    }
 
    public void xyStagePositionChanged(String deviceName, double xPos, double yPos) {
-      jLabel_CurrentX.setText(Double.toString(xPos));
-      jLabel_CurrentY.setText(Double.toString(yPos));
+      String xString = String.format("%.2f", xPos);
+      String yString = String.format("%.2f", yPos);
+      jLabel_CurrentX.setText(xString);
+      jLabel_CurrentY.setText(yString);
    }
 }
