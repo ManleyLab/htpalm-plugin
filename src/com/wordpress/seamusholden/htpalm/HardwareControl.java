@@ -11,6 +11,7 @@ import org.micromanager.MMStudioMainFrame;
 import org.micromanager.api.AcquisitionEngine;
 import org.micromanager.utils.MMScriptException;
 import org.micromanager.utils.ReportingUtils;
+import static com.wordpress.seamusholden.htpalm.Debug.DEBUG;
 
 /**
  *
@@ -69,6 +70,11 @@ public class HardwareControl {
          
       try {
          gui_.setXYStagePosition(currentFovPosX_,currentFovPosY_);
+         if (DEBUG){
+            Point2D.Double posXY = gui_.getXYStagePosition();
+            System.out.println("Stage pos x: "+ posXY.x+ " y: "+ posXY.y);
+            
+         }
       } catch (MMScriptException ex) {
          ReportingUtils.logError(ex, "Could not move stage to FOV "+ Integer.toString(fovNum));
       }
@@ -95,10 +101,14 @@ public class HardwareControl {
       return currentFovNum_;
    }
    public void gotoPrevFov(){
-      gotoFOV(currentFovNum_-1);
+      if (currentFovNum_>0){
+         gotoFOV(currentFovNum_-1);
+      }
    }
    public void gotoNextFov(){
-      gotoFOV(currentFovNum_+1);
+      if (currentFovNum_<config_.getMosaicNFov()){
+         gotoFOV(currentFovNum_+1);
+      }
    }
    public void acquire1Fov(){
       //TODO

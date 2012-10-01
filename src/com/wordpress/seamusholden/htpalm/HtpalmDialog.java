@@ -11,6 +11,7 @@ import org.micromanager.MMStudioMainFrame;
 import org.micromanager.api.MMListenerInterface;
 import org.micromanager.utils.MMScriptException;
 import org.micromanager.utils.ReportingUtils;
+import static com.wordpress.seamusholden.htpalm.Debug.DEBUG;
         
 
 /**
@@ -671,11 +672,13 @@ public class HtpalmDialog extends javax.swing.JDialog implements MMListenerInter
          try {
             File file = fileCh.getSelectedFile();
             file = XmlFilter.makeXml(file);
-            System.out.println("Load: " + file.getCanonicalPath());
+            if (DEBUG){
+               System.out.println("Load: " + file.getCanonicalPath());
+            }
             config_.loadConfig(file.getCanonicalPath());
             reloadSettings();//update config_
          } catch (IOException ex) {
-            Logger.getLogger(HtpalmDialog.class.getName()).log(Level.SEVERE, null, ex);
+            throw new RuntimeException(ex);
          }
       } else {
          //DO NOTHING - file load cancelled by user
@@ -693,10 +696,12 @@ public class HtpalmDialog extends javax.swing.JDialog implements MMListenerInter
             File file = fileCh.getSelectedFile();
             file = XmlFilter.makeXml(file);
             reloadSettings();//update config_
-            System.out.println("Save as" + file.getCanonicalPath());//DEBUG
+            if (DEBUG){
+               System.out.println("Save as" + file.getCanonicalPath());//DEBUG
+            }
             config_.saveConfig(file.getCanonicalPath());
          } catch (IOException ex) {
-            Logger.getLogger(HtpalmDialog.class.getName()).log(Level.SEVERE, null, ex);
+            throw new RuntimeException(ex);
          }
       } else {
          //DO NOTHING - file load cancelled by user

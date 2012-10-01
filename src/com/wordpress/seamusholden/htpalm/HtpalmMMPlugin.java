@@ -11,7 +11,6 @@ import org.micromanager.MMStudioMainFrame;
 import org.micromanager.api.ScriptInterface;
 import org.micromanager.api.AcquisitionEngine;
 import org.micromanager.utils.MMScriptException;
-import static com.wordpress.seamusholden.htpalm.Debug.DEBUG;
 
 /**
  *

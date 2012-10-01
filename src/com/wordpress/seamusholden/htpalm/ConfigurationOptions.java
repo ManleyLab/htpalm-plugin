@@ -11,6 +11,7 @@ import org.apache.commons.beanutils.BeanUtils;
 import org.simpleframework.xml.Default;
 import org.simpleframework.xml.Serializer;
 import org.simpleframework.xml.core.Persister;
+import static com.wordpress.seamusholden.htpalm.Debug.DEBUG;
 
 /**
  * All the configuration options for required to run HTPALM. 
@@ -96,8 +97,8 @@ public class ConfigurationOptions {
    private void assignDefaultConfig(){
       mosaicStartPosX_=0.0;
       mosaicStartPosY_=0.0;
-      mosaicStepSizeX_=0.0;
-      mosaicStepSizeY_=0.0;
+      mosaicStepSizeX_=17.0;
+      mosaicStepSizeY_=17.0;
       mosaicNFov_ = 100;
       //Laser config
       laserManualExPower_ = 3.0;
