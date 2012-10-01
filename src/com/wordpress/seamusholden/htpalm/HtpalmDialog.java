@@ -21,7 +21,7 @@ public class HtpalmDialog extends javax.swing.JDialog implements MMListenerInter
 
    //TODO: Make current position / current FOV update automatically
    //TODO: Add nFov config parameter
-   private HtpalmMMPlugin htpalm =null;
+   private HtpalmMMPlugin htpalm_ =null;
    private ConfigurationOptions config_=null;
    private InitOptionDialog initOptionDlg_ = null;
    private HardwareControl control_ = null;
@@ -34,7 +34,7 @@ public class HtpalmDialog extends javax.swing.JDialog implements MMListenerInter
       super(parent, modal);
       initComponents();
       
-      this.htpalm = htpalm;
+      this.htpalm_ = htpalm;
       this.config_ = config_;
       this.control_ = control_;
       gui_ = (MMStudioMainFrame) parent;
@@ -153,6 +153,11 @@ public class HtpalmDialog extends javax.swing.JDialog implements MMListenerInter
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setTitle("HTPALM Control");
+        addWindowListener(new java.awt.event.WindowAdapter() {
+            public void windowClosing(java.awt.event.WindowEvent evt) {
+                formWindowClosing(evt);
+            }
+        });
 
         jPanel_Initialize.setBorder(javax.swing.BorderFactory.createTitledBorder("Mosaic setup"));
 
@@ -709,6 +714,11 @@ public class HtpalmDialog extends javax.swing.JDialog implements MMListenerInter
    private void jTextField_ExcitationPowerNumberActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextField_ExcitationPowerNumberActionPerformed
       config_.laserManualExPower_=Double.parseDouble(jTextField_ExcitationPowerNumber.getText());
    }//GEN-LAST:event_jTextField_ExcitationPowerNumberActionPerformed
+
+   private void formWindowClosing(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowClosing
+      // shut down the plugin as well
+      htpalm_.dispose();
+   }//GEN-LAST:event_formWindowClosing
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.ButtonGroup buttonGroup_LaserControl;

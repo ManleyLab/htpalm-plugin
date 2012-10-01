@@ -11,6 +11,7 @@ import org.micromanager.MMStudioMainFrame;
 import org.micromanager.api.ScriptInterface;
 import org.micromanager.api.AcquisitionEngine;
 import org.micromanager.utils.MMScriptException;
+import static com.wordpress.seamusholden.htpalm.Debug.DEBUG;
 
 /**
  *
@@ -26,7 +27,7 @@ public class HtpalmMMPlugin implements org.micromanager.api.MMPlugin {
    AcquisitionEngine acq_ ;
    //this stores all the HtpalmMMPlugin config options
    ConfigurationOptions config_=null;
-   HtpalmDialog dlg=null;
+   HtpalmDialog dlg_=null;
    HardwareControl control_=null;
    
    ///****
@@ -40,7 +41,10 @@ public class HtpalmMMPlugin implements org.micromanager.api.MMPlugin {
    
    @Override
    public void dispose() {
-      //TODO close down properly
+      config_=null;
+      control_=null;
+      dlg_=null;
+      //TODO ensure current acquisition is shut down
    }
 
    @Override
@@ -61,10 +65,10 @@ public class HtpalmMMPlugin implements org.micromanager.api.MMPlugin {
          control_= new HardwareControl(gui_);
       }
          
-      if (dlg==null) {
-          dlg = new HtpalmDialog(gui_,false,config_,control_,  this);
+      if (dlg_==null) {
+          dlg_ = new HtpalmDialog(gui_,false,config_,control_,  this);
       }
-      dlg.setVisible(true);
+      dlg_.setVisible(true);
    }
 
    @Override
