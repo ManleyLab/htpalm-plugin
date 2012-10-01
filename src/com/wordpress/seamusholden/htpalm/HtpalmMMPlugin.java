@@ -40,10 +40,13 @@ public class HtpalmMMPlugin implements org.micromanager.api.MMPlugin {
    
    @Override
    public void dispose() {
+      if (!(control_==null)){
+         // abort any running acquisitions
+         control_.abortAll();
+      }
       config_=null;
       control_=null;
       dlg_=null;
-      //TODO ensure current acquisition is shut down
    }
 
    @Override

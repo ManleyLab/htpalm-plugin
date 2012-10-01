@@ -721,8 +721,6 @@ public class HtpalmDialog extends javax.swing.JDialog implements MMListenerInter
 
    private void formWindowClosing(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowClosing
       //TODO - if acquisition is running, check before exit
-      // abort any running acquisitions
-      control_.abortAll();
       // shut down the plugin
       htpalm_.dispose();
    }//GEN-LAST:event_formWindowClosing
@@ -770,23 +768,23 @@ public class HtpalmDialog extends javax.swing.JDialog implements MMListenerInter
     // End of variables declaration//GEN-END:variables
 
    public void propertiesChangedAlert() {
-      //TODO
+      //DO NOTHING
    }
 
    public void propertyChangedAlert(String device, String property, String value) {
-      //TODO
+      //DO NOTHING
    }
 
    public void configGroupChangedAlert(String groupName, String newConfig) {
-      //TODO
+      //DO NOTHING
    }
 
    public void pixelSizeChangedAlert(double newPixelSizeUm) {
-      //TODO
+      //DO NOTHING
    }
 
    public void stagePositionChangedAlert(String deviceName, double pos) {
-      //TODO
+      //DO NOTHING
    }
 
    public void xyStagePositionChanged(String deviceName, double xPos, double yPos) {
