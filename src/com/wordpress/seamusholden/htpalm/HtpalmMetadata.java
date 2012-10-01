@@ -58,10 +58,10 @@ public class HtpalmMetadata {
       }
    }
 
-   public void addNewAcquisition(int fovNum, boolean phPreAcquired, boolean phPostAcquired, int[] flCh){
+   public void addNewAcquisition(int fovNum, boolean phPreAcquire, boolean phPostAcquire, int[] flCh){
       nAcq_++;
       int currentFovIndex = updateFovList(fovNum);
-      updateAcqList(currentFovIndex,phPreAcquired, phPostAcquired, flCh);
+      updateAcqList(currentFovIndex,phPreAcquire, phPostAcquire, flCh);
       
    }
    
@@ -93,22 +93,22 @@ public class HtpalmMetadata {
       return currentFovIndex;
    }
 
-   private void updateAcqList(int currentFovIndex, boolean phPreAcquired, boolean phPostAcquired, int[] flCh){
+   private void updateAcqList(int currentFovIndex, boolean phPreAcquire, boolean phPostAcquire, int[] flCh){
       //update the acquisition list
       AcqMetadata acqMetadata = new AcqMetadata();
 
-      acqMetadata.phPreAcquired_ = phPreAcquired;
-      acqMetadata.phPostAcquired_ = phPostAcquired;
+      acqMetadata.phPreAcquire_ = phPreAcquire;
+      acqMetadata.phPostAcquire_ = phPostAcquire;
       acqMetadata.flCh_ = flCh;
       acqMetadata.fovNum_ = fovMetadataList_.get(currentFovIndex).fovNum_;
       acqMetadata.fovAcqNum_ =fovMetadataList_.get(currentFovIndex).nFovAcq_-1;//-1 is due to zero indexing
       
       String fovNameStub = baseName_+"_FOV"+Integer.toString(acqMetadata.fovNum_)+"_Acq"+Integer.toString(acqMetadata.fovAcqNum_);
       
-      if (phPreAcquired){
+      if (phPreAcquire){
          acqMetadata.acqNamePhPre_ = fovNameStub+"_phPre";
       }
-      if (phPostAcquired){
+      if (phPostAcquire){
          acqMetadata.acqNamePhPost_ = fovNameStub+"_phPost";
       }
       acqMetadata.acqNameFl = new String[flCh.length];
@@ -135,26 +135,3 @@ public class HtpalmMetadata {
 
 }
 
-class FovMetadata{
-   @Element
-   int fovNum_;
-   @Element
-   int nFovAcq_=0;
-   @ElementList
-   ArrayList<Integer> fovAcqNum_ = new ArrayList<Integer>();
-}
-
-class AcqMetadata{
-   @Element
-   int fovNum_;
-   @Element
-   int fovAcqNum_;
-   @Element
-   boolean phPreAcquired_, phPostAcquired_;
-   @Element
-   int[] flCh_;
-   @Element
-   String acqNamePhPre_, acqNamePhPost_;
-   @Element
-   String[] acqNameFl;
-}

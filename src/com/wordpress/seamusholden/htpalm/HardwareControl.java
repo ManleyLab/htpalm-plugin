@@ -13,6 +13,7 @@ import org.micromanager.utils.MMScriptException;
 import org.micromanager.utils.ReportingUtils;
 import static com.wordpress.seamusholden.htpalm.Debug.DEBUG;
 import java.io.File;
+import org.micromanager.utils.MMException;
 
 /**
  *
@@ -116,6 +117,7 @@ public class HardwareControl {
       }
    }
    public void acquire1Fov(){
+      //TODO  - check we are not about to overwrite an existing acquisition
       if (!isInitialized_){
             ReportingUtils.showError("Error: Htpalm acquisition must be initialized before starting acquisition!");
       } 
@@ -124,13 +126,14 @@ public class HardwareControl {
             ReportingUtils.showError("Error: Cannot start new acquisition while a previous acquisition is running!");
          } 
          else {
-            currentAcqThread_ = new Thread(new Acquire1Fov(this));
+            currentAcqThread_ = new Thread(new Acquire1FovManual(this));
             currentAcqThread_.start();
          }
       }
    }
    
    public void acquireAll(){
+      //TODO  - check we are not about to overwrite an existing acquisition
       if (!isInitialized_){
             ReportingUtils.showError("Error: Htpalm acquisition must be initialized before starting acquisition!");
       } 
@@ -151,56 +154,178 @@ public class HardwareControl {
       }
       //TODO - if an acquisition was interupted, delete the metadata for that acquisition
    }
-}
 
-class Acquire1Fov implements Runnable{
-   //TODO setup proper interrupt to shut down acquisition
-   HardwareControl control_;
-   Acquire1Fov(HardwareControl control) {
-      this.control_= control;
-   }
-   public void run() {
-      //note - in manual mode we ignore skipCurrentFOV_
 
-      //update the metadata
-      boolean phPreAcquired=true,phPostAcquired=true;// for now this is always the case
-      int[] flCh={0};// for now this is always the case
-      control_.metadata_.addNewAcquisition(control_.currentFovNum_, phPreAcquired, phPostAcquired, flCh);
-      control_.metadata_.saveMetadata();
-
-      // goto FOV - should be there already but just in case
-      control_.gotoFOV(control_.currentFovNum_);
-      //TODO - run the acquisition
-      if (DEBUG){
-         System.out.println("Acquiring FOV "+control_.currentFovNum_);
+   
+   class Acquire1FovManual implements Runnable{
+      //TODO setup proper interrupt to shut down acquisition
+      HardwareControl control_;
+      Acquire1FovManual(HardwareControl control) {
+         this.control_= control;
       }
-   }
-   
-}
+      public void run() {
+         //note - in manual mode we ignore skipCurrentFOV_
 
-class AcquireAllFov implements Runnable{
-
-   //TODO setup proper interrupt to shut down acquisition
-   HardwareControl control_;
-   AcquireAllFov(HardwareControl control) {
-      this.control_= control;
-   }
-   
-   public void run() {
-      for (int ii=0;ii< control_.config_.mosaicNFov_;ii++){
-         boolean phPreAcquired=true,phPostAcquired=true;// for now this is always the case
+         //update the metadata
+         boolean phPreAcquire=true,phPostAcquire=true;// for now this is always the case
          int[] flCh={0};// for now this is always the case
-         control_.metadata_.addNewAcquisition(control_.currentFovNum_, phPreAcquired, phPostAcquired, flCh);
+         control_.metadata_.addNewAcquisition(control_.currentFovNum_, phPreAcquire, phPostAcquire, flCh);
          control_.metadata_.saveMetadata();
 
-         control_.gotoFOV(ii);
-         if (control_.skipCurrentFOV_==false){
-            //TODO - run the acquisition
-            if (DEBUG){
-               System.out.println("Acquiring FOV "+control_.currentFovNum_);
-            }
+         // goto FOV - should be there already but just in case
+         control_.gotoFOV(control_.currentFovNum_);
+         //TODO - run the acquisition
+         if (DEBUG){
+            System.out.println("Acquiring FOV "+control_.currentFovNum_);
          }
+         //get last array acqMetadata
+         AcqMetadata acqMetadata =control_.metadata_.acqMetadataList_.get(control_.metadata_.acqMetadataList_.size()-1);
+         //Make the hardware get the FOV
+         acquire1FovAuto(acqMetadata);
+
       }
+      
    }
 
+   class AcquireAllFov implements Runnable{
+
+      //TODO setup proper interrupt to shut down acquisition
+      HardwareControl control_;
+      AcquireAllFov(HardwareControl control) {
+         this.control_= control;
+      }
+      
+      public void run() {
+         for (int ii=0;ii< control_.config_.mosaicNFov_;ii++){
+            boolean phPreAcquire=true,phPostAcquire=true;// for now this is always the case
+            int[] flCh={0};// for now this is always the case
+            control_.metadata_.addNewAcquisition(control_.currentFovNum_, phPreAcquire, phPostAcquire, flCh);
+            control_.metadata_.saveMetadata();
+
+            control_.gotoFOV(ii);
+            if (control_.skipCurrentFOV_==false){
+               //TODO - run the acquisition
+               if (DEBUG){
+                  System.out.println("Acquiring FOV "+control_.currentFovNum_);
+               }
+
+               //get last array acqMetadata
+               AcqMetadata acqMetadata =control_.metadata_.acqMetadataList_.get(control_.metadata_.acqMetadataList_.size()-1);
+               //Make the hardware get the FOV
+               acquire1FovAuto(acqMetadata);
+                  }
+               }
+      }
+
+   }
+
+
+   
+   private void acquire1FovAuto(AcqMetadata acqMetadata){
+      
+         if (acqMetadata.phPreAcquire_=true){
+            //acquire ph pre
+            acquire1Phase(acqMetadata.acqNamePhPre_);
+         }
+
+         for (int ii: acqMetadata.flCh_){
+            //TODO - multichannel logic to go here
+            acquire1Fl(acqMetadata.acqNameFl[ii]);
+         }
+      
+         if (acqMetadata.phPostAcquire_=true){
+            //acquire ph post 
+            acquire1Phase(acqMetadata.acqNamePhPost_);
+         }
+   }
+
+   private void acquire1Phase(String fname){
+      //TODO plug in to acquire 1 movie
+   }
+   
+   private void acquire1Fl(String fname){
+      //TODO plug in to acquire 1 movie
+   }
+
+   //TODO tidy up, get it working 
+   private void acquire1Movie(String camName, String rootDirName, int numFrames, double intervalMs, double exposureTime, boolean closeOnExit){
+      try{
+         core_.setProperty("Core", "Camera", camName);
+         core_.setProperty(camName,"Exposure",exposureTime);
+         
+         acq_.setRootName(rootDirName);
+         acq_.setFrames(numFrames,intervalMs);
+         acq_.setUpdateLiveWindow(true);
+         core_.waitForSystem();
+         String[] oldAcqNames=null, newAcqNames= null;
+         String currentAcqName=null;
+         oldAcqNames = gui_.getAcquisitionNames();
+         acq_.acquire();
+         
+         //while(!acq_.isAcquisitionRunning())//wait until acq_ is started
+         //{	Thread.sleep(50);}
+         while(!acq_.isFinished()){
+            if (newAcqNames== null){ 
+               newAcqNames =gui_.getAcquisitionNames(); 
+               currentAcqName = getCurrentAcqName(newAcqNames,oldAcqNames);
+            }
+            Thread.sleep(200);
+         }  
+         
+         core_.waitForSystem();
+         gui_.message("Acq finished");
+         //RunAcq.sleep(1000);//give the PH cam time to sort itself out
+         if (closeOnExit==true){
+            gui_.closeAcquisitionImage5D(currentAcqName);
+         }
+         gui_.refreshGUI();
+         
+      }
+      catch(InterruptedException e){}
+      catch (MMException mex) {
+         Logger.getLogger(RunAcq.class.getName()).log(Level.SEVERE, null, mex);
+      }
+      catch (Exception ex) {
+         Logger.getLogger(RunAcq.class.getName()).log(Level.SEVERE, null, ex);
+      }
+
+   }
+
+   /*
+    *   find the acquisition name matching Acq_NN where NN is the largest number
+    */
+   private String getCurrentAcqName(String[] newAcqNames, String[] oldAcqNames) throws Exception{
+      String currentAcqName =null;
+      int nOld,nNew,nCurrent,iCurrent;
+      nOld = oldAcqNames.length;
+      nNew = newAcqNames.length;
+      nCurrent=0;//number of new names
+      iCurrent = 0;
+      
+      //for each acq name in newAcqNames
+      for (int ii=0;ii<nNew;ii++){
+         //compare to all memebers of old acqNames, check if it existed before
+         int nMatches=0;
+         for (int jj=0;jj<nOld;jj++){
+            if (newAcqNames[ii].matches(oldAcqNames[jj])){
+               nMatches++;
+            }
+         }
+         if (nMatches==0){//if its new
+            nCurrent++;
+            iCurrent= ii;
+         }
+      }
+      
+      if (nCurrent ==0 ){
+         throw new Exception("Finding current acquisition name failed - no new names ");// throw runtime exception
+		}      
+		else if (nCurrent > 1){
+         throw new Exception("Finding current acquisition name failed - multiple new names ");// throw runtime exception
+		}
+      else {
+          currentAcqName = newAcqNames[iCurrent];
+ 		}           
+      return currentAcqName;
+   } 
 }
