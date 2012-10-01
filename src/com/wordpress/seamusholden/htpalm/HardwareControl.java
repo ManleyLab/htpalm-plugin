@@ -111,13 +111,24 @@ public class HardwareControl {
       }
    }
    public void acquire1Fov(){
-      //TODO
+      //note - in manual mode we ignore skipCurrentFOV_
+
+      //update the metadata
+      boolean phPreAcquired=true,phPostAcquired=true;// for now this is always the case
+      int[] flCh={0};// for now this is always the case
+      metadata_.addNewAcquisition(currentFovNum_, phPreAcquired, phPostAcquired, flCh);
+      //TODO - run the acquisition
+      //save the metadata
    }
    public void acquireAll(){
-      //TODO
+      //for (int ii;ii< config_.mosaicNFov_){
+
+      //TODO - run the acquisition
+      //}
    }
    public void abortAll(){
-      //TODO
+      //TODO - shut down running acquisition
+      //TODO - if an acquisition was interupted, delete the metadata for that acquisition
    }
 
    

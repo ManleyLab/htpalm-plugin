@@ -25,7 +25,7 @@ public class ConfigurationOptions {
    
    //Mosaic config
    double mosaicStartPosX_, mosaicStartPosY_, mosaicStepSizeX_, mosaicStepSizeY_;
-   private int mosaicNFov_;
+   int mosaicNFov_;
    //Laser config
    double laserManualExPower_, laserManualActPower_;
    boolean laserControlIsAutomatic_;
@@ -72,11 +72,11 @@ public class ConfigurationOptions {
          config = serializer.read(ConfigurationOptions.class,f);
          BeanUtils.copyProperties(this,config);//copy the properties of config into the this
       } catch (IllegalAccessException ex) {
-         Logger.getLogger(ConfigurationOptions.class.getName()).log(Level.SEVERE, null, ex);
+         throw new RuntimeException(ex);
       } catch (InvocationTargetException ex) {
-         Logger.getLogger(ConfigurationOptions.class.getName()).log(Level.SEVERE, null, ex);
+         throw new RuntimeException(ex);
       } catch (Exception ex) {
-         Logger.getLogger(ConfigurationOptions.class.getName()).log(Level.SEVERE, null, ex);
+         throw new RuntimeException(ex);
       }
    }
 
@@ -86,7 +86,7 @@ public class ConfigurationOptions {
       try {
          serializer.write(this,f);
       } catch (Exception ex) {
-         Logger.getLogger(ConfigurationOptions.class.getName()).log(Level.SEVERE, null, ex);
+         throw new RuntimeException(ex);
       }
    }
 

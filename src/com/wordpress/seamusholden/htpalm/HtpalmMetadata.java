@@ -5,30 +5,120 @@
 package com.wordpress.seamusholden.htpalm;
 
 import java.io.File;
+import java.util.ArrayList;
+import org.simpleframework.xml.*;
+import org.simpleframework.xml.core.*;
+import static com.wordpress.seamusholden.htpalm.Debug.DEBUG;
 
 /**
  *
  * @author seamus.holden@epfl.ch
  */
+@Root
 public class HtpalmMetadata {
-   ConfigurationOptions config_;
-   SpiralMosaic mosaic_;
-   private String metaDataFileName_;
-   private String configFileName_;
-   private String fullBaseName_;
+
+   @Element
+   String metaDataFileName_;
+   @Element
+   String configFileName_;
+   @Element
+   String baseName_;
+   @Element
+   String acqFolder_;
+   @Element
+   int nAcq_=0;
+   @Element
+   int nFov_=0;
+   @ElementList
+   ArrayList<FovMetadata> fovMetadataList_;
+   @ElementList
+   ArrayList<AcqMetadata> acqMetadataList_;
+
+   
    
    public HtpalmMetadata(ConfigurationOptions config_,SpiralMosaic mosaic_){
-      this.config_ = config_;
-      this.mosaic_ = mosaic_;
-      fullBaseName_ = config_.fileAcqFolder_+File.separator+config_.fileBaseName_;
-      configFileName_ = fullBaseName_+"_config.xml";
-      metaDataFileName_ = fullBaseName_ + "_HtpalmMetadata.xml";
-
+      acqFolder_ = config_.fileAcqFolder_;
+      baseName_ =config_.fileBaseName_ ;
+      configFileName_ = baseName_+"_config.xml";
+      metaDataFileName_ = baseName_+ "_htpalmMetadata.xml";
+      fovMetadataList_ = new ArrayList<FovMetadata>();
+      acqMetadataList_ = new ArrayList<AcqMetadata>();
+      nAcq_=0;
+      nFov_=0;
    }
    
-   public void saveConfig(){
+   public void saveMetadata(){
+      String fpath = acqFolder_+File.separator+metaDataFileName_;
+      File f = new File(fpath);
+      Serializer serializer = new Persister();
+      try {
+         serializer.write(this,f);
+      } catch (Exception ex) {
+         throw new RuntimeException(ex);
+      }
    }
 
+   public void addNewAcquisition(int fovNum, boolean phPreAcquired, boolean phPostAcquired, int[] flCh){
+      nAcq_++;
+      int currentFovIndex = updateFovList(fovNum);
+      updateAcqList(currentFovIndex,phPreAcquired, phPostAcquired, flCh);
+      
+   }
+   
+   private int updateFovList(int fovNum){
+      
+      //find out if this fov has been imaged before
+      boolean isNewFov = true;
+      Integer currentFovIndex=null;
+      int ii = 0;
+      while (isNewFov == true && ii<fovMetadataList_.size()){
+         //if imaged before, implement the FOV count
+         if (fovNum == fovMetadataList_.get(ii).fovNum_){
+            isNewFov = false;
+            currentFovIndex = ii;
+         }
+         ii++;
+      }
+      if (isNewFov == true){
+         currentFovIndex = fovMetadataList_.size();
+         FovMetadata fovMetadata = new FovMetadata();
+         fovMetadata.fovNum_ = fovNum;
+         fovMetadataList_.add(fovMetadata);
+      }
+
+      //update the fov metadatalist
+      fovMetadataList_.get(currentFovIndex).nFovAcq_++;
+      int currentAcqNum = acqMetadataList_.size();// even though its zero indexed, don't need to subtract 1 because have not added the new acq yet
+      fovMetadataList_.get(currentFovIndex).fovAcqNum_.add(currentAcqNum);
+      return currentFovIndex;
+   }
+
+   private void updateAcqList(int currentFovIndex, boolean phPreAcquired, boolean phPostAcquired, int[] flCh){
+      //update the acquisition list
+      AcqMetadata acqMetadata = new AcqMetadata();
+
+      acqMetadata.phPreAcquired_ = phPreAcquired;
+      acqMetadata.phPostAcquired_ = phPostAcquired;
+      acqMetadata.flCh_ = flCh;
+      acqMetadata.fovNum_ = fovMetadataList_.get(currentFovIndex).fovNum_;
+      acqMetadata.fovAcqNum_ =fovMetadataList_.get(currentFovIndex).nFovAcq_-1;//-1 is due to zero indexing
+      
+      String fovNameStub = baseName_+"_FOV"+Integer.toString(acqMetadata.fovNum_)+"_Acq"+Integer.toString(acqMetadata.fovAcqNum_);
+      
+      if (phPreAcquired){
+         acqMetadata.acqNamePhPre_ = fovNameStub+"_phPre";
+      }
+      if (phPostAcquired){
+         acqMetadata.acqNamePhPost_ = fovNameStub+"_phPost";
+      }
+      acqMetadata.acqNameFl = new String[flCh.length];
+      for( int jj=0;jj<flCh.length;jj++){
+         acqMetadata.acqNameFl[jj] = fovNameStub+"_flCh"+Integer.toString(jj);
+      }
+
+      acqMetadataList_.add(acqMetadata);
+   }
+   
    /**
     * @return the metaDataFileName_
     */
@@ -43,10 +133,28 @@ public class HtpalmMetadata {
       return configFileName_;
    }
 
-   /**
-    * @return the fullBaseName_
-    */
-   public String getFullBaseName() {
-      return fullBaseName_;
-   }
+}
+
+class FovMetadata{
+   @Element
+   int fovNum_;
+   @Element
+   int nFovAcq_=0;
+   @ElementList
+   ArrayList<Integer> fovAcqNum_ = new ArrayList<Integer>();
+}
+
+class AcqMetadata{
+   @Element
+   int fovNum_;
+   @Element
+   int fovAcqNum_;
+   @Element
+   boolean phPreAcquired_, phPostAcquired_;
+   @Element
+   int[] flCh_;
+   @Element
+   String acqNamePhPre_, acqNamePhPost_;
+   @Element
+   String[] acqNameFl;
 }
