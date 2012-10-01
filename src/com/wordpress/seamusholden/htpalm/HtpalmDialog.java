@@ -654,12 +654,11 @@ public class HtpalmDialog extends javax.swing.JDialog implements MMListenerInter
 
    private void jButton_AcquireAllFovActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton_AcquireAllFovActionPerformed
       updateSettings();
-      control_.acquire1Fov();
+      control_.acquireAll();
    }//GEN-LAST:event_jButton_AcquireAllFovActionPerformed
 
    private void jButton_AbortActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton_AbortActionPerformed
-      updateSettings();
-      control_.acquireAll();
+      control_.abortAll();
    }//GEN-LAST:event_jButton_AbortActionPerformed
 
    private void jButton_LoadSettingsActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton_LoadSettingsActionPerformed
@@ -721,7 +720,10 @@ public class HtpalmDialog extends javax.swing.JDialog implements MMListenerInter
    }//GEN-LAST:event_jTextField_ExcitationPowerNumberActionPerformed
 
    private void formWindowClosing(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowClosing
-      // shut down the plugin as well
+      //TODO - if acquisition is running, check before exit
+      // abort any running acquisitions
+      control_.abortAll();
+      // shut down the plugin
       htpalm_.dispose();
    }//GEN-LAST:event_formWindowClosing
 

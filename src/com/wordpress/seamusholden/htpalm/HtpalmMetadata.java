@@ -30,9 +30,9 @@ public class HtpalmMetadata {
    @Element
    int nFov_=0;
    @ElementList
-   ArrayList<FovMetadata> fovMetadataList_;
-   @ElementList
    ArrayList<AcqMetadata> acqMetadataList_;
+   @ElementList
+   ArrayList<FovMetadata> fovMetadataList_;
 
    
    

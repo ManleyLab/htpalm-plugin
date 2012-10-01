@@ -12,6 +12,7 @@ import org.micromanager.api.AcquisitionEngine;
 import org.micromanager.utils.MMScriptException;
 import org.micromanager.utils.ReportingUtils;
 import static com.wordpress.seamusholden.htpalm.Debug.DEBUG;
+import java.io.File;
 
 /**
  *
@@ -25,9 +26,11 @@ public class HardwareControl {
    ConfigurationOptions config_ = new ConfigurationOptions();
    SpiralMosaic mosaic_;
    HtpalmMetadata metadata_;
-   private int currentFovNum_;
-   private double currentFovPosX_,currentFovPosY_;
-   private boolean skipCurrentFOV_;
+   int currentFovNum_;
+   double currentFovPosX_,currentFovPosY_;
+   boolean skipCurrentFOV_;
+   Thread currentAcqThread_=null;
+   boolean isInitialized_ = false;
    
    public HardwareControl(MMStudioMainFrame gui_){
       this.gui_ = gui_;
@@ -47,6 +50,7 @@ public class HardwareControl {
       try {
          BeanUtils.copyProperties(config_,newConfig);//copy the properties of newConfig into config_, ready to run acquisition
          initializeHardwareControl();
+         isInitialized_ = true;
       } catch (IllegalAccessException ex) {
          ReportingUtils.logError(ex, "Failed to copy config object");
       } catch (InvocationTargetException ex) {
@@ -59,7 +63,8 @@ public class HardwareControl {
       //set up all the correct file names and metadata  - how is skip fov going to work for saving? - save after every acquisition.
       metadata_ = new HtpalmMetadata(config_,mosaic_);
       //save a copy of the config in the acquisition folder
-      config_.saveConfig(metadata_.getConfigFileName());//save the config in the acquisition folder
+      String configPath =metadata_.acqFolder_+File.separator+metadata_.getConfigFileName();
+      config_.saveConfig(configPath);//save the config in the acquisition folder
       gotoFOV(0);
    }
    
@@ -81,7 +86,7 @@ public class HardwareControl {
 
       //Check whether we will skip this FOV
       if (config_.fovAnalysis_excludeBadFov_){
-         //TODO 
+         //TODO - detect the bacteria
          skipCurrentFOV_=false;
       } else {
          skipCurrentFOV_ = false;
@@ -111,25 +116,91 @@ public class HardwareControl {
       }
    }
    public void acquire1Fov(){
+      if (!isInitialized_){
+            ReportingUtils.showError("Error: Htpalm acquisition must be initialized before starting acquisition!");
+      } 
+      else { 
+         if ( !(currentAcqThread_==null) && currentAcqThread_.isAlive()){
+            ReportingUtils.showError("Error: Cannot start new acquisition while a previous acquisition is running!");
+         } 
+         else {
+            currentAcqThread_ = new Thread(new Acquire1Fov(this));
+            currentAcqThread_.start();
+         }
+      }
+   }
+   
+   public void acquireAll(){
+      if (!isInitialized_){
+            ReportingUtils.showError("Error: Htpalm acquisition must be initialized before starting acquisition!");
+      } 
+      else { 
+         if ( !(currentAcqThread_==null) && currentAcqThread_.isAlive()){
+            ReportingUtils.showError("Error: Cannot start new acquisition while a previous acquisition is running!");
+         }
+         else {
+            currentAcqThread_ = new Thread(new AcquireAllFov(this));
+            currentAcqThread_.start();
+         }
+      }
+   }
+   
+   public void abortAll(){
+      if ( !(currentAcqThread_==null) && currentAcqThread_.isAlive()){
+         currentAcqThread_.interrupt();
+      }
+      //TODO - if an acquisition was interupted, delete the metadata for that acquisition
+   }
+}
+
+class Acquire1Fov implements Runnable{
+   //TODO setup proper interrupt to shut down acquisition
+   HardwareControl control_;
+   Acquire1Fov(HardwareControl control) {
+      this.control_= control;
+   }
+   public void run() {
       //note - in manual mode we ignore skipCurrentFOV_
 
       //update the metadata
       boolean phPreAcquired=true,phPostAcquired=true;// for now this is always the case
       int[] flCh={0};// for now this is always the case
-      metadata_.addNewAcquisition(currentFovNum_, phPreAcquired, phPostAcquired, flCh);
-      //TODO - run the acquisition
-      //save the metadata
-   }
-   public void acquireAll(){
-      //for (int ii;ii< config_.mosaicNFov_){
+      control_.metadata_.addNewAcquisition(control_.currentFovNum_, phPreAcquired, phPostAcquired, flCh);
+      control_.metadata_.saveMetadata();
 
+      // goto FOV - should be there already but just in case
+      control_.gotoFOV(control_.currentFovNum_);
       //TODO - run the acquisition
-      //}
+      if (DEBUG){
+         System.out.println("Acquiring FOV "+control_.currentFovNum_);
+      }
    }
-   public void abortAll(){
-      //TODO - shut down running acquisition
-      //TODO - if an acquisition was interupted, delete the metadata for that acquisition
-   }
-
    
+}
+
+class AcquireAllFov implements Runnable{
+
+   //TODO setup proper interrupt to shut down acquisition
+   HardwareControl control_;
+   AcquireAllFov(HardwareControl control) {
+      this.control_= control;
+   }
+   
+   public void run() {
+      for (int ii=0;ii< control_.config_.mosaicNFov_;ii++){
+         boolean phPreAcquired=true,phPostAcquired=true;// for now this is always the case
+         int[] flCh={0};// for now this is always the case
+         control_.metadata_.addNewAcquisition(control_.currentFovNum_, phPreAcquired, phPostAcquired, flCh);
+         control_.metadata_.saveMetadata();
+
+         control_.gotoFOV(ii);
+         if (control_.skipCurrentFOV_==false){
+            //TODO - run the acquisition
+            if (DEBUG){
+               System.out.println("Acquiring FOV "+control_.currentFovNum_);
+            }
+         }
+      }
+   }
+
 }
