@@ -24,7 +24,7 @@ public class ConfigurationOptions {
    
    //Mosaic config
    double mosaicStartPosX_, mosaicStartPosY_, mosaicStepSizeX_, mosaicStepSizeY_;
-   int mosaicNFov;
+   private int mosaicNFov_;
    //Laser config
    double laserManualExPower_, laserManualActPower_;
    boolean laserControlIsAutomatic_;
@@ -98,7 +98,7 @@ public class ConfigurationOptions {
       mosaicStartPosY_=0.0;
       mosaicStepSizeX_=0.0;
       mosaicStepSizeY_=0.0;
-      mosaicNFov = 100;
+      mosaicNFov_ = 100;
       //Laser config
       laserManualExPower_ = 3.0;
       laserManualActPower_ = 0.3;
@@ -437,6 +437,20 @@ public class ConfigurationOptions {
     */
    public void setLaserActDacName(String laserActDacName_) {
       this.laserActDacName_ = laserActDacName_;
+   }
+
+   /**
+    * @return the mosaicNFov_
+    */
+   public int getMosaicNFov() {
+      return mosaicNFov_;
+   }
+
+   /**
+    * @param mosaicNFov_ the mosaicNFov_ to set
+    */
+   public void setMosaicNFov(int mosaicNFov_) {
+      this.mosaicNFov_ = mosaicNFov_;
    }
 
 }

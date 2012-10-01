@@ -44,7 +44,7 @@ public class InitOptionDialog extends javax.swing.JDialog {
    private void reloadSettings(){
       jTextField_StepSizeX.setText(Double.toString(newConfig_.mosaicStepSizeX_));
       jTextField_StepSizeY.setText(Double.toString(newConfig_.mosaicStepSizeY_));
-      jTextField_MosaicNFov.setText(Integer.toString(newConfig_.mosaicNFov));
+      jTextField_MosaicNFov.setText(Integer.toString(newConfig_.getMosaicNFov()));
       jTextField_AcqFolderName.setText(newConfig_.fileAcqFolder_);
       jTextField_BaseFileName.setText(newConfig_.fileBaseName_);
       jTextField_EmccdCamName.setText(newConfig_.camEmccdName_);
@@ -65,7 +65,7 @@ public class InitOptionDialog extends javax.swing.JDialog {
    private void updateSettings(){
       newConfig_.mosaicStepSizeX_= Double.parseDouble(jTextField_StepSizeX.getText());
       newConfig_.mosaicStepSizeY_= Double.parseDouble(jTextField_StepSizeY.getText());
-      newConfig_.mosaicNFov = Integer.parseInt(jTextField_MosaicNFov.getText());
+      newConfig_.setMosaicNFov(Integer.parseInt(jTextField_MosaicNFov.getText()));
       newConfig_.fileAcqFolder_ = jTextField_AcqFolderName.getText();
       newConfig_.fileBaseName_ = jTextField_BaseFileName.getText();
       newConfig_.camEmccdName_ = jTextField_EmccdCamName.getText();
@@ -664,7 +664,7 @@ public class InitOptionDialog extends javax.swing.JDialog {
    }//GEN-LAST:event_jTextField_PhLampTtlNameActionPerformed
 
    private void jTextField_MosaicNFovActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextField_MosaicNFovActionPerformed
-      newConfig_.mosaicNFov = Integer.parseInt(jTextField_MosaicNFov.getText());
+      newConfig_.setMosaicNFov(Integer.parseInt(jTextField_MosaicNFov.getText()));
    }//GEN-LAST:event_jTextField_MosaicNFovActionPerformed
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

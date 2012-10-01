@@ -54,7 +54,7 @@ public class HardwareControl {
    }
 
    private void initializeHardwareControl(){
-      mosaic_ = new SpiralMosaic(config_.mosaicStartPosX_,config_.mosaicStartPosY_,config_.mosaicStepSizeX_,config_.mosaicStepSizeY_,config_.mosaicNFov);
+      mosaic_ = new SpiralMosaic(config_.mosaicStartPosX_,config_.mosaicStartPosY_,config_.mosaicStepSizeX_,config_.mosaicStepSizeY_, config_.getMosaicNFov());
       //set up all the correct file names and metadata  - how is skip fov going to work for saving? - save after every acquisition.
       metadata_ = new HtpalmMetadata(config_,mosaic_);
       //save a copy of the config in the acquisition folder

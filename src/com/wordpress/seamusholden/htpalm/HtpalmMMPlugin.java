@@ -40,7 +40,7 @@ public class HtpalmMMPlugin implements org.micromanager.api.MMPlugin {
    
    @Override
    public void dispose() {
-      //TODO
+      //TODO close down properly
    }
 
    @Override
