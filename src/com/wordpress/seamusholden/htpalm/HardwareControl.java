@@ -295,20 +295,25 @@ public class HardwareControl {
    
    private void acquire1FovAuto(AcqMetadata acqMetadata){
       
-         if (acqMetadata.phPreAcquire_=true){
-            //acquire ph pre
-            acquire1Phase(acqMetadata.acqNamePhPre_);
-         }
+      String fname;
 
-         for (int ii: acqMetadata.flCh_){
-            //TODO - multichannel logic to go here
-            acquire1Fl(acqMetadata.acqNameFl[ii]);
-         }
-      
-         if (acqMetadata.phPostAcquire_=true){
-            //acquire ph post 
-            acquire1Phase(acqMetadata.acqNamePhPost_);
-         }
+      if (acqMetadata.phPreAcquire_=true){
+         //acquire ph pre
+         fname =acqMetadata.acqNamePhPre_ ;
+         acquire1Phase(fname);
+      }
+
+      for (int ii: acqMetadata.flCh_){
+         //TODO - multichannel logic to go here
+         fname =acqMetadata.acqNameFl[ii];
+         acquire1Fl(fname);
+      }
+   
+      if (acqMetadata.phPostAcquire_=true){
+         //acquire ph post 
+         fname =acqMetadata.acqNamePhPost_;
+         acquire1Phase(fname);
+      }
    }
 
    private void acquire1Phase(String fname){
@@ -320,7 +325,8 @@ public class HardwareControl {
    
          //run the acquisition
          String camName = config_.camPhName_;
-         String rootDirName = fname;
+         String rootDirName = config_.fileAcqFolder_;
+         //TODO add an acquisition name!
          int numFrames = 1;
          double intervalMs = 0;
          double exposureTime = config_.camPhExposureMs_;
@@ -341,7 +347,7 @@ public class HardwareControl {
          
          //run the acquisition
          String camName = config_.camEmccdName_;
-         String rootDirName = fname;
+         String rootDirName = config_.fileAcqFolder_;
          int numFrames = config_.getCamEmccdNumFrames();
          double intervalMs = 0;
          double exposureTime = config_.camEmccdExposureMs_;
