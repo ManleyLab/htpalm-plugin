@@ -140,22 +140,18 @@ public class HardwareControl {
    public void acquireAll(){
       //TODO  - check we are not about to overwrite an existing acquisition
       //TODO - set the laser powers, ttls
-      if (!isInitialized_){
-            ReportingUtils.showError("Error: Htpalm acquisition must be initialized before starting acquisition!");
-      } 
-      else { 
-         if ( !(currentAcqThread_==null) && currentAcqThread_.isAlive()){
-            ReportingUtils.showError("Error: Cannot start new acquisition while a previous acquisition is running!");
-         } else {
-            currentAcqThread_ = new Thread(new AcquireAllFov(this));
-            currentAcqThread_.start();
-         }
+
+      if ( !(currentAcqThread_==null) && currentAcqThread_.isAlive()){
+         ReportingUtils.showError("Error: Cannot start new acquisition while a previous acquisition is running!");
+      } else {
+         currentAcqThread_ = new Thread(new AcquireAllFov(this));
+         currentAcqThread_.start();
       }
-   }
    
    public void abortAll(){
       if ( !(currentAcqThread_==null) && currentAcqThread_.isAlive()){
          currentAcqThread_.interrupt();
+         acq_.abortRequest();//Shut down current acquisition
       }
       //TODO - if an acquisition was interupted, delete the metadata for that acquisition
    }
@@ -299,24 +295,21 @@ public class HardwareControl {
 
       if (acqMetadata.phPreAcquire_=true){
          //acquire ph pre
-         fname =acqMetadata.acqNamePhPre_ ;
-         acquire1Phase(fname);
+         acquire1Phase(acqMetadata.acqNamePhPre_);
       }
 
       for (int ii: acqMetadata.flCh_){
          //TODO - multichannel logic to go here
-         fname =acqMetadata.acqNameFl[ii];
-         acquire1Fl(fname);
+         acquire1Fl(acqMetadata.acqNameFl[ii]);
       }
    
       if (acqMetadata.phPostAcquire_=true){
          //acquire ph post 
-         fname =acqMetadata.acqNamePhPost_;
-         acquire1Phase(fname);
+         acquire1Phase(acqMetadata.acqNamePhPost_);
       }
    }
 
-   private void acquire1Phase(String fname){
+   private void acquire1Phase(String acqName){
       try {
          //set the ttls - note this assumes the auto shutter is on and working happily
          core_.setProperty(config_.getLaserShutterTtlName(0),config_.getLaserShutterTtlName(1),0);//Lasers off
@@ -332,13 +325,13 @@ public class HardwareControl {
          double exposureTime = config_.camPhExposureMs_;
          double delayTime = config_.camPhDelayMs_;
          boolean closeOnExit = true;
-         acquire1Movie(camName, rootDirName, numFrames, intervalMs, exposureTime,delayTime, closeOnExit);
+         acquire1Movie(camName, acqName, rootDirName, numFrames, intervalMs, exposureTime,delayTime, closeOnExit);
       } catch (Exception ex) {
          throw new RuntimeException(ex);
       }
    }
    
-   private void acquire1Fl(String fname){
+   private void acquire1Fl(String acqName){
       try {
          //set the ttls - note this assumes the auto shutter is on and working happily
          core_.setProperty(config_.getLaserShutterTtlName(0),config_.getLaserShutterTtlName(1),1);//Lasers ON
@@ -353,18 +346,19 @@ public class HardwareControl {
          double exposureTime = config_.camEmccdExposureMs_;
          double delayTime = config_.camPhDelayMs_;
          boolean closeOnExit = true;
-         acquire1Movie(camName, rootDirName, numFrames, intervalMs, exposureTime,delayTime, closeOnExit);
+         acquire1Movie(camName, acqName, rootDirName, numFrames, intervalMs, exposureTime,delayTime, closeOnExit);
       } catch (Exception ex) {
          throw new RuntimeException(ex);
       }
    }
 
-   private void acquire1Movie(String camName, String rootDirName, int numFrames, double intervalMs, double exposureTime,double delayTime, boolean closeOnExit){
+   private void acquire1Movie(String camName, String acqName, String rootDirName, int numFrames, double intervalMs, double exposureTime,double delayTime, boolean closeOnExit){
       try{
          core_.setProperty("Core", "Camera", camName);
          core_.setProperty(camName,"Exposure",exposureTime);
          
          acq_.setRootName(rootDirName);
+         acq_.setDirName(acqName);
          acq_.setFrames(numFrames,intervalMs);
          acq_.setUpdateLiveWindow(true);
          core_.waitForSystem();
