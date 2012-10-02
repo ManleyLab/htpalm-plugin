@@ -26,18 +26,22 @@ public class ConfigurationOptions {
    //Mosaic config
    double mosaicStartPosX_, mosaicStartPosY_, mosaicStepSizeX_, mosaicStepSizeY_;
    int mosaicNFov_;
-   //Laser config
-   double laserManualExPower_, laserManualActPower_;
-   boolean laserControlIsAutomatic_;
-   String laserExDacName_, laserExTtlName_;
-   String laserActDacName_;
-   String  laserActTtlName_, laserShutterTtlName_,phLampTtlName_;
    //FOV analysis/segmenation config        
    boolean fovAnalysis_excludeBadFov_;
    //Camera config
    String camEmccdName_, camPhName_;
    double camEmccdExposureMs_,camPhExposureMs_,camPhDelayMs_;
+   int camEmccdNumFrames_;
    boolean camConvertPhExposureToSec_;
+   //Laser config
+   double laserManualExPower_, laserManualActPower_;
+   boolean laserControlIsAutomatic_;
+   String[] laserExDacName_;
+   String[] laserExTtlName_;
+   String[] laserActDacName_;
+   String[] laserActTtlName_;
+   String[] laserShutterTtlName_;
+   String[] phLampTtlName_;
    //File config
    String fileAcqFolder_, fileBaseName_;
    
@@ -104,12 +108,12 @@ public class ConfigurationOptions {
       laserManualExPower_ = 3.0;
       laserManualActPower_ = 0.3;
       laserControlIsAutomatic_ = false;
-      laserExDacName_= "AOTF-DAC1,Volts";
-      laserExTtlName_= "AOTF-Switch,TTL1";
-      laserActDacName_= "AOTF-DAC3,Volts";
-      laserActTtlName_= "AOTF-Switch,TTL3";
-      laserShutterTtlName_ = "TTL-Switch,TTL2";
-      phLampTtlName_= "TTL-Switch,TTL3";
+      setLaserExDacName(new String[]{"AOTF-DAC1","Volts"});
+      setLaserExTtlName(new String[]{"AOTF-Switch","TTL1"});
+      setLaserActDacName(new String[]{"AOTF-DAC3","Volts"});
+      setLaserActTtlName(new String[]{"AOTF-Switch","TTL3"});
+      setLaserShutterTtlName(new String[]{"TTL-Switch","TTL2"});
+      setPhLampTtlName(new String[]{"TTL-Switch","TTL3"});
       //FOV analysis/segmenation config        
       fovAnalysis_excludeBadFov_ = false;
       //Camera config
@@ -118,6 +122,7 @@ public class ConfigurationOptions {
       camEmccdExposureMs_=30;
       camPhExposureMs_=200;
       camPhDelayMs_=500;
+      camEmccdNumFrames_ = 10000;
       camConvertPhExposureToSec_=true;
       //File config
       fileAcqFolder_="."; 
@@ -233,73 +238,86 @@ public class ConfigurationOptions {
    /**
     * @return the laserExDacName_
     */
-   public String getLaserExDacName() {
-      return laserExDacName_;
+   public String getLaserExDacName(int idx) {
+      return getLaserExDacName()[idx];
    }
 
    /**
     * @param laserExDacName_ the laserExDacName_ to set
     */
-   public void setLaserExDacName(String laserExDacName_) {
-      this.laserExDacName_ = laserExDacName_;
+   public void setLaserExDacName(String laserExDacName_, int idx) {
+      this.getLaserExDacName()[idx] = laserExDacName_;
    }
 
    /**
     * @return the laserExTtlName_
     */
-   public String getLaserExTtlName() {
-      return laserExTtlName_;
+   public String getLaserExTtlName(int idx) {
+      return getLaserExTtlName()[idx];
    }
 
    /**
     * @param laserExTtlName_ the laserExTtlName_ to set
     */
-   public void setLaserExTtlName(String laserExTtlName_) {
-      this.laserExTtlName_ = laserExTtlName_;
+   public void setLaserExTtlName(String laserExTtlName_, int idx) {
+      this.getLaserExTtlName()[idx] = laserExTtlName_;
    }
 
    /**
     * @return the laserActTtlName_
     */
-   public String getLaserActTtlName() {
-      return laserActTtlName_;
+   public String getLaserActTtlName(int idx) {
+      return getLaserActTtlName()[idx];
    }
 
    /**
     * @param laserActTtlName_ the laserActTtlName_ to set
     */
-   public void setLaserActTtlName(String laserActTtlName_) {
-      this.laserActTtlName_ = laserActTtlName_;
+   public void setLaserActTtlName(String laserActTtlName_, int idx) {
+      this.getLaserActTtlName()[idx] = laserActTtlName_;
    }
 
    /**
     * @return the laserShutterTtlName_
     */
-   public String getLaserShutterTtlName() {
-      return laserShutterTtlName_;
+   public String getLaserShutterTtlName(int idx) {
+      return getLaserShutterTtlName()[idx];
    }
 
    /**
     * @param laserShutterTtlName_ the laserShutterTtlName_ to set
     */
-   public void setLaserShutterTtlName(String laserShutterTtlName_) {
-      this.laserShutterTtlName_ = laserShutterTtlName_;
+   public void setLaserShutterTtlName(String laserShutterTtlName_, int idx) {
+      this.getLaserShutterTtlName()[idx] = laserShutterTtlName_;
    }
 
    /**
     * @return the phLampTtlName_
     */
-   public String getPhLampTtlName() {
-      return phLampTtlName_;
+   public String getPhLampTtlName(int idx) {
+      return getPhLampTtlName()[idx];
    }
 
    /**
     * @param phLampTtlName_ the phLampTtlName_ to set
     */
-   public void setPhLampTtlName(String phLampTtlName_) {
-      this.phLampTtlName_ = phLampTtlName_;
+   public void setPhLampTtlName(String phLampTtlName_, int idx) {
+      this.getPhLampTtlName()[idx] = phLampTtlName_;
    }
 
+   /**
+    * @return the laserActDacName_
+    */
+   public String getLaserActDacName(int idx) {
+      return getLaserActDacName()[idx];
+   }
+
+   /**
+    * @param laserActDacName_ the laserActDacName_ to set
+    */
+   public void setLaserActDacName(String laserActDacName_, int idx) {
+      this.getLaserActDacName()[idx] = laserActDacName_;
+   }
    /**
     * @return the fovAnalysis_excludeBadFov_
     */
@@ -426,19 +444,6 @@ public class ConfigurationOptions {
       this.fileBaseName_ = fileBaseName;
    }
 
-   /**
-    * @return the laserActDacName_
-    */
-   public String getLaserActDacName() {
-      return laserActDacName_;
-   }
-
-   /**
-    * @param laserActDacName_ the laserActDacName_ to set
-    */
-   public void setLaserActDacName(String laserActDacName_) {
-      this.laserActDacName_ = laserActDacName_;
-   }
 
    /**
     * @return the mosaicNFov_
@@ -452,6 +457,104 @@ public class ConfigurationOptions {
     */
    public void setMosaicNFov(int mosaicNFov_) {
       this.mosaicNFov_ = mosaicNFov_;
+   }
+
+   /**
+    * @return the laserExDacName_
+    */
+   public String[] getLaserExDacName() {
+      return laserExDacName_;
+   }
+
+   /**
+    * @param laserExDacName_ the laserExDacName_ to set
+    */
+   public void setLaserExDacName(String[] laserExDacName_) {
+      this.laserExDacName_ = laserExDacName_;
+   }
+
+   /**
+    * @return the laserExTtlName_
+    */
+   public String[] getLaserExTtlName() {
+      return laserExTtlName_;
+   }
+
+   /**
+    * @param laserExTtlName_ the laserExTtlName_ to set
+    */
+   public void setLaserExTtlName(String[] laserExTtlName_) {
+      this.laserExTtlName_ = laserExTtlName_;
+   }
+
+   /**
+    * @return the laserActDacName_
+    */
+   public String[] getLaserActDacName() {
+      return laserActDacName_;
+   }
+
+   /**
+    * @param laserActDacName_ the laserActDacName_ to set
+    */
+   public void setLaserActDacName(String[] laserActDacName_) {
+      this.laserActDacName_ = laserActDacName_;
+   }
+
+   /**
+    * @return the laserActTtlName_
+    */
+   public String[] getLaserActTtlName() {
+      return laserActTtlName_;
+   }
+
+   /**
+    * @param laserActTtlName_ the laserActTtlName_ to set
+    */
+   public void setLaserActTtlName(String[] laserActTtlName_) {
+      this.laserActTtlName_ = laserActTtlName_;
+   }
+
+   /**
+    * @return the laserShutterTtlName_
+    */
+   public String[] getLaserShutterTtlName() {
+      return laserShutterTtlName_;
+   }
+
+   /**
+    * @param laserShutterTtlName_ the laserShutterTtlName_ to set
+    */
+   public void setLaserShutterTtlName(String[] laserShutterTtlName_) {
+      this.laserShutterTtlName_ = laserShutterTtlName_;
+   }
+
+   /**
+    * @return the phLampTtlName_
+    */
+   public String[] getPhLampTtlName() {
+      return phLampTtlName_;
+   }
+
+   /**
+    * @param phLampTtlName_ the phLampTtlName_ to set
+    */
+   public void setPhLampTtlName(String[] phLampTtlName_) {
+      this.phLampTtlName_ = phLampTtlName_;
+   }
+
+   /**
+    * @return the camEmccdNumFrames_
+    */
+   public int getCamEmccdNumFrames() {
+      return camEmccdNumFrames_;
+   }
+
+   /**
+    * @param camEmccdNumFrames_ the camEmccdNumFrames_ to set
+    */
+   public void setCamEmccdNumFrames(int camEmccdNumFrames_) {
+      this.camEmccdNumFrames_ = camEmccdNumFrames_;
    }
 
 }

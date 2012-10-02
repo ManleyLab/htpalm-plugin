@@ -258,29 +258,45 @@
           <Layout>
             <DimensionLayout dim="0">
               <Group type="103" groupAlignment="0" attributes="0">
-                  <Group type="102" alignment="0" attributes="0">
-                      <EmptySpace max="-2" attributes="0"/>
-                      <Group type="103" groupAlignment="0" attributes="0">
-                          <Component id="jLabel_EmccdCamName" alignment="0" min="-2" max="-2" attributes="0"/>
-                          <Component id="jLabel_EmccdExposureTime" alignment="0" min="-2" max="-2" attributes="0"/>
-                          <Component id="jLabel_PhCamName" alignment="0" min="-2" max="-2" attributes="0"/>
-                          <Component id="jLabel_PhExposureTime" alignment="0" min="-2" max="-2" attributes="0"/>
-                          <Component id="jLabel_PhCamDelayTime" alignment="0" min="-2" max="-2" attributes="0"/>
-                      </Group>
-                      <EmptySpace min="-2" pref="65" max="-2" attributes="0"/>
-                      <Group type="103" groupAlignment="0" attributes="0">
-                          <Component id="jTextField_EmccdCamName" alignment="1" max="32767" attributes="0"/>
-                          <Component id="jTextField_EmccdExposureTime" alignment="1" max="32767" attributes="0"/>
-                          <Component id="jTextField_PhCamName" alignment="1" max="32767" attributes="0"/>
-                          <Component id="jTextField_PhExposureTime" alignment="1" max="32767" attributes="0"/>
-                          <Component id="jTextField_PhCamDelayTime" alignment="1" max="32767" attributes="0"/>
-                      </Group>
-                      <EmptySpace max="-2" attributes="0"/>
-                  </Group>
                   <Group type="102" attributes="0">
-                      <EmptySpace min="20" pref="20" max="-2" attributes="0"/>
-                      <Component id="jCheckBox_ConvertPhExposureMsToSec" min="-2" max="-2" attributes="0"/>
-                      <EmptySpace min="127" pref="127" max="-2" attributes="0"/>
+                      <EmptySpace max="-2" attributes="0"/>
+                      <Group type="103" groupAlignment="0" attributes="0">
+                          <Group type="102" alignment="0" attributes="0">
+                              <Group type="103" groupAlignment="0" attributes="0">
+                                  <Component id="jLabel_EmccdCamName" alignment="0" min="-2" max="-2" attributes="0"/>
+                                  <Component id="jLabel_EmccdExposureTime" alignment="0" min="-2" max="-2" attributes="0"/>
+                              </Group>
+                              <EmptySpace min="-2" pref="66" max="-2" attributes="0"/>
+                              <Group type="103" groupAlignment="0" attributes="0">
+                                  <Component id="jTextField_EmccdCamName" alignment="1" max="32767" attributes="0"/>
+                                  <Component id="jTextField_EmccdExposureTime" alignment="1" max="32767" attributes="0"/>
+                              </Group>
+                          </Group>
+                          <Group type="102" alignment="0" attributes="0">
+                              <Group type="103" groupAlignment="0" attributes="0">
+                                  <Component id="jLabel_PhCamName" alignment="0" min="-2" max="-2" attributes="0"/>
+                                  <Component id="jLabel_PhExposureTime" alignment="0" min="-2" max="-2" attributes="0"/>
+                                  <Component id="jLabel_PhCamDelayTime" alignment="0" min="-2" max="-2" attributes="0"/>
+                              </Group>
+                              <EmptySpace min="-2" pref="65" max="-2" attributes="0"/>
+                              <Group type="103" groupAlignment="0" attributes="0">
+                                  <Component id="jTextField_PhCamName" alignment="1" max="32767" attributes="0"/>
+                                  <Component id="jTextField_PhExposureTime" alignment="1" max="32767" attributes="0"/>
+                                  <Component id="jTextField_PhCamDelayTime" alignment="1" max="32767" attributes="0"/>
+                              </Group>
+                          </Group>
+                          <Group type="102" alignment="0" attributes="0">
+                              <EmptySpace min="-2" pref="10" max="-2" attributes="0"/>
+                              <Component id="jCheckBox_ConvertPhExposureMsToSec" min="-2" max="-2" attributes="0"/>
+                              <EmptySpace min="-2" pref="117" max="-2" attributes="0"/>
+                          </Group>
+                          <Group type="102" alignment="0" attributes="0">
+                              <Component id="jLabel_EmccdNumFrames" min="-2" max="-2" attributes="0"/>
+                              <EmptySpace min="-2" pref="75" max="-2" attributes="0"/>
+                              <Component id="jTextField_EmccdNumFrames" max="32767" attributes="0"/>
+                          </Group>
+                      </Group>
+                      <EmptySpace max="-2" attributes="0"/>
                   </Group>
               </Group>
             </DimensionLayout>
@@ -296,6 +312,11 @@
                       <Group type="103" groupAlignment="3" attributes="0">
                           <Component id="jLabel_EmccdExposureTime" alignment="3" min="-2" max="-2" attributes="0"/>
                           <Component id="jTextField_EmccdExposureTime" alignment="3" min="-2" max="-2" attributes="0"/>
+                      </Group>
+                      <EmptySpace min="-2" pref="4" max="-2" attributes="0"/>
+                      <Group type="103" groupAlignment="3" attributes="0">
+                          <Component id="jLabel_EmccdNumFrames" alignment="3" min="-2" max="-2" attributes="0"/>
+                          <Component id="jTextField_EmccdNumFrames" alignment="3" min="-2" max="-2" attributes="0"/>
                       </Group>
                       <EmptySpace max="-2" attributes="0"/>
                       <Group type="103" groupAlignment="3" attributes="0">
@@ -314,7 +335,7 @@
                       </Group>
                       <EmptySpace type="unrelated" max="-2" attributes="0"/>
                       <Component id="jCheckBox_ConvertPhExposureMsToSec" min="-2" max="-2" attributes="0"/>
-                      <EmptySpace pref="61" max="32767" attributes="0"/>
+                      <EmptySpace pref="37" max="32767" attributes="0"/>
                   </Group>
               </Group>
             </DimensionLayout>
@@ -395,6 +416,19 @@
                 <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jTextField_PhCamDelayTimeActionPerformed"/>
               </Events>
             </Component>
+            <Component class="javax.swing.JLabel" name="jLabel_EmccdNumFrames">
+              <Properties>
+                <Property name="text" type="java.lang.String" value="EMCCD num. frames:"/>
+              </Properties>
+            </Component>
+            <Component class="javax.swing.JTextField" name="jTextField_EmccdNumFrames">
+              <Properties>
+                <Property name="horizontalAlignment" type="int" value="11"/>
+              </Properties>
+              <Events>
+                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jTextField_EmccdNumFramesActionPerformed"/>
+              </Events>
+            </Component>
           </SubComponents>
         </Container>
         <Container class="javax.swing.JPanel" name="jPanel2">
@@ -409,7 +443,7 @@
           <Layout>
             <DimensionLayout dim="0">
               <Group type="103" groupAlignment="0" attributes="0">
-                  <Group type="102" attributes="0">
+                  <Group type="102" alignment="0" attributes="0">
                       <EmptySpace min="-2" max="-2" attributes="0"/>
                       <Group type="103" groupAlignment="0" attributes="0">
                           <Component id="jLabel_ExcitationDacName" alignment="0" min="-2" max="-2" attributes="0"/>
@@ -419,14 +453,25 @@
                           <Component id="jLabel_LaserShutterTtlName" alignment="0" min="-2" max="-2" attributes="0"/>
                           <Component id="jLabel_PhLampTtlName" alignment="0" min="-2" max="-2" attributes="0"/>
                       </Group>
-                      <EmptySpace type="separate" min="-2" max="-2" attributes="0"/>
+                      <EmptySpace min="-2" max="-2" attributes="0"/>
                       <Group type="103" groupAlignment="0" attributes="0">
-                          <Component id="jTextField_ExcitationDacName" alignment="1" max="32767" attributes="0"/>
-                          <Component id="jTextField_ExcitationTtlName" alignment="1" max="32767" attributes="0"/>
-                          <Component id="jTextField_ActivationDacName" alignment="1" max="32767" attributes="0"/>
-                          <Component id="jTextField_ActivationTtlName" alignment="1" max="32767" attributes="0"/>
-                          <Component id="jTextField_LaserShutterTtlName" alignment="1" pref="157" max="32767" attributes="0"/>
-                          <Component id="jTextField_PhLampTtlName" alignment="1" pref="157" max="32767" attributes="0"/>
+                          <Component id="jTextField_LaserShutterTtLabel" alignment="1" max="32767" attributes="0"/>
+                          <Component id="jTextField_ActivationTtlLabel" alignment="1" max="32767" attributes="0"/>
+                          <Component id="jTextField_ActivationLabel" alignment="1" max="32767" attributes="0"/>
+                          <Component id="jTextField_ExcitationTtlLabel" max="32767" attributes="0"/>
+                          <Component id="jTextField_PhLampTtlLabel" max="32767" attributes="0"/>
+                          <Component id="jTextField_ExcitationDacLabel" alignment="0" min="-2" pref="94" max="-2" attributes="0"/>
+                          <Component id="jLabel1" alignment="0" min="-2" max="-2" attributes="0"/>
+                      </Group>
+                      <EmptySpace min="-2" max="-2" attributes="0"/>
+                      <Group type="103" groupAlignment="0" attributes="0">
+                          <Component id="jTextField_ActivationTtlProp" alignment="1" max="32767" attributes="0"/>
+                          <Component id="jTextField_ActivationDacProp" alignment="1" max="32767" attributes="0"/>
+                          <Component id="jTextField_ExcitationTtlProp" alignment="0" max="32767" attributes="0"/>
+                          <Component id="jTextField_LaserShutterTtlProp" alignment="1" max="32767" attributes="0"/>
+                          <Component id="jTextField_PhLampTtlProp" max="32767" attributes="0"/>
+                          <Component id="jTextField_ExcitationDacProp" alignment="0" min="-2" pref="69" max="-2" attributes="0"/>
+                          <Component id="jLabel2" min="-2" max="-2" attributes="0"/>
                       </Group>
                       <EmptySpace min="-2" max="-2" attributes="0"/>
                   </Group>
@@ -435,37 +480,59 @@
             <DimensionLayout dim="1">
               <Group type="103" groupAlignment="0" attributes="0">
                   <Group type="102" alignment="0" attributes="0">
-                      <EmptySpace max="-2" attributes="0"/>
-                      <Group type="103" groupAlignment="3" attributes="0">
-                          <Component id="jLabel_ExcitationDacName" alignment="3" min="-2" max="-2" attributes="0"/>
-                          <Component id="jTextField_ExcitationDacName" alignment="3" min="-2" max="-2" attributes="0"/>
+                      <EmptySpace min="-2" pref="13" max="-2" attributes="0"/>
+                      <Group type="103" groupAlignment="0" attributes="0">
+                          <Component id="jLabel2" alignment="1" min="-2" max="-2" attributes="0"/>
+                          <Component id="jLabel1" min="-2" max="-2" attributes="0"/>
                       </Group>
                       <EmptySpace max="-2" attributes="0"/>
-                      <Group type="103" groupAlignment="3" attributes="0">
-                          <Component id="jLabel_ExcitationTtlName" alignment="3" min="-2" max="-2" attributes="0"/>
-                          <Component id="jTextField_ExcitationTtlName" alignment="3" min="-2" max="-2" attributes="0"/>
+                      <Group type="103" groupAlignment="1" attributes="0">
+                          <Group type="102" alignment="1" attributes="0">
+                              <Component id="jTextField_ExcitationDacProp" min="-2" max="-2" attributes="0"/>
+                              <EmptySpace max="-2" attributes="0"/>
+                              <Component id="jTextField_ExcitationTtlProp" min="-2" max="-2" attributes="0"/>
+                              <EmptySpace max="-2" attributes="0"/>
+                              <Component id="jTextField_ActivationDacProp" min="-2" max="-2" attributes="0"/>
+                              <EmptySpace max="-2" attributes="0"/>
+                              <Component id="jTextField_ActivationTtlProp" min="-2" max="-2" attributes="0"/>
+                              <EmptySpace max="-2" attributes="0"/>
+                              <Component id="jTextField_LaserShutterTtlProp" min="-2" max="-2" attributes="0"/>
+                              <EmptySpace max="-2" attributes="0"/>
+                              <Component id="jTextField_PhLampTtlProp" min="-2" max="-2" attributes="0"/>
+                          </Group>
+                          <Group type="102" alignment="1" attributes="0">
+                              <Group type="103" groupAlignment="3" attributes="0">
+                                  <Component id="jLabel_ExcitationDacName" alignment="3" min="-2" max="-2" attributes="0"/>
+                                  <Component id="jTextField_ExcitationDacLabel" alignment="3" min="-2" max="-2" attributes="0"/>
+                              </Group>
+                              <EmptySpace max="-2" attributes="0"/>
+                              <Group type="103" groupAlignment="3" attributes="0">
+                                  <Component id="jLabel_ExcitationTtlName" alignment="3" min="-2" max="-2" attributes="0"/>
+                                  <Component id="jTextField_ExcitationTtlLabel" alignment="3" min="-2" max="-2" attributes="0"/>
+                              </Group>
+                              <EmptySpace max="-2" attributes="0"/>
+                              <Group type="103" groupAlignment="3" attributes="0">
+                                  <Component id="jLabel_ActivationDacName" alignment="3" min="-2" max="-2" attributes="0"/>
+                                  <Component id="jTextField_ActivationLabel" alignment="3" min="-2" max="-2" attributes="0"/>
+                              </Group>
+                              <EmptySpace max="-2" attributes="0"/>
+                              <Group type="103" groupAlignment="3" attributes="0">
+                                  <Component id="jLabel_ActivationTtlName" alignment="3" min="-2" max="-2" attributes="0"/>
+                                  <Component id="jTextField_ActivationTtlLabel" alignment="3" min="-2" max="-2" attributes="0"/>
+                              </Group>
+                              <EmptySpace max="-2" attributes="0"/>
+                              <Group type="103" groupAlignment="3" attributes="0">
+                                  <Component id="jLabel_LaserShutterTtlName" alignment="3" min="-2" max="-2" attributes="0"/>
+                                  <Component id="jTextField_LaserShutterTtLabel" alignment="3" min="-2" max="-2" attributes="0"/>
+                              </Group>
+                              <EmptySpace max="-2" attributes="0"/>
+                              <Group type="103" groupAlignment="3" attributes="0">
+                                  <Component id="jLabel_PhLampTtlName" alignment="3" min="-2" max="-2" attributes="0"/>
+                                  <Component id="jTextField_PhLampTtlLabel" alignment="3" min="-2" max="-2" attributes="0"/>
+                              </Group>
+                          </Group>
                       </Group>
-                      <EmptySpace max="-2" attributes="0"/>
-                      <Group type="103" groupAlignment="3" attributes="0">
-                          <Component id="jLabel_ActivationDacName" alignment="3" min="-2" max="-2" attributes="0"/>
-                          <Component id="jTextField_ActivationDacName" alignment="3" min="-2" max="-2" attributes="0"/>
-                      </Group>
-                      <EmptySpace max="-2" attributes="0"/>
-                      <Group type="103" groupAlignment="3" attributes="0">
-                          <Component id="jLabel_ActivationTtlName" alignment="3" min="-2" max="-2" attributes="0"/>
-                          <Component id="jTextField_ActivationTtlName" alignment="3" min="-2" max="-2" attributes="0"/>
-                      </Group>
-                      <EmptySpace max="-2" attributes="0"/>
-                      <Group type="103" groupAlignment="3" attributes="0">
-                          <Component id="jLabel_LaserShutterTtlName" alignment="3" min="-2" max="-2" attributes="0"/>
-                          <Component id="jTextField_LaserShutterTtlName" alignment="3" min="-2" max="-2" attributes="0"/>
-                      </Group>
-                      <EmptySpace max="-2" attributes="0"/>
-                      <Group type="103" groupAlignment="3" attributes="0">
-                          <Component id="jLabel_PhLampTtlName" alignment="3" min="-2" max="-2" attributes="0"/>
-                          <Component id="jTextField_PhLampTtlName" alignment="3" min="-2" max="-2" attributes="0"/>
-                      </Group>
-                      <EmptySpace pref="65" max="32767" attributes="0"/>
+                      <EmptySpace pref="43" max="32767" attributes="0"/>
                   </Group>
               </Group>
             </DimensionLayout>
@@ -501,53 +568,111 @@
                 <Property name="text" type="java.lang.String" value="PH lamp TTL name:"/>
               </Properties>
             </Component>
-            <Component class="javax.swing.JTextField" name="jTextField_ExcitationDacName">
+            <Component class="javax.swing.JTextField" name="jTextField_ExcitationDacLabel">
               <Properties>
                 <Property name="horizontalAlignment" type="int" value="11"/>
               </Properties>
               <Events>
-                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jTextField_ExcitationDacNameActionPerformed"/>
+                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jTextField_ExcitationDacLabelActionPerformed"/>
               </Events>
             </Component>
-            <Component class="javax.swing.JTextField" name="jTextField_ExcitationTtlName">
+            <Component class="javax.swing.JTextField" name="jTextField_ExcitationTtlLabel">
               <Properties>
                 <Property name="horizontalAlignment" type="int" value="11"/>
               </Properties>
               <Events>
-                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jTextField_ExcitationTtlNameActionPerformed"/>
+                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jTextField_ExcitationTtlLabelActionPerformed"/>
               </Events>
             </Component>
-            <Component class="javax.swing.JTextField" name="jTextField_ActivationDacName">
+            <Component class="javax.swing.JTextField" name="jTextField_ActivationLabel">
               <Properties>
                 <Property name="horizontalAlignment" type="int" value="11"/>
               </Properties>
               <Events>
-                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jTextField_ActivationDacNameActionPerformed"/>
+                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jTextField_ActivationLabelActionPerformed"/>
               </Events>
             </Component>
-            <Component class="javax.swing.JTextField" name="jTextField_ActivationTtlName">
+            <Component class="javax.swing.JTextField" name="jTextField_ActivationTtlLabel">
               <Properties>
                 <Property name="horizontalAlignment" type="int" value="11"/>
               </Properties>
               <Events>
-                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jTextField_ActivationTtlNameActionPerformed"/>
+                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jTextField_ActivationTtlLabelActionPerformed"/>
               </Events>
             </Component>
-            <Component class="javax.swing.JTextField" name="jTextField_LaserShutterTtlName">
+            <Component class="javax.swing.JTextField" name="jTextField_LaserShutterTtLabel">
               <Properties>
                 <Property name="horizontalAlignment" type="int" value="11"/>
               </Properties>
               <Events>
-                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jTextField_LaserShutterTtlNameActionPerformed"/>
+                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jTextField_LaserShutterTtLabelActionPerformed"/>
               </Events>
             </Component>
-            <Component class="javax.swing.JTextField" name="jTextField_PhLampTtlName">
+            <Component class="javax.swing.JTextField" name="jTextField_PhLampTtlLabel">
               <Properties>
                 <Property name="horizontalAlignment" type="int" value="11"/>
               </Properties>
               <Events>
-                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jTextField_PhLampTtlNameActionPerformed"/>
+                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jTextField_PhLampTtlLabelActionPerformed"/>
               </Events>
+            </Component>
+            <Component class="javax.swing.JTextField" name="jTextField_ExcitationDacProp">
+              <Properties>
+                <Property name="horizontalAlignment" type="int" value="11"/>
+              </Properties>
+              <Events>
+                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jTextField_ExcitationDacPropActionPerformed"/>
+              </Events>
+            </Component>
+            <Component class="javax.swing.JTextField" name="jTextField_PhLampTtlProp">
+              <Properties>
+                <Property name="horizontalAlignment" type="int" value="11"/>
+              </Properties>
+              <Events>
+                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jTextField_PhLampTtlPropActionPerformed"/>
+              </Events>
+            </Component>
+            <Component class="javax.swing.JTextField" name="jTextField_ExcitationTtlProp">
+              <Properties>
+                <Property name="horizontalAlignment" type="int" value="11"/>
+              </Properties>
+              <Events>
+                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jTextField_ExcitationTtlPropActionPerformed"/>
+              </Events>
+            </Component>
+            <Component class="javax.swing.JTextField" name="jTextField_ActivationDacProp">
+              <Properties>
+                <Property name="horizontalAlignment" type="int" value="11"/>
+              </Properties>
+              <Events>
+                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jTextField_ActivationDacPropActionPerformed"/>
+              </Events>
+            </Component>
+            <Component class="javax.swing.JTextField" name="jTextField_ActivationTtlProp">
+              <Properties>
+                <Property name="horizontalAlignment" type="int" value="11"/>
+              </Properties>
+              <Events>
+                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jTextField_ActivationTtlPropActionPerformed"/>
+              </Events>
+            </Component>
+            <Component class="javax.swing.JTextField" name="jTextField_LaserShutterTtlProp">
+              <Properties>
+                <Property name="horizontalAlignment" type="int" value="11"/>
+              </Properties>
+              <Events>
+                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jTextField_LaserShutterTtlPropActionPerformed"/>
+              </Events>
+            </Component>
+            <Component class="javax.swing.JLabel" name="jLabel1">
+              <Properties>
+                <Property name="text" type="java.lang.String" value="Label:"/>
+              </Properties>
+            </Component>
+            <Component class="javax.swing.JLabel" name="jLabel2">
+              <Properties>
+                <Property name="text" type="java.lang.String" value="Property:"/>
+              </Properties>
             </Component>
           </SubComponents>
         </Container>

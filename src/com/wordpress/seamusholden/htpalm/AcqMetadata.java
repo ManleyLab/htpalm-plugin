@@ -23,4 +23,6 @@ public class AcqMetadata {
    String acqNamePhPre_, acqNamePhPost_;
    @Element
    String[] acqNameFl;
+
+   public AcqMetadata(){}
 }   

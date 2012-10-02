@@ -19,4 +19,6 @@ public class FovMetadata {
    int nFovAcq_=0;
    @ElementList
    ArrayList<Integer> fovAcqNum_ = new ArrayList<Integer>();
+
+   public FovMetadata(){}
 }

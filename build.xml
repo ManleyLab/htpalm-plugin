@@ -14,8 +14,7 @@
 
     <property name="pluginsDir"  location="C:\Program Files\Micro-Manager-1.4\mmplugins" />
     <target name="-post-jar">
-        <!-- Empty placeholder for easier customization. -->
-        <!-- You can override this target in the ../build.xml file. -->
+        <!-- Every time you run build/clean, this copies your plugin to the MM plugins folder. -->
         <echo message="--Copied MM plugin JAR to basedir: ${basedir}" />
 
         <copy file="${basedir}/${dist.jar}" toDir="${pluginsDir}" />
