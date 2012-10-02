@@ -31,7 +31,7 @@ public class HardwareControl {
    double currentFovPosX_,currentFovPosY_;
    boolean skipCurrentFOV_;
    Thread currentAcqThread_=null;
-   boolean isInitialized_ = false;
+   boolean isInitialized_ = false, isRunning_=false;
    
    public HardwareControl(MMStudioMainFrame gui_){
       this.gui_ = gui_;
@@ -51,7 +51,10 @@ public class HardwareControl {
       try {
          BeanUtils.copyProperties(config_,newConfig);//copy the properties of newConfig into config_, ready to run acquisition
          initializeHardwareControl();
+         //check that Acquisition folder does not aleady contain data
+         checkIfPreviousAcqExists();
          isInitialized_ = true;
+         
       } catch (IllegalAccessException ex) {
          ReportingUtils.logError(ex, "Failed to copy config object");
       } catch (InvocationTargetException ex) {
@@ -63,10 +66,42 @@ public class HardwareControl {
       mosaic_ = new SpiralMosaic(config_.mosaicStartPosX_,config_.mosaicStartPosY_,config_.mosaicStepSizeX_,config_.mosaicStepSizeY_, config_.getMosaicNFov());
       //set up all the correct file names and metadata  - how is skip fov going to work for saving? - save after every acquisition.
       metadata_ = new HtpalmMetadata(config_,mosaic_);
-      //save a copy of the config in the acquisition folder
-      String configPath =metadata_.acqFolder_+File.separator+metadata_.getConfigFileName();
-      config_.saveConfig(configPath);//save the config in the acquisition folder
       gotoFOV(0);
+   }
+   
+   private void checkIfPreviousAcqExists(){//and if it does, make a new folder and change the acquisition name
+      //if the config_.fileAcqFolder_ does not exist, 
+      File f = new File(config_.fileAcqFolder_);
+      if (!f.exists()){
+         //create it
+         f.mkdir();
+         //setup the config files and were good to go
+         //save a copy of the config in the acquisition folder
+         String configPath =metadata_.acqFolder_+File.separator+metadata_.getConfigFileName();
+         config_.saveConfig(configPath);//save the config in the acquisition folder
+         //save an empty metadata file to signal that the folder is in use
+         metadata_.saveMetadata();
+      }
+      else {
+         //if the metadata_.metaDataFileName_ already exists
+         String fname = config_.fileAcqFolder_+File.separator+metadata_.metaDataFileName_;
+         f = new File(fname);
+         if (f.exists()){
+            // parse the name of fileAcqFolder_ , think up a new one
+            //find anything that looks like _(numbers) at the end of the file
+            // if you dont find any, add _1 to the end
+            // otherwise, increment the number
+      
+         }
+         else{
+            //setup the config files and were good to go
+            //save a copy of the config in the acquisition folder
+            String configPath =metadata_.acqFolder_+File.separator+metadata_.getConfigFileName();
+            config_.saveConfig(configPath);//save the config in the acquisition folder
+            //save an empty metadata file to signal that the folder is in use
+            metadata_.saveMetadata();
+         }
+      }
    }
    
    public void gotoFOV(int fovNum){
@@ -147,6 +182,7 @@ public class HardwareControl {
          currentAcqThread_ = new Thread(new AcquireAllFov(this));
          currentAcqThread_.start();
       }
+   }
    
    public void abortAll(){
       if ( !(currentAcqThread_==null) && currentAcqThread_.isAlive()){
@@ -167,6 +203,7 @@ public class HardwareControl {
 
       public void run() {
          try {
+            isRunning_ = true;
             //note - in manual mode we ignore skipCurrentFOV_
 
             //sort out  the lasers
@@ -214,8 +251,12 @@ public class HardwareControl {
                core_.waitForSystem();
             }
 
-         } catch (Exception ex) {
+         } 
+         catch (Exception ex) {
             throw new RuntimeException(ex);
+         }
+         finally{
+            isRunning_ = false;
          }
       }
       
@@ -233,6 +274,7 @@ public class HardwareControl {
       
       public void run() {
          try{
+            isRunning_=true;
             //sort out  the lasers
             if (config_.laserControlIsAutomatic_){
                      //TODO - Autolase
@@ -282,6 +324,10 @@ public class HardwareControl {
          } 
          catch (Exception ex) {
             throw new RuntimeException(ex);
+         }
+         finally{
+            isRunning_=false;
+            isInitialized_=false; //this makes sure the acquisition will not get overwritten
          }
       }
 
@@ -404,7 +450,7 @@ public class HardwareControl {
    /*
     *   find the acquisition name matching Acq_NN where NN is the largest number
     */
-   private String getCurrentAcqName(String[] newAcqNames, String[] oldAcqNames) throws Exception{
+   private String getCurrentAcqName(String[] newAcqNames, String[] oldAcqNames) {
       String currentAcqName =null;
       int nOld,nNew,nCurrent,iCurrent;
       nOld = oldAcqNames.length;
@@ -428,10 +474,10 @@ public class HardwareControl {
       }
       
       if (nCurrent ==0 ){
-         throw new Exception("Finding current acquisition name failed - no new names ");// throw runtime exception
+         throw new RuntimeException("Finding current acquisition name failed - no new names ");// throw runtime exception
 		}      
 		else if (nCurrent > 1){
-         throw new Exception("Finding current acquisition name failed - multiple new names ");// throw runtime exception
+         throw new RuntimeException("Finding current acquisition name failed - multiple new names ");// throw runtime exception
 		}
       else {
           currentAcqName = newAcqNames[iCurrent];

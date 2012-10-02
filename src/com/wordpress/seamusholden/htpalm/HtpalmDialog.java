@@ -27,7 +27,6 @@ public class HtpalmDialog extends javax.swing.JDialog implements MMListenerInter
    private InitOptionDialog initOptionDlg_ = null;
    private HardwareControl control_ = null;
    private MMStudioMainFrame gui_;
-   private boolean isInitialized_ = false;
    /**
     * Creates new form HtpalmDialog
     */
@@ -62,7 +61,7 @@ public class HtpalmDialog extends javax.swing.JDialog implements MMListenerInter
       } catch (MMScriptException ex) {
          ReportingUtils.logError(ex, "Unable to get stage position");
       }
-      if (isInitialized_){
+      if (control_.isInitialized_){
          jLabel_CurrentFovNumber.setText(Integer.toString(control_.getCurrentFovNum()));
       }
    }
@@ -145,7 +144,6 @@ public class HtpalmDialog extends javax.swing.JDialog implements MMListenerInter
         jPanel_BactDetection = new javax.swing.JPanel();
         jCheckBox_ExcludeBadFov = new javax.swing.JCheckBox();
         jButton_OpenBactConfig = new javax.swing.JButton();
-        jButton_Initialize = new javax.swing.JButton();
         jButton_AcquireAllFov = new javax.swing.JButton();
         jButton_Abort = new javax.swing.JButton();
         jButton_OpenInitOptions = new javax.swing.JButton();
@@ -481,14 +479,6 @@ public class HtpalmDialog extends javax.swing.JDialog implements MMListenerInter
                 .add(jButton_OpenBactConfig))
         );
 
-        jButton_Initialize.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
-        jButton_Initialize.setText("Initialize!");
-        jButton_Initialize.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton_InitializeActionPerformed(evt);
-            }
-        });
-
         jButton_AcquireAllFov.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
         jButton_AcquireAllFov.setText("Acquire all!");
         jButton_AcquireAllFov.addActionListener(new java.awt.event.ActionListener() {
@@ -544,8 +534,7 @@ public class HtpalmDialog extends javax.swing.JDialog implements MMListenerInter
                                 .add(jButton_LoadSettings, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                                 .add(jButton_AcquireAllFov, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                                 .add(jButton_Abort, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                .add(jButton_OpenInitOptions, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                .add(jButton_Initialize, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, 95, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE)))
+                                .add(jButton_OpenInitOptions, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
                         .add(org.jdesktop.layout.GroupLayout.LEADING, jPanel_LaserControl, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                     .add(jPanel_BactDetection, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE))
                 .add(0, 11, Short.MAX_VALUE))
@@ -554,16 +543,16 @@ public class HtpalmDialog extends javax.swing.JDialog implements MMListenerInter
             layout.createParallelGroup(org.jdesktop.layout.GroupLayout.LEADING)
             .add(layout.createSequentialGroup()
                 .addContainerGap()
-                .add(layout.createParallelGroup(org.jdesktop.layout.GroupLayout.TRAILING, false)
+                .add(layout.createParallelGroup(org.jdesktop.layout.GroupLayout.LEADING)
                     .add(layout.createSequentialGroup()
-                        .add(jButton_Initialize)
-                        .addPreferredGap(org.jdesktop.layout.LayoutStyle.RELATED)
                         .add(jButton_AcquireAllFov)
                         .addPreferredGap(org.jdesktop.layout.LayoutStyle.RELATED)
                         .add(jButton_Abort)
                         .addPreferredGap(org.jdesktop.layout.LayoutStyle.RELATED, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .add(jButton_OpenInitOptions))
-                    .add(jPanel_Initialize, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE))
+                    .add(org.jdesktop.layout.GroupLayout.TRAILING, layout.createSequentialGroup()
+                        .add(0, 0, Short.MAX_VALUE)
+                        .add(jPanel_Initialize, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE)))
                 .addPreferredGap(org.jdesktop.layout.LayoutStyle.RELATED)
                 .add(layout.createParallelGroup(org.jdesktop.layout.GroupLayout.TRAILING)
                     .add(org.jdesktop.layout.GroupLayout.LEADING, layout.createSequentialGroup()
@@ -593,12 +582,6 @@ public class HtpalmDialog extends javax.swing.JDialog implements MMListenerInter
       control_.setCurrentPosAsOrigin();
    }//GEN-LAST:event_jButton_SetPosAsOriginActionPerformed
 
-   private void jButton_InitializeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton_InitializeActionPerformed
-      updateSettings();
-      control_.initializeAcquisition(config_);
-      isInitialized_ = true;
-   }//GEN-LAST:event_jButton_InitializeActionPerformed
-
    private void jRadioButton_LaserControlManualActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jRadioButton_LaserControlManualActionPerformed
       config_.laserControlIsAutomatic_ = getStateLaserControlRadioGroup();
    }//GEN-LAST:event_jRadioButton_LaserControlManualActionPerformed
@@ -613,6 +596,10 @@ public class HtpalmDialog extends javax.swing.JDialog implements MMListenerInter
 
    private void jButton_Acqiure1FovActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton_Acqiure1FovActionPerformed
       updateSettings();
+      if (control_.isInitialized_==false){
+         //TODO - indicate whether acquisition is automatic or manual
+         control_.initializeAcquisition(config_);
+      }
       control_.acquire1Fov();
    }//GEN-LAST:event_jButton_Acqiure1FovActionPerformed
 
@@ -654,6 +641,7 @@ public class HtpalmDialog extends javax.swing.JDialog implements MMListenerInter
 
    private void jButton_AcquireAllFovActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton_AcquireAllFovActionPerformed
       updateSettings();
+      control_.initializeAcquisition(config_);//reinitialize to make sure we don't overwrite an old acquisition
       control_.acquireAll();
    }//GEN-LAST:event_jButton_AcquireAllFovActionPerformed
 
@@ -732,7 +720,6 @@ public class HtpalmDialog extends javax.swing.JDialog implements MMListenerInter
     private javax.swing.JButton jButton_AcquireAllFov;
     private javax.swing.JButton jButton_GotoNextFov;
     private javax.swing.JButton jButton_GotoPrevFov;
-    private javax.swing.JButton jButton_Initialize;
     private javax.swing.JButton jButton_LoadSettings;
     private javax.swing.JButton jButton_OpenAutoLase;
     private javax.swing.JButton jButton_OpenBactConfig;
