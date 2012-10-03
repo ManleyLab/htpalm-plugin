@@ -663,7 +663,7 @@ public class HtpalmDialog extends javax.swing.JDialog implements MMListenerInter
                System.out.println("Load: " + file.getCanonicalPath());
             }
             config_.loadConfig(file.getCanonicalPath());
-            reloadSettings();//update config_
+            reloadSettings();//update configHW_
          } catch (IOException ex) {
             throw new RuntimeException(ex);
          }
@@ -682,7 +682,7 @@ public class HtpalmDialog extends javax.swing.JDialog implements MMListenerInter
          try {
             File file = fileCh.getSelectedFile();
             file = XmlFilter.makeXml(file);
-            reloadSettings();//update config_
+            reloadSettings();//update configHW_
             if (DEBUG){
                System.out.println("Save as" + file.getCanonicalPath());//DEBUG
             }

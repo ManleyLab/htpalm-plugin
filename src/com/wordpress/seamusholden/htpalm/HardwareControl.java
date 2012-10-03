@@ -13,6 +13,8 @@ import org.micromanager.utils.MMScriptException;
 import org.micromanager.utils.ReportingUtils;
 import static com.wordpress.seamusholden.htpalm.Debug.DEBUG;
 import java.io.File;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 import org.micromanager.utils.MMException;
 
 /**
@@ -24,7 +26,10 @@ public class HardwareControl {
    CMMCore core_;
    MMStudioMainFrame gui_;
    AcquisitionEngine acq_ ;
-   ConfigurationOptions config_ = new ConfigurationOptions();
+   /* note configHW_ will be a CLONE of config_ used in the other parts of 
+    * the plugin to make sure that it cannot be modified during acquisition
+    */
+   ConfigurationOptions configHW_ = new ConfigurationOptions();
    SpiralMosaic mosaic_;
    HtpalmMetadata metadata_;
    int currentFovNum_;
@@ -40,68 +45,104 @@ public class HardwareControl {
    }
    
    public void initializeAcquisition(){
-      config_.loadDefaultConfig();
-      initializeHardwareControl();
+      configHW_.loadDefaultConfig();
+      initializeAcquisitionMain();
    }
+   
    public void initializeAcquisition(String fpath){
-      config_.loadConfig(fpath);
-      initializeHardwareControl();
+      configHW_.loadConfig(fpath);
+      initializeAcquisitionMain();
    }
+   
    public void initializeAcquisition(ConfigurationOptions newConfig){
       try {
-         BeanUtils.copyProperties(config_,newConfig);//copy the properties of newConfig into config_, ready to run acquisition
-         initializeHardwareControl();
-         //check that Acquisition folder does not aleady contain data
-         checkIfPreviousAcqExists();
-         isInitialized_ = true;
-         
-      } catch (IllegalAccessException ex) {
+         BeanUtils.copyProperties(configHW_,newConfig);//copy the properties of newConfig into configHW_, ready to run acquisition
+         initializeAcquisitionMain();
+      } 
+      catch (IllegalAccessException ex) {
          ReportingUtils.logError(ex, "Failed to copy config object");
-      } catch (InvocationTargetException ex) {
+      }
+      catch (InvocationTargetException ex) {
          ReportingUtils.logError(ex, "Failed to copy config object");
       }
    }
 
+
+   private void initializeAcquisitionMain(){
+      initializeHardwareControl();
+      //check that Acquisition folder does not aleady contain data
+      checkIfPreviousAcqExists();
+      isInitialized_ = true;
+   }
+
    private void initializeHardwareControl(){
-      mosaic_ = new SpiralMosaic(config_.mosaicStartPosX_,config_.mosaicStartPosY_,config_.mosaicStepSizeX_,config_.mosaicStepSizeY_, config_.getMosaicNFov());
+      mosaic_ = new SpiralMosaic(configHW_.mosaicStartPosX_,configHW_.mosaicStartPosY_,configHW_.mosaicStepSizeX_,configHW_.mosaicStepSizeY_, configHW_.getMosaicNFov());
       //set up all the correct file names and metadata  - how is skip fov going to work for saving? - save after every acquisition.
-      metadata_ = new HtpalmMetadata(config_,mosaic_);
+      metadata_ = new HtpalmMetadata(configHW_,mosaic_);
       gotoFOV(0);
    }
    
    private void checkIfPreviousAcqExists(){//and if it does, make a new folder and change the acquisition name
-      //if the config_.fileAcqFolder_ does not exist, 
-      File f = new File(config_.fileAcqFolder_);
-      if (!f.exists()){
+      //if the configHW_.fileAcqFolder_ does not exist, 
+      String configPath;
+      File acqFolder = new File(configHW_.fileAcqFolder_);
+      String fname = configHW_.fileAcqFolder_+File.separator+metadata_.metaDataFileName_;
+      File metadataFile = new File(fname);
+      String acqName = configHW_.fileAcqFolder_;
+      String acqName2=" ";
+      if (!acqFolder.exists()){
+
          //create it
-         f.mkdir();
-         //setup the config files and were good to go
-         //save a copy of the config in the acquisition folder
-         String configPath =metadata_.acqFolder_+File.separator+metadata_.getConfigFileName();
-         config_.saveConfig(configPath);//save the config in the acquisition folder
-         //save an empty metadata file to signal that the folder is in use
-         metadata_.saveMetadata();
+         acqFolder.mkdir();
       }
       else {
-         //if the metadata_.metaDataFileName_ already exists
-         String fname = config_.fileAcqFolder_+File.separator+metadata_.metaDataFileName_;
-         f = new File(fname);
-         if (f.exists()){
-            // parse the name of fileAcqFolder_ , think up a new one
-            //find anything that looks like _(numbers) at the end of the file
-            // if you dont find any, add _1 to the end
-            // otherwise, increment the number
-      
-         }
-         else{
-            //setup the config files and were good to go
-            //save a copy of the config in the acquisition folder
-            String configPath =metadata_.acqFolder_+File.separator+metadata_.getConfigFileName();
-            config_.saveConfig(configPath);//save the config in the acquisition folder
-            //save an empty metadata file to signal that the folder is in use
-            metadata_.saveMetadata();
+         //have to do this in a loop in case the replacement filename matches as well
+         if (metadataFile.exists()){
+            boolean acqNameIsOk = false;
+            while (acqNameIsOk ==false){
+               //if the metadata_.metaDataFileName_ already exists
+                  // parse the name of fileAcqFolder_ , think up a new one
+                  //find anything that looks like _(numbers) at the end of the file
+                  // if you dont find any, add _1 to the end
+                  // otherwise, increment the number
+                  acqName2 = makeNewFolderName(acqName);
+                  acqFolder = new File(acqName2);
+                  fname = acqName2+File.separator+metadata_.metaDataFileName_;
+                  metadataFile = new File(fname);
+
+                  if (!acqFolder.exists()){
+                     acqFolder.mkdir();
+                     acqNameIsOk = true;
+                  }
+                  else if (!metadataFile.exists()){
+                     acqNameIsOk = true;
+                  }
+                  else{
+                     acqName = acqName2;
+                     acqNameIsOk = false;//go round again til we get an empty folder
+                  }
+                  if (DEBUG){
+                     System.out.println("Folder name: " + acqName2);
+                  }
+            }
+
+            if (acqName2.equals(" ")){//ie if for some crazy reason it hasnt been changed since initialization
+               throw new RuntimeException("acqName2 not assigned to a folder name! Weird!");
+            }
+            else{
+               acqFolder.mkdir();
+               configHW_.fileAcqFolder_ = acqName2;
+            }
          }
       }
+
+      metadata_.acqFolder_ = configHW_.fileAcqFolder_;
+      //setup the config files and were good to go
+      //save a copy of the config in the acquisition folder
+      configPath =metadata_.acqFolder_+File.separator+metadata_.getConfigFileName();
+      configHW_.saveConfig(configPath);//save the config in the acquisition folder
+      //save an empty metadata file to signal that the folder is in use
+      metadata_.saveMetadata();
    }
    
    public void gotoFOV(int fovNum){
@@ -121,7 +162,7 @@ public class HardwareControl {
       }
 
       //Check whether we will skip this FOV
-      if (config_.fovAnalysis_excludeBadFov_){
+      if (configHW_.fovAnalysis_excludeBadFov_){
          //TODO - detect the bacteria
          skipCurrentFOV_=false;
       } else {
@@ -150,7 +191,7 @@ public class HardwareControl {
    }
 
    public void gotoNextFov(){
-      if (currentFovNum_<config_.getMosaicNFov()){
+      if (currentFovNum_<configHW_.getMosaicNFov()){
          gotoFOV(currentFovNum_+1);
       }
    }
@@ -159,7 +200,7 @@ public class HardwareControl {
       //TODO  - check we are not about to overwrite an existing acquisition
       //TODO - set the laser powers, ttls
       if (!isInitialized_){
-            ReportingUtils.showError("Error: Htpalm acquisition must be initialized before starting acquisition!");
+            throw new RuntimeException("Error: Htpalm acquisition must be initialized before starting acquisition!");
       } 
       else { 
          if ( !(currentAcqThread_==null) && currentAcqThread_.isAlive()){
@@ -173,14 +214,17 @@ public class HardwareControl {
    }
    
    public void acquireAll(){
-      //TODO  - check we are not about to overwrite an existing acquisition
-      //TODO - set the laser powers, ttls
 
-      if ( !(currentAcqThread_==null) && currentAcqThread_.isAlive()){
-         ReportingUtils.showError("Error: Cannot start new acquisition while a previous acquisition is running!");
-      } else {
-         currentAcqThread_ = new Thread(new AcquireAllFov(this));
-         currentAcqThread_.start();
+      if (!isInitialized_){
+         throw new RuntimeException("Error: Htpalm acquisition must be initialized before starting acquisition!");
+      } 
+      else{
+         if ( !(currentAcqThread_==null) && currentAcqThread_.isAlive()){
+            ReportingUtils.showError("Error: Cannot start new acquisition while a previous acquisition is running!");
+         } else {
+            currentAcqThread_ = new Thread(new AcquireAllFov(this));
+            currentAcqThread_.start();
+         }
       }
    }
    
@@ -207,15 +251,15 @@ public class HardwareControl {
             //note - in manual mode we ignore skipCurrentFOV_
 
             //sort out  the lasers
-            if (config_.laserControlIsAutomatic_){
+            if (configHW_.laserControlIsAutomatic_){
                //TODO - Autolase
             }
             else {
                //Make sure the laser powers etc are right
-               core_.setProperty(config_.getLaserExDacName(0),config_.getLaserExDacName(1),config_.laserManualExPower_);
-               core_.setProperty(config_.getLaserExTtlName(0),config_.getLaserExTtlName(1),1);
-               core_.setProperty(config_.getLaserActDacName(0),config_.getLaserActDacName(1),config_.laserManualActPower_);
-               core_.setProperty(config_.getLaserActTtlName(0),config_.getLaserActTtlName(1),1);
+               core_.setProperty(configHW_.getLaserExDacName(0),configHW_.getLaserExDacName(1),configHW_.laserManualExPower_);
+               core_.setProperty(configHW_.getLaserExTtlName(0),configHW_.getLaserExTtlName(1),1);
+               core_.setProperty(configHW_.getLaserActDacName(0),configHW_.getLaserActDacName(1),configHW_.laserManualActPower_);
+               core_.setProperty(configHW_.getLaserActTtlName(0),configHW_.getLaserActTtlName(1),1);
                core_.waitForSystem();
             }         
 
@@ -276,15 +320,15 @@ public class HardwareControl {
          try{
             isRunning_=true;
             //sort out  the lasers
-            if (config_.laserControlIsAutomatic_){
+            if (configHW_.laserControlIsAutomatic_){
                      //TODO - Autolase
             }
             else {
                //Make sure the laser powers etc are right
-               core_.setProperty(config_.getLaserExDacName(0),config_.getLaserExDacName(1),config_.laserManualExPower_);
-               core_.setProperty(config_.getLaserExTtlName(0),config_.getLaserExTtlName(1),1);
-               core_.setProperty(config_.getLaserActDacName(0),config_.getLaserActDacName(1),config_.laserManualActPower_);
-               core_.setProperty(config_.getLaserActTtlName(0),config_.getLaserActTtlName(1),1);
+               core_.setProperty(configHW_.getLaserExDacName(0),configHW_.getLaserExDacName(1),configHW_.laserManualExPower_);
+               core_.setProperty(configHW_.getLaserExTtlName(0),configHW_.getLaserExTtlName(1),1);
+               core_.setProperty(configHW_.getLaserActDacName(0),configHW_.getLaserActDacName(1),configHW_.laserManualActPower_);
+               core_.setProperty(configHW_.getLaserActTtlName(0),configHW_.getLaserActTtlName(1),1);
                core_.waitForSystem();
             } 
 
@@ -296,7 +340,7 @@ public class HardwareControl {
             }
 
             //aquire all the Fovs
-            for (int ii=0;ii< control_.config_.mosaicNFov_;ii++){
+            for (int ii=0;ii< control_.configHW_.mosaicNFov_;ii++){
                boolean phPreAcquire=true,phPostAcquire=true;// for now this is always the case
                int[] flCh={0};// for now, this is always the case
                control_.metadata_.addNewAcquisition(control_.currentFovNum_, phPreAcquire, phPostAcquire, flCh);
@@ -358,18 +402,18 @@ public class HardwareControl {
    private void acquire1Phase(String acqName){
       try {
          //set the ttls - note this assumes the auto shutter is on and working happily
-         core_.setProperty(config_.getLaserShutterTtlName(0),config_.getLaserShutterTtlName(1),0);//Lasers off
-         core_.setProperty(config_.getPhLampTtlName(0),config_.getPhLampTtlName(1),1);//Ph lamp on
+         core_.setProperty(configHW_.getLaserShutterTtlName(0),configHW_.getLaserShutterTtlName(1),0);//Lasers off
+         core_.setProperty(configHW_.getPhLampTtlName(0),configHW_.getPhLampTtlName(1),1);//Ph lamp on
          core_.waitForSystem();
    
          //run the acquisition
-         String camName = config_.camPhName_;
-         String rootDirName = config_.fileAcqFolder_;
+         String camName = configHW_.camPhName_;
+         String rootDirName = configHW_.fileAcqFolder_;
          //TODO add an acquisition name!
          int numFrames = 1;
          double intervalMs = 0;
-         double exposureTime = config_.camPhExposureMs_;
-         double delayTime = config_.camPhDelayMs_;
+         double exposureTime = configHW_.camPhExposureMs_;
+         double delayTime = configHW_.camPhDelayMs_;
          boolean closeOnExit = true;
          acquire1Movie(camName, acqName, rootDirName, numFrames, intervalMs, exposureTime,delayTime, closeOnExit);
       } catch (Exception ex) {
@@ -380,17 +424,17 @@ public class HardwareControl {
    private void acquire1Fl(String acqName){
       try {
          //set the ttls - note this assumes the auto shutter is on and working happily
-         core_.setProperty(config_.getLaserShutterTtlName(0),config_.getLaserShutterTtlName(1),1);//Lasers ON
-         core_.setProperty(config_.getPhLampTtlName(0),config_.getPhLampTtlName(1),0);//Ph lamp OFF
+         core_.setProperty(configHW_.getLaserShutterTtlName(0),configHW_.getLaserShutterTtlName(1),1);//Lasers ON
+         core_.setProperty(configHW_.getPhLampTtlName(0),configHW_.getPhLampTtlName(1),0);//Ph lamp OFF
          core_.waitForSystem();
          
          //run the acquisition
-         String camName = config_.camEmccdName_;
-         String rootDirName = config_.fileAcqFolder_;
-         int numFrames = config_.getCamEmccdNumFrames();
+         String camName = configHW_.camEmccdName_;
+         String rootDirName = configHW_.fileAcqFolder_;
+         int numFrames = configHW_.getCamEmccdNumFrames();
          double intervalMs = 0;
-         double exposureTime = config_.camEmccdExposureMs_;
-         double delayTime = config_.camPhDelayMs_;
+         double exposureTime = configHW_.camEmccdExposureMs_;
+         double delayTime = configHW_.camPhDelayMs_;
          boolean closeOnExit = true;
          acquire1Movie(camName, acqName, rootDirName, numFrames, intervalMs, exposureTime,delayTime, closeOnExit);
       } catch (Exception ex) {
@@ -484,4 +528,25 @@ public class HardwareControl {
  		}           
       return currentAcqName;
    } 
+   
+   public String makeNewFolderName(String fname){
+      String newFname;
+      
+      Pattern p = Pattern.compile("_\\d+$");// ie "_[some numbers][end of string]"
+      Matcher m = p.matcher(fname);
+      if (m.find()){
+         String sMatch = m.group();
+         //skip the _,convert it to a number, and increment it by 1
+         int fNum = Integer.parseInt(sMatch.substring(1)) + 1;
+         //get fname without the _ stuff
+         fname = fname.substring(0,m.start());
+         // increment the number by 1
+         newFname = fname + "_" + fNum;
+      }
+      else{
+         newFname = fname + "_" + 1;
+      }
+
+      return newFname;
+   }
 }
