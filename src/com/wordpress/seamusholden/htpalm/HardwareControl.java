@@ -395,6 +395,9 @@ public class HardwareControl {
          int numFrames = 1;
          double intervalMs = 0;
          double exposureTime = configHW_.camPhExposureMs_;
+         if (configHW_.camConvertPhExposureToSec_){//correct for stupid bug in the camera driver
+            exposureTime /= 1000;
+         }
          double delayTime = configHW_.camPhDelayMs_;
          boolean closeOnExit = true;
          acquire1Movie(camName, acqName, rootDirName, numFrames, intervalMs, exposureTime,delayTime, closeOnExit);
