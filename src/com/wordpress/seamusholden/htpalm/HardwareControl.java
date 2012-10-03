@@ -85,61 +85,43 @@ public class HardwareControl {
    private void checkIfPreviousAcqExists(){//and if it does, make a new folder and change the acquisition name
       //if the configHW_.fileAcqFolder_ does not exist, 
       String configPath;
-      File acqFolder = new File(configHW_.fileAcqFolder_);
-      String fname = configHW_.fileAcqFolder_+File.separator+metadata_.metaDataFileName_;
-      File metadataFile = new File(fname);
       String acqName = configHW_.fileAcqFolder_;
-      String acqName2=" ";
-      if (!acqFolder.exists()){
+      File acqFolder = new File(acqName);
+      //String fname = configHW_.fileAcqFolder_+File.separator+metadata_.metaDataFileName_;
+      //File metadataFile = new File(fname);
 
-         //create it
-         acqFolder.mkdir();
-      }
-      else {
-         //have to do this in a loop in case the replacement filename matches as well
-         if (metadataFile.exists()){
-            boolean acqNameIsOk = false;
-            while (acqNameIsOk ==false){
-               //if the metadata_.metaDataFileName_ already exists
-                  // parse the name of fileAcqFolder_ , think up a new one
-                  //find anything that looks like _(numbers) at the end of the file
-                  // if you dont find any, add _1 to the end
-                  // otherwise, increment the number
-                  acqName2 = makeNewFolderName(acqName);
-                  acqFolder = new File(acqName2);
-                  fname = acqName2+File.separator+metadata_.metaDataFileName_;
-                  metadataFile = new File(fname);
+      //have to do this in a loop in case the replacement filename matches as well
+      boolean acqNameIsOk = false;
+      while (acqNameIsOk ==false){
+         //if the folder already exists and contains files
+         // parse the name of fileAcqFolder_ , think up a new one
+         //find anything that looks like _(numbers) at the end of the file
+         // if you dont find any, add _1 to the end
+         // otherwise, increment the number
 
-                  if (!acqFolder.exists()){
-                     acqFolder.mkdir();
-                     acqNameIsOk = true;
-                  }
-                  else if (!metadataFile.exists()){
-                     acqNameIsOk = true;
-                  }
-                  else{
-                     acqName = acqName2;
-                     acqNameIsOk = false;//go round again til we get an empty folder
-                  }
-                  if (DEBUG){
-                     System.out.println("Folder name: " + acqName2);
-                  }
-            }
-
-            if (acqName2.equals(" ")){//ie if for some crazy reason it hasnt been changed since initialization
-               throw new RuntimeException("acqName2 not assigned to a folder name! Weird!");
-            }
-            else{
-               acqFolder.mkdir();
-               configHW_.fileAcqFolder_ = acqName2;
-            }
+         if (!acqFolder.exists()){
+            acqFolder.mkdir();
+            acqNameIsOk = true;
+         }
+         else if ( (acqFolder.list()).length ==0){//if the folder is empty
+            acqNameIsOk = true;
+         }
+         else{
+            acqName = makeNewFolderName(acqName);
+            acqFolder = new File(acqName);
+            acqNameIsOk = false;//go round again til we get an empty folder
+         }
+         
+         if (DEBUG){
+            System.out.println("Folder name: " + acqName);
          }
       }
 
-      metadata_.acqFolder_ = configHW_.fileAcqFolder_;
+      configHW_.fileAcqFolder_ = acqName;
+      metadata_.acqFolder_ = acqName;
       //setup the config files and were good to go
       //save a copy of the config in the acquisition folder
-      configPath =metadata_.acqFolder_+File.separator+metadata_.getConfigFileName();
+      configPath = acqName +File.separator+ metadata_.getConfigFileName();
       configHW_.saveConfig(configPath);//save the config in the acquisition folder
       //save an empty metadata file to signal that the folder is in use
       metadata_.saveMetadata();
