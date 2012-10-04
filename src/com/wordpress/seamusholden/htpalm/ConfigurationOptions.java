@@ -32,7 +32,7 @@ public class ConfigurationOptions {
    String camEmccdName_, camPhName_;
    double camEmccdExposureMs_,camPhExposureMs_,camPhDelayMs_;
    int camEmccdNumFrames_;
-   boolean camConvertPhExposureToSec_;
+   private boolean camConvertPhExposureToSec_;
    //Laser config
    double laserManualExPower_, laserManualActPower_;
    boolean laserControlIsAutomatic_;
@@ -403,13 +403,6 @@ public class ConfigurationOptions {
    }
 
    /**
-    * @return the camConvertPhExposureToSec_
-    */
-   public boolean isConvertPhExposureToSec() {
-      return camConvertPhExposureToSec_;
-   }
-
-   /**
     * @param camConvertPhExposureToSec_ the camConvertPhExposureToSec_ to set
     */
    public void setCamConvertPhExposureToSec(boolean camConvertPhExposureToSec_) {
@@ -555,6 +548,13 @@ public class ConfigurationOptions {
     */
    public void setCamEmccdNumFrames(int camEmccdNumFrames_) {
       this.camEmccdNumFrames_ = camEmccdNumFrames_;
+   }
+
+   /**
+    * @return the camConvertPhExposureToSec_
+    */
+   public boolean isCamConvertPhExposureToSec() {
+      return camConvertPhExposureToSec_;
    }
 
 }

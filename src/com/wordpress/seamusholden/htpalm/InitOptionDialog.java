@@ -53,7 +53,7 @@ public class InitOptionDialog extends javax.swing.JDialog {
       jTextField_PhCamName.setText(newConfig_.camPhName_);
       jTextField_PhExposureTime.setText(Double.toString(newConfig_.camPhExposureMs_));
       jTextField_PhCamDelayTime.setText(Double.toString(newConfig_.camPhDelayMs_));
-      jCheckBox_ConvertPhExposureMsToSec.setSelected(newConfig_.camConvertPhExposureToSec_);
+      jCheckBox_ConvertPhExposureMsToSec.setSelected(newConfig_.isCamConvertPhExposureToSec());
       jTextField_ExcitationDacLabel.setText(newConfig_.getLaserExDacName(0));
       jTextField_ExcitationTtlLabel.setText(newConfig_.getLaserExTtlName(0));
       jTextField_ActivationLabel.setText(newConfig_.getLaserActDacName(0));
@@ -81,7 +81,7 @@ public class InitOptionDialog extends javax.swing.JDialog {
       newConfig_.camPhName_ = jTextField_PhCamName.getText(); 
       newConfig_.camPhExposureMs_= Double.parseDouble(jTextField_PhExposureTime.getText());
       newConfig_.camPhDelayMs_= Double.parseDouble(jTextField_PhCamDelayTime.getText());
-      newConfig_.camConvertPhExposureToSec_ = jCheckBox_ConvertPhExposureMsToSec.isSelected();
+      newConfig_.setCamConvertPhExposureToSec(jCheckBox_ConvertPhExposureMsToSec.isSelected());
       newConfig_.setLaserExDacName(jTextField_ExcitationDacLabel.getText(),0);
       newConfig_.setLaserExTtlName(jTextField_ExcitationTtlLabel.getText(),0);
       newConfig_.setLaserActDacName(jTextField_ActivationLabel.getText(),0);
@@ -761,7 +761,7 @@ public class InitOptionDialog extends javax.swing.JDialog {
    }//GEN-LAST:event_jButton_OkActionPerformed
 
    private void jCheckBox_ConvertPhExposureMsToSecActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jCheckBox_ConvertPhExposureMsToSecActionPerformed
-      newConfig_.camConvertPhExposureToSec_ = jCheckBox_ConvertPhExposureMsToSec.isSelected();
+      newConfig_.setCamConvertPhExposureToSec(jCheckBox_ConvertPhExposureMsToSec.isSelected());
    }//GEN-LAST:event_jCheckBox_ConvertPhExposureMsToSecActionPerformed
 
    private void jTextField_ExcitationTtlLabelActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextField_ExcitationTtlLabelActionPerformed
