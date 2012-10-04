@@ -325,10 +325,10 @@ public class HardwareControl {
             for (int ii=0;ii< control_.configHW_.mosaicNFov_;ii++){
                boolean phPreAcquire=true,phPostAcquire=true;// for now this is always the case
                int[] flCh={0};// for now, this is always the case
+               control_.gotoFOV(ii);
                control_.metadata_.addNewAcquisition(control_.currentFovNum_, phPreAcquire, phPostAcquire, flCh);
                control_.metadata_.saveMetadata();
 
-               control_.gotoFOV(ii);
                if (control_.skipCurrentFOV_==false){
                   
                   if (DEBUG){
