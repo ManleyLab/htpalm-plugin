@@ -1,0 +1,26 @@
+/**
+    This script performs some cool foo and then generates a lot of bar.
+ */
+import ij.plugin.filter.ParticleAnalyzer;
+import ij.*;
+import ij.process.*;
+import ij.gui.*;
+import java.awt.*;
+import ij.plugin.*;
+
+static void countBact(ImagePlus im,String size, String circularity,String showResultIm){
+   ParticleAnalyzer imParticle = new ParticleAnalyzer();
+   String arg ="size="+size+" circularity="+circularity+" show="+showResultIm+" clear"; 
+   imParticle.setup(arg,im);
+   imParticle.run(im.getProcessor());
+   //IJ.run(im,"Analyze Particles...",arg);
+      
+}
+
+im = IJ.getImage();
+//counting
+String size = "0-Infinity";
+String circularity = "0.00-1.00";
+//String showResultIm="Nothing";
+String showResultIm="Outlines";
+countBact(im,size,circularity,showResultIm);
