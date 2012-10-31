@@ -136,10 +136,10 @@ public class TestSegJDialog extends javax.swing.JDialog  implements ImageListene
       jLabel2.setText("Smoothing radius");
 
       jLabel3.setText("Min size bacteria:");
-      jLabel3.setToolTipText("");
+      jLabel3.setToolTipText("Minimum size of bacteria (pixel^2)");
 
       jLabel4.setText("Max size bacteria:");
-      jLabel4.setToolTipText("");
+      jLabel4.setToolTipText("Minimum size of bacteria (pixel^2)");
 
       jTextField_minPixSize.setHorizontalAlignment(javax.swing.JTextField.RIGHT);
       jTextField_minPixSize.setText("0");
@@ -197,24 +197,23 @@ public class TestSegJDialog extends javax.swing.JDialog  implements ImageListene
                   .add(layout.createParallelGroup(org.jdesktop.layout.GroupLayout.LEADING)
                      .add(org.jdesktop.layout.GroupLayout.TRAILING, jButton_countBacteria)
                      .add(org.jdesktop.layout.GroupLayout.TRAILING, jButton_grabCurrentImage)))
-               .add(layout.createParallelGroup(org.jdesktop.layout.GroupLayout.LEADING)
-                  .add(layout.createSequentialGroup()
-                     .add(jLabel6)
-                     .addPreferredGap(org.jdesktop.layout.LayoutStyle.RELATED, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                     .add(jComboBox_SelectAlg, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE))
-                  .add(layout.createSequentialGroup()
+               .add(layout.createSequentialGroup()
+                  .add(jLabel6)
+                  .addPreferredGap(org.jdesktop.layout.LayoutStyle.RELATED, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                  .add(jComboBox_SelectAlg, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE))
+               .add(layout.createSequentialGroup()
+                  .add(layout.createParallelGroup(org.jdesktop.layout.GroupLayout.LEADING)
                      .add(layout.createParallelGroup(org.jdesktop.layout.GroupLayout.LEADING)
-                        .add(layout.createParallelGroup(org.jdesktop.layout.GroupLayout.LEADING)
-                           .add(org.jdesktop.layout.GroupLayout.TRAILING, layout.createSequentialGroup()
-                              .add(jLabel1)
-                              .addPreferredGap(org.jdesktop.layout.LayoutStyle.UNRELATED)
-                              .add(jTextFieldBallRad, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, 34, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE))
-                           .add(org.jdesktop.layout.GroupLayout.TRAILING, layout.createSequentialGroup()
-                              .add(jLabel2)
-                              .addPreferredGap(org.jdesktop.layout.LayoutStyle.UNRELATED)
-                              .add(jTextFieldSmoothRad, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, 34, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE)))
-                        .add(jLabel5))
-                     .add(0, 0, Short.MAX_VALUE))))
+                        .add(org.jdesktop.layout.GroupLayout.TRAILING, layout.createSequentialGroup()
+                           .add(jLabel1)
+                           .addPreferredGap(org.jdesktop.layout.LayoutStyle.UNRELATED)
+                           .add(jTextFieldBallRad, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, 34, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE))
+                        .add(org.jdesktop.layout.GroupLayout.TRAILING, layout.createSequentialGroup()
+                           .add(jLabel2)
+                           .addPreferredGap(org.jdesktop.layout.LayoutStyle.UNRELATED)
+                           .add(jTextFieldSmoothRad, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, 34, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE)))
+                     .add(jLabel5))
+                  .add(0, 0, Short.MAX_VALUE)))
             .addContainerGap())
       );
       layout.setVerticalGroup(

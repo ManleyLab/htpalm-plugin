@@ -166,6 +166,41 @@ public class InitOptionDialog extends javax.swing.JDialog {
       jTextField_LaserShutterTtlProp = new javax.swing.JTextField();
       jLabel1 = new javax.swing.JLabel();
       jLabel2 = new javax.swing.JLabel();
+      jPanel5 = new javax.swing.JPanel();
+      jPanel6 = new javax.swing.JPanel();
+      jLabel4 = new javax.swing.JLabel();
+      jTextField_Counting_bgRad = new javax.swing.JTextField();
+      jPanel7 = new javax.swing.JPanel();
+      jLabel6 = new javax.swing.JLabel();
+      jComboBox_Counting_SelectAlg = new javax.swing.JComboBox();
+      jLabel3 = new javax.swing.JLabel();
+      jLabel5 = new javax.swing.JLabel();
+      jTextField_Counting_blurRad = new javax.swing.JTextField();
+      jLabel7 = new javax.swing.JLabel();
+      jLabel8 = new javax.swing.JLabel();
+      jComboBox_Counting_localMethod = new javax.swing.JComboBox();
+      jLabel9 = new javax.swing.JLabel();
+      jLabel10 = new javax.swing.JLabel();
+      jLabel11 = new javax.swing.JLabel();
+      jTextField_Counting_LocalRad = new javax.swing.JTextField();
+      jTextField_Counting_LocalPar1 = new javax.swing.JTextField();
+      jTextField_Counting_Par2 = new javax.swing.JTextField();
+      jPanel8 = new javax.swing.JPanel();
+      jLabel12 = new javax.swing.JLabel();
+      jLabel13 = new javax.swing.JLabel();
+      jTextField_Counting_maxPixSize = new javax.swing.JTextField();
+      jTextField_Counting_minPixSize = new javax.swing.JTextField();
+      jPanel9 = new javax.swing.JPanel();
+      jLabel14 = new javax.swing.JLabel();
+      jComboBox_roiCamera = new javax.swing.JComboBox();
+      jLabel15 = new javax.swing.JLabel();
+      jLabel16 = new javax.swing.JLabel();
+      jLabel17 = new javax.swing.JLabel();
+      jLabel18 = new javax.swing.JLabel();
+      jTextField_roiX = new javax.swing.JTextField();
+      jTextField_roiY = new javax.swing.JTextField();
+      jTextField_roiW = new javax.swing.JTextField();
+      jTextField_roiH = new javax.swing.JTextField();
       jButton_Apply = new javax.swing.JButton();
       jButton_Cancel = new javax.swing.JButton();
       jButton_Ok = new javax.swing.JButton();
@@ -235,7 +270,7 @@ public class InitOptionDialog extends javax.swing.JDialog {
             .add(jPanel1Layout.createParallelGroup(org.jdesktop.layout.GroupLayout.BASELINE)
                .add(jLabel_MosaicNFov)
                .add(jTextField_MosaicNFov, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE))
-            .addContainerGap(143, Short.MAX_VALUE))
+            .addContainerGap(250, Short.MAX_VALUE))
       );
 
       jTabbedPane_Settings.addTab("Mosaic settings", jPanel1);
@@ -298,7 +333,7 @@ public class InitOptionDialog extends javax.swing.JDialog {
             .add(jPanel3Layout.createParallelGroup(org.jdesktop.layout.GroupLayout.BASELINE)
                .add(jLabel_BaseFileName)
                .add(jTextField_BaseFileName, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE))
-            .addContainerGap(166, Short.MAX_VALUE))
+            .addContainerGap(273, Short.MAX_VALUE))
       );
 
       jTabbedPane_Settings.addTab("File locations", jPanel3);
@@ -430,7 +465,7 @@ public class InitOptionDialog extends javax.swing.JDialog {
                .add(jTextField_PhCamDelayTime, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE))
             .addPreferredGap(org.jdesktop.layout.LayoutStyle.UNRELATED)
             .add(jCheckBox_ConvertPhExposureMsToSec)
-            .addContainerGap(37, Short.MAX_VALUE))
+            .addContainerGap(144, Short.MAX_VALUE))
       );
 
       jTabbedPane_Settings.addTab("Camera settings", jPanel4);
@@ -613,10 +648,304 @@ public class InitOptionDialog extends javax.swing.JDialog {
                   .add(jPanel2Layout.createParallelGroup(org.jdesktop.layout.GroupLayout.BASELINE)
                      .add(jLabel_PhLampTtlName)
                      .add(jTextField_PhLampTtlLabel, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE))))
-            .addContainerGap(43, Short.MAX_VALUE))
+            .addContainerGap(150, Short.MAX_VALUE))
       );
 
       jTabbedPane_Settings.addTab("Lasers & shutters", jPanel2);
+
+      jPanel6.setBorder(javax.swing.BorderFactory.createTitledBorder("Background subtraction"));
+
+      jLabel4.setText("Rolling ball radius:");
+      jLabel4.setToolTipText("Rolling ball radius (pixels)");
+
+      jTextField_Counting_bgRad.setHorizontalAlignment(javax.swing.JTextField.TRAILING);
+      jTextField_Counting_bgRad.setText("50.0");
+
+      org.jdesktop.layout.GroupLayout jPanel6Layout = new org.jdesktop.layout.GroupLayout(jPanel6);
+      jPanel6.setLayout(jPanel6Layout);
+      jPanel6Layout.setHorizontalGroup(
+         jPanel6Layout.createParallelGroup(org.jdesktop.layout.GroupLayout.LEADING)
+         .add(jPanel6Layout.createSequentialGroup()
+            .addContainerGap()
+            .add(jLabel4)
+            .addPreferredGap(org.jdesktop.layout.LayoutStyle.UNRELATED)
+            .add(jTextField_Counting_bgRad, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, 36, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE)
+            .addContainerGap(org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+      );
+      jPanel6Layout.setVerticalGroup(
+         jPanel6Layout.createParallelGroup(org.jdesktop.layout.GroupLayout.LEADING)
+         .add(jPanel6Layout.createParallelGroup(org.jdesktop.layout.GroupLayout.BASELINE)
+            .add(jLabel4)
+            .add(jTextField_Counting_bgRad, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE))
+      );
+
+      jPanel7.setBorder(javax.swing.BorderFactory.createTitledBorder("Image segmentation"));
+
+      jLabel6.setText("Algorithm:");
+
+      jComboBox_Counting_SelectAlg.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "LoG", "Sauvola" }));
+      jComboBox_Counting_SelectAlg.addActionListener(new java.awt.event.ActionListener() {
+         public void actionPerformed(java.awt.event.ActionEvent evt) {
+            jComboBox_Counting_SelectAlgActionPerformed(evt);
+         }
+      });
+
+      jLabel3.setText("LoG parameters:");
+
+      jLabel5.setText("Blur radius:");
+      jLabel5.setToolTipText("Gaussian blur radius (pixels)");
+
+      jTextField_Counting_blurRad.setHorizontalAlignment(javax.swing.JTextField.TRAILING);
+      jTextField_Counting_blurRad.setText("2.0");
+
+      jLabel7.setText("Local threshold parameters:");
+
+      jLabel8.setText("Method:");
+
+      jComboBox_Counting_localMethod.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
+
+      jLabel9.setText("Radius:");
+
+      jLabel10.setText("Par 1:");
+      jLabel10.setToolTipText("0 indicates default value");
+
+      jLabel11.setText("Par 2:");
+      jLabel11.setToolTipText("0 indicates default value");
+
+      jTextField_Counting_LocalRad.setHorizontalAlignment(javax.swing.JTextField.TRAILING);
+      jTextField_Counting_LocalRad.setText("15.0");
+
+      jTextField_Counting_LocalPar1.setHorizontalAlignment(javax.swing.JTextField.TRAILING);
+      jTextField_Counting_LocalPar1.setText("0.0");
+
+      jTextField_Counting_Par2.setHorizontalAlignment(javax.swing.JTextField.TRAILING);
+      jTextField_Counting_Par2.setText("0.0");
+
+      org.jdesktop.layout.GroupLayout jPanel7Layout = new org.jdesktop.layout.GroupLayout(jPanel7);
+      jPanel7.setLayout(jPanel7Layout);
+      jPanel7Layout.setHorizontalGroup(
+         jPanel7Layout.createParallelGroup(org.jdesktop.layout.GroupLayout.LEADING)
+         .add(jPanel7Layout.createSequentialGroup()
+            .addContainerGap()
+            .add(jPanel7Layout.createParallelGroup(org.jdesktop.layout.GroupLayout.LEADING)
+               .add(jPanel7Layout.createSequentialGroup()
+                  .add(jLabel6)
+                  .addPreferredGap(org.jdesktop.layout.LayoutStyle.RELATED)
+                  .add(jComboBox_Counting_SelectAlg, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE))
+               .add(jPanel7Layout.createSequentialGroup()
+                  .add(jPanel7Layout.createParallelGroup(org.jdesktop.layout.GroupLayout.LEADING)
+                     .add(jLabel3)
+                     .add(jPanel7Layout.createSequentialGroup()
+                        .add(10, 10, 10)
+                        .add(jLabel5)
+                        .addPreferredGap(org.jdesktop.layout.LayoutStyle.UNRELATED)
+                        .add(jTextField_Counting_blurRad, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, 31, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE)))
+                  .add(21, 21, 21)
+                  .add(jPanel7Layout.createParallelGroup(org.jdesktop.layout.GroupLayout.LEADING)
+                     .add(jLabel7)
+                     .add(jPanel7Layout.createSequentialGroup()
+                        .add(10, 10, 10)
+                        .add(jPanel7Layout.createParallelGroup(org.jdesktop.layout.GroupLayout.LEADING, false)
+                           .add(org.jdesktop.layout.GroupLayout.TRAILING, jPanel7Layout.createSequentialGroup()
+                              .add(jLabel8)
+                              .addPreferredGap(org.jdesktop.layout.LayoutStyle.UNRELATED)
+                              .add(jComboBox_Counting_localMethod, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, 94, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE))
+                           .add(org.jdesktop.layout.GroupLayout.TRAILING, jPanel7Layout.createSequentialGroup()
+                              .add(jPanel7Layout.createParallelGroup(org.jdesktop.layout.GroupLayout.LEADING)
+                                 .add(jLabel9)
+                                 .add(jLabel10)
+                                 .add(jLabel11))
+                              .addPreferredGap(org.jdesktop.layout.LayoutStyle.RELATED, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                              .add(jPanel7Layout.createParallelGroup(org.jdesktop.layout.GroupLayout.LEADING, false)
+                                 .add(jTextField_Counting_Par2)
+                                 .add(jTextField_Counting_LocalPar1)
+                                 .add(jTextField_Counting_LocalRad, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, 36, Short.MAX_VALUE))))))))
+            .addContainerGap(org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+      );
+      jPanel7Layout.setVerticalGroup(
+         jPanel7Layout.createParallelGroup(org.jdesktop.layout.GroupLayout.LEADING)
+         .add(jPanel7Layout.createSequentialGroup()
+            .add(jPanel7Layout.createParallelGroup(org.jdesktop.layout.GroupLayout.BASELINE)
+               .add(jLabel6)
+               .add(jComboBox_Counting_SelectAlg, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE))
+            .addPreferredGap(org.jdesktop.layout.LayoutStyle.RELATED)
+            .add(jPanel7Layout.createParallelGroup(org.jdesktop.layout.GroupLayout.BASELINE)
+               .add(jLabel3)
+               .add(jLabel7))
+            .addPreferredGap(org.jdesktop.layout.LayoutStyle.RELATED)
+            .add(jPanel7Layout.createParallelGroup(org.jdesktop.layout.GroupLayout.BASELINE)
+               .add(jLabel5)
+               .add(jTextField_Counting_blurRad, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE)
+               .add(jLabel8)
+               .add(jComboBox_Counting_localMethod, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE))
+            .addPreferredGap(org.jdesktop.layout.LayoutStyle.RELATED)
+            .add(jPanel7Layout.createParallelGroup(org.jdesktop.layout.GroupLayout.BASELINE)
+               .add(jLabel9)
+               .add(jTextField_Counting_LocalRad, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE))
+            .addPreferredGap(org.jdesktop.layout.LayoutStyle.RELATED)
+            .add(jPanel7Layout.createParallelGroup(org.jdesktop.layout.GroupLayout.BASELINE)
+               .add(jLabel10)
+               .add(jTextField_Counting_LocalPar1, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE))
+            .addPreferredGap(org.jdesktop.layout.LayoutStyle.RELATED)
+            .add(jPanel7Layout.createParallelGroup(org.jdesktop.layout.GroupLayout.BASELINE)
+               .add(jLabel11)
+               .add(jTextField_Counting_Par2, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE))
+            .addContainerGap(org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+      );
+
+      jPanel8.setBorder(javax.swing.BorderFactory.createTitledBorder("Morphology filtering"));
+
+      jLabel12.setText("Min size bacteria:");
+      jLabel12.setToolTipText("Minimum size of bacteria (pixel^2)");
+
+      jLabel13.setText("Max size bacteria:");
+      jLabel13.setToolTipText("Minimum size of bacteria (pixel^2)");
+
+      jTextField_Counting_maxPixSize.setHorizontalAlignment(javax.swing.JTextField.RIGHT);
+      jTextField_Counting_maxPixSize.setText("Inf");
+      jTextField_Counting_maxPixSize.setToolTipText("Maximum size of bacteria (no. of pixels)");
+
+      jTextField_Counting_minPixSize.setHorizontalAlignment(javax.swing.JTextField.RIGHT);
+      jTextField_Counting_minPixSize.setText("0");
+      jTextField_Counting_minPixSize.setToolTipText("Minimum size of bacteria (no. of pixels)");
+
+      org.jdesktop.layout.GroupLayout jPanel8Layout = new org.jdesktop.layout.GroupLayout(jPanel8);
+      jPanel8.setLayout(jPanel8Layout);
+      jPanel8Layout.setHorizontalGroup(
+         jPanel8Layout.createParallelGroup(org.jdesktop.layout.GroupLayout.LEADING)
+         .add(jPanel8Layout.createSequentialGroup()
+            .addContainerGap()
+            .add(jPanel8Layout.createParallelGroup(org.jdesktop.layout.GroupLayout.LEADING)
+               .add(jPanel8Layout.createSequentialGroup()
+                  .add(jLabel12)
+                  .addPreferredGap(org.jdesktop.layout.LayoutStyle.RELATED, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                  .add(jTextField_Counting_minPixSize, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, 34, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE))
+               .add(jPanel8Layout.createSequentialGroup()
+                  .add(jLabel13)
+                  .addPreferredGap(org.jdesktop.layout.LayoutStyle.RELATED, 5, Short.MAX_VALUE)
+                  .add(jTextField_Counting_maxPixSize, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, 34, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE)))
+            .add(186, 186, 186))
+      );
+      jPanel8Layout.setVerticalGroup(
+         jPanel8Layout.createParallelGroup(org.jdesktop.layout.GroupLayout.LEADING)
+         .add(jPanel8Layout.createSequentialGroup()
+            .add(jPanel8Layout.createParallelGroup(org.jdesktop.layout.GroupLayout.BASELINE)
+               .add(jLabel12)
+               .add(jTextField_Counting_minPixSize, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE))
+            .addPreferredGap(org.jdesktop.layout.LayoutStyle.RELATED)
+            .add(jPanel8Layout.createParallelGroup(org.jdesktop.layout.GroupLayout.BASELINE)
+               .add(jLabel13)
+               .add(jTextField_Counting_maxPixSize, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE)))
+      );
+
+      org.jdesktop.layout.GroupLayout jPanel5Layout = new org.jdesktop.layout.GroupLayout(jPanel5);
+      jPanel5.setLayout(jPanel5Layout);
+      jPanel5Layout.setHorizontalGroup(
+         jPanel5Layout.createParallelGroup(org.jdesktop.layout.GroupLayout.LEADING)
+         .add(jPanel5Layout.createSequentialGroup()
+            .addContainerGap()
+            .add(jPanel5Layout.createParallelGroup(org.jdesktop.layout.GroupLayout.LEADING)
+               .add(jPanel6, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+               .add(jPanel7, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+               .add(jPanel8, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+            .addContainerGap())
+      );
+      jPanel5Layout.setVerticalGroup(
+         jPanel5Layout.createParallelGroup(org.jdesktop.layout.GroupLayout.LEADING)
+         .add(jPanel5Layout.createSequentialGroup()
+            .addContainerGap()
+            .add(jPanel6, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE)
+            .addPreferredGap(org.jdesktop.layout.LayoutStyle.RELATED)
+            .add(jPanel7, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, 179, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE)
+            .addPreferredGap(org.jdesktop.layout.LayoutStyle.RELATED)
+            .add(jPanel8, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE)
+            .addContainerGap(org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+      );
+
+      jTabbedPane_Settings.addTab("FOV filtering", jPanel5);
+
+      jLabel14.setText("Acquisition channel:");
+
+      jComboBox_roiCamera.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Phase contrast", "Fluorescence" }));
+      jComboBox_roiCamera.addActionListener(new java.awt.event.ActionListener() {
+         public void actionPerformed(java.awt.event.ActionEvent evt) {
+            jComboBox_roiCameraActionPerformed(evt);
+         }
+      });
+
+      jLabel15.setText("ROI start X:");
+      jLabel15.setToolTipText("ROI start X (pixels)");
+
+      jLabel16.setText("ROI start Y:");
+      jLabel16.setToolTipText("ROI start Y (pixels)");
+
+      jLabel17.setText("ROI width:");
+      jLabel17.setToolTipText("ROI width (pixels)");
+
+      jLabel18.setText("ROI height:");
+      jLabel18.setToolTipText("ROI height (pixels)");
+
+      jTextField_roiX.setText("0");
+
+      jTextField_roiY.setText("0");
+
+      jTextField_roiW.setText("0");
+
+      jTextField_roiH.setText("0");
+
+      org.jdesktop.layout.GroupLayout jPanel9Layout = new org.jdesktop.layout.GroupLayout(jPanel9);
+      jPanel9.setLayout(jPanel9Layout);
+      jPanel9Layout.setHorizontalGroup(
+         jPanel9Layout.createParallelGroup(org.jdesktop.layout.GroupLayout.LEADING)
+         .add(jPanel9Layout.createSequentialGroup()
+            .addContainerGap()
+            .add(jPanel9Layout.createParallelGroup(org.jdesktop.layout.GroupLayout.LEADING)
+               .add(jPanel9Layout.createSequentialGroup()
+                  .add(jLabel14)
+                  .addPreferredGap(org.jdesktop.layout.LayoutStyle.UNRELATED)
+                  .add(jComboBox_roiCamera, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, 121, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE))
+               .add(jPanel9Layout.createSequentialGroup()
+                  .add(10, 10, 10)
+                  .add(jPanel9Layout.createParallelGroup(org.jdesktop.layout.GroupLayout.TRAILING)
+                     .add(jLabel16)
+                     .add(jLabel15)
+                     .add(org.jdesktop.layout.GroupLayout.LEADING, jLabel17)
+                     .add(org.jdesktop.layout.GroupLayout.LEADING, jLabel18))
+                  .addPreferredGap(org.jdesktop.layout.LayoutStyle.UNRELATED)
+                  .add(jPanel9Layout.createParallelGroup(org.jdesktop.layout.GroupLayout.LEADING)
+                     .add(jTextField_roiX, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, 53, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE)
+                     .add(jTextField_roiY, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, 53, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE)
+                     .add(jTextField_roiW, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, 53, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE)
+                     .add(jTextField_roiH, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, 53, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE))))
+            .addContainerGap(118, Short.MAX_VALUE))
+      );
+      jPanel9Layout.setVerticalGroup(
+         jPanel9Layout.createParallelGroup(org.jdesktop.layout.GroupLayout.LEADING)
+         .add(jPanel9Layout.createSequentialGroup()
+            .addContainerGap()
+            .add(jPanel9Layout.createParallelGroup(org.jdesktop.layout.GroupLayout.BASELINE)
+               .add(jLabel14)
+               .add(jComboBox_roiCamera, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE))
+            .addPreferredGap(org.jdesktop.layout.LayoutStyle.RELATED)
+            .add(jPanel9Layout.createParallelGroup(org.jdesktop.layout.GroupLayout.BASELINE)
+               .add(jLabel15)
+               .add(jTextField_roiX, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE))
+            .addPreferredGap(org.jdesktop.layout.LayoutStyle.RELATED)
+            .add(jPanel9Layout.createParallelGroup(org.jdesktop.layout.GroupLayout.BASELINE)
+               .add(jLabel16)
+               .add(jTextField_roiY, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE))
+            .addPreferredGap(org.jdesktop.layout.LayoutStyle.RELATED)
+            .add(jPanel9Layout.createParallelGroup(org.jdesktop.layout.GroupLayout.BASELINE)
+               .add(jLabel17)
+               .add(jTextField_roiW, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE))
+            .addPreferredGap(org.jdesktop.layout.LayoutStyle.RELATED)
+            .add(jPanel9Layout.createParallelGroup(org.jdesktop.layout.GroupLayout.BASELINE)
+               .add(jLabel18)
+               .add(jTextField_roiH, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE))
+            .addContainerGap(198, Short.MAX_VALUE))
+      );
+
+      jTabbedPane_Settings.addTab("Camera ROIs", jPanel9);
 
       jButton_Apply.setText("Apply");
       jButton_Apply.addActionListener(new java.awt.event.ActionListener() {
@@ -668,14 +997,13 @@ public class InitOptionDialog extends javax.swing.JDialog {
          layout.createParallelGroup(org.jdesktop.layout.GroupLayout.LEADING)
          .add(layout.createSequentialGroup()
             .addContainerGap()
-            .add(jTabbedPane_Settings)
+            .add(jTabbedPane_Settings, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, 377, Short.MAX_VALUE)
             .addPreferredGap(org.jdesktop.layout.LayoutStyle.RELATED)
             .add(layout.createParallelGroup(org.jdesktop.layout.GroupLayout.BASELINE)
                .add(jButton_Apply)
                .add(jButton_Cancel)
                .add(jButton_Ok)
-               .add(jButton_SaveSettingsAsDefault))
-            .add(12, 12, 12))
+               .add(jButton_SaveSettingsAsDefault)))
       );
 
       pack();
@@ -816,6 +1144,13 @@ public class InitOptionDialog extends javax.swing.JDialog {
       newConfig_.camEmccdNumFrames_= Integer.parseInt(jTextField_EmccdNumFrames.getText());
    }//GEN-LAST:event_jTextField_EmccdNumFramesActionPerformed
 
+   private void jComboBox_Counting_SelectAlgActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jComboBox_Counting_SelectAlgActionPerformed
+   }//GEN-LAST:event_jComboBox_Counting_SelectAlgActionPerformed
+
+   private void jComboBox_roiCameraActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jComboBox_roiCameraActionPerformed
+      // TODO add your handling code here:
+   }//GEN-LAST:event_jComboBox_roiCameraActionPerformed
+
    // Variables declaration - do not modify//GEN-BEGIN:variables
    private javax.swing.JButton jButton_Apply;
    private javax.swing.JButton jButton_BrowseAcqFolder;
@@ -823,8 +1158,27 @@ public class InitOptionDialog extends javax.swing.JDialog {
    private javax.swing.JButton jButton_Ok;
    private javax.swing.JButton jButton_SaveSettingsAsDefault;
    private javax.swing.JCheckBox jCheckBox_ConvertPhExposureMsToSec;
+   private javax.swing.JComboBox jComboBox_Counting_SelectAlg;
+   private javax.swing.JComboBox jComboBox_Counting_localMethod;
+   private javax.swing.JComboBox jComboBox_roiCamera;
    private javax.swing.JLabel jLabel1;
+   private javax.swing.JLabel jLabel10;
+   private javax.swing.JLabel jLabel11;
+   private javax.swing.JLabel jLabel12;
+   private javax.swing.JLabel jLabel13;
+   private javax.swing.JLabel jLabel14;
+   private javax.swing.JLabel jLabel15;
+   private javax.swing.JLabel jLabel16;
+   private javax.swing.JLabel jLabel17;
+   private javax.swing.JLabel jLabel18;
    private javax.swing.JLabel jLabel2;
+   private javax.swing.JLabel jLabel3;
+   private javax.swing.JLabel jLabel4;
+   private javax.swing.JLabel jLabel5;
+   private javax.swing.JLabel jLabel6;
+   private javax.swing.JLabel jLabel7;
+   private javax.swing.JLabel jLabel8;
+   private javax.swing.JLabel jLabel9;
    private javax.swing.JLabel jLabel_AcqFolderName;
    private javax.swing.JLabel jLabel_ActivationDacName;
    private javax.swing.JLabel jLabel_ActivationTtlName;
@@ -846,6 +1200,11 @@ public class InitOptionDialog extends javax.swing.JDialog {
    private javax.swing.JPanel jPanel2;
    private javax.swing.JPanel jPanel3;
    private javax.swing.JPanel jPanel4;
+   private javax.swing.JPanel jPanel5;
+   private javax.swing.JPanel jPanel6;
+   private javax.swing.JPanel jPanel7;
+   private javax.swing.JPanel jPanel8;
+   private javax.swing.JPanel jPanel9;
    private javax.swing.JTabbedPane jTabbedPane_Settings;
    private javax.swing.JTextField jTextField_AcqFolderName;
    private javax.swing.JTextField jTextField_ActivationDacProp;
@@ -853,6 +1212,13 @@ public class InitOptionDialog extends javax.swing.JDialog {
    private javax.swing.JTextField jTextField_ActivationTtlLabel;
    private javax.swing.JTextField jTextField_ActivationTtlProp;
    private javax.swing.JTextField jTextField_BaseFileName;
+   private javax.swing.JTextField jTextField_Counting_LocalPar1;
+   private javax.swing.JTextField jTextField_Counting_LocalRad;
+   private javax.swing.JTextField jTextField_Counting_Par2;
+   private javax.swing.JTextField jTextField_Counting_bgRad;
+   private javax.swing.JTextField jTextField_Counting_blurRad;
+   private javax.swing.JTextField jTextField_Counting_maxPixSize;
+   private javax.swing.JTextField jTextField_Counting_minPixSize;
    private javax.swing.JTextField jTextField_EmccdCamName;
    private javax.swing.JTextField jTextField_EmccdExposureTime;
    private javax.swing.JTextField jTextField_EmccdNumFrames;
@@ -870,5 +1236,9 @@ public class InitOptionDialog extends javax.swing.JDialog {
    private javax.swing.JTextField jTextField_PhLampTtlProp;
    private javax.swing.JTextField jTextField_StepSizeX;
    private javax.swing.JTextField jTextField_StepSizeY;
+   private javax.swing.JTextField jTextField_roiH;
+   private javax.swing.JTextField jTextField_roiW;
+   private javax.swing.JTextField jTextField_roiX;
+   private javax.swing.JTextField jTextField_roiY;
    // End of variables declaration//GEN-END:variables
 }

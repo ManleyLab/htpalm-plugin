@@ -32,27 +32,25 @@
       <Group type="103" groupAlignment="0" attributes="0">
           <Group type="102" attributes="0">
               <EmptySpace max="-2" attributes="0"/>
-              <Group type="103" groupAlignment="0" attributes="0">
-                  <Group type="103" groupAlignment="1" max="-2" attributes="0">
-                      <Group type="102" alignment="0" attributes="0">
-                          <Group type="103" groupAlignment="0" max="-2" attributes="0">
-                              <Component id="jPanel_Initialize" max="32767" attributes="0"/>
-                              <Component id="jPanel_ManualControl" max="32767" attributes="0"/>
-                          </Group>
-                          <EmptySpace max="-2" attributes="0"/>
-                          <Group type="103" groupAlignment="0" max="-2" attributes="0">
-                              <Component id="jButton_SaveSettings" max="32767" attributes="0"/>
-                              <Component id="jButton_LoadSettings" max="32767" attributes="0"/>
-                              <Component id="jButton_AcquireAllFov" alignment="0" max="32767" attributes="0"/>
-                              <Component id="jButton_Abort" max="32767" attributes="0"/>
-                              <Component id="jButton_OpenInitOptions" alignment="0" max="32767" attributes="0"/>
-                          </Group>
+              <Group type="103" groupAlignment="1" max="-2" attributes="0">
+                  <Group type="102" alignment="0" attributes="0">
+                      <Group type="103" groupAlignment="0" max="-2" attributes="0">
+                          <Component id="jPanel_Initialize" max="32767" attributes="0"/>
+                          <Component id="jPanel_ManualControl" max="32767" attributes="0"/>
                       </Group>
-                      <Component id="jPanel_LaserControl" alignment="0" max="32767" attributes="0"/>
+                      <EmptySpace max="-2" attributes="0"/>
+                      <Group type="103" groupAlignment="0" max="-2" attributes="0">
+                          <Component id="jButton_SaveSettings" max="32767" attributes="0"/>
+                          <Component id="jButton_LoadSettings" max="32767" attributes="0"/>
+                          <Component id="jButton_AcquireAllFov" alignment="0" max="32767" attributes="0"/>
+                          <Component id="jButton_Abort" max="32767" attributes="0"/>
+                          <Component id="jButton_OpenInitOptions" alignment="0" max="32767" attributes="0"/>
+                      </Group>
                   </Group>
-                  <Component id="jPanel_BactDetection" alignment="0" min="-2" max="-2" attributes="0"/>
+                  <Component id="jPanel_LaserControl" alignment="0" max="32767" attributes="0"/>
+                  <Component id="jPanel_BactDetection" max="32767" attributes="0"/>
               </Group>
-              <EmptySpace min="0" pref="11" max="32767" attributes="0"/>
+              <EmptySpace min="0" pref="6" max="32767" attributes="0"/>
           </Group>
       </Group>
     </DimensionLayout>
@@ -61,32 +59,30 @@
           <Group type="102" alignment="0" attributes="0">
               <EmptySpace max="-2" attributes="0"/>
               <Group type="103" groupAlignment="0" attributes="0">
+                  <Group type="102" attributes="0">
+                      <EmptySpace min="0" pref="0" max="32767" attributes="0"/>
+                      <Component id="jPanel_Initialize" min="-2" max="-2" attributes="0"/>
+                      <EmptySpace max="-2" attributes="0"/>
+                      <Component id="jPanel_ManualControl" min="-2" max="-2" attributes="0"/>
+                  </Group>
                   <Group type="102" alignment="0" attributes="0">
                       <Component id="jButton_AcquireAllFov" min="-2" max="-2" attributes="0"/>
                       <EmptySpace max="-2" attributes="0"/>
                       <Component id="jButton_Abort" min="-2" max="-2" attributes="0"/>
-                      <EmptySpace max="32767" attributes="0"/>
+                      <EmptySpace max="-2" attributes="0"/>
                       <Component id="jButton_OpenInitOptions" min="-2" max="-2" attributes="0"/>
-                  </Group>
-                  <Group type="102" alignment="1" attributes="0">
-                      <EmptySpace min="0" pref="0" max="32767" attributes="0"/>
-                      <Component id="jPanel_Initialize" min="-2" max="-2" attributes="0"/>
-                  </Group>
-              </Group>
-              <EmptySpace max="-2" attributes="0"/>
-              <Group type="103" groupAlignment="1" attributes="0">
-                  <Group type="102" alignment="0" attributes="0">
+                      <EmptySpace max="-2" attributes="0"/>
                       <Component id="jButton_LoadSettings" min="-2" max="-2" attributes="0"/>
                       <EmptySpace max="-2" attributes="0"/>
                       <Component id="jButton_SaveSettings" min="-2" max="-2" attributes="0"/>
-                      <EmptySpace max="-2" attributes="0"/>
+                      <EmptySpace max="32767" attributes="0"/>
                   </Group>
-                  <Component id="jPanel_ManualControl" min="-2" max="-2" attributes="0"/>
               </Group>
+              <EmptySpace max="-2" attributes="0"/>
               <Component id="jPanel_LaserControl" min="-2" max="-2" attributes="0"/>
               <EmptySpace max="-2" attributes="0"/>
               <Component id="jPanel_BactDetection" min="-2" max="-2" attributes="0"/>
-              <EmptySpace pref="17" max="32767" attributes="0"/>
+              <EmptySpace max="32767" attributes="0"/>
           </Group>
       </Group>
     </DimensionLayout>
@@ -104,31 +100,13 @@
       <Layout>
         <DimensionLayout dim="0">
           <Group type="103" groupAlignment="0" attributes="0">
-              <Group type="103" groupAlignment="0" attributes="0">
-                  <Group type="102" alignment="1" attributes="0">
-                      <EmptySpace min="-2" pref="99" max="-2" attributes="0"/>
-                      <Component id="jButton_SetStartAsCurrentPos" max="32767" attributes="0"/>
-                  </Group>
-                  <Group type="102" attributes="0">
-                      <EmptySpace min="-2" pref="102" max="-2" attributes="0"/>
-                      <Component id="jButton_SetPosAsOrigin" max="32767" attributes="0"/>
-                  </Group>
-              </Group>
-              <Group type="102" attributes="0">
-                  <EmptySpace min="-2" pref="11" max="-2" attributes="0"/>
-                  <Component id="jLabel_CurrentPos" min="-2" max="-2" attributes="0"/>
-                  <EmptySpace type="unrelated" max="-2" attributes="0"/>
-                  <Component id="jLabel_CurrentPosXName" min="-2" max="-2" attributes="0"/>
-                  <EmptySpace min="-2" pref="10" max="-2" attributes="0"/>
-                  <Component id="jLabel_CurrentX" min="-2" pref="43" max="-2" attributes="0"/>
-                  <EmptySpace type="unrelated" max="-2" attributes="0"/>
-                  <Component id="jLabel_CurrentPosYName" min="-2" max="-2" attributes="0"/>
-                  <EmptySpace type="unrelated" max="-2" attributes="0"/>
-                  <Component id="jLabel_CurrentY" min="-2" pref="43" max="-2" attributes="0"/>
-              </Group>
               <Group type="102" alignment="0" attributes="0">
                   <EmptySpace max="-2" attributes="0"/>
                   <Group type="103" groupAlignment="0" attributes="0">
+                      <Group type="102" alignment="0" attributes="0">
+                          <EmptySpace min="-2" pref="89" max="-2" attributes="0"/>
+                          <Component id="jButton_SetStartAsCurrentPos" max="32767" attributes="0"/>
+                      </Group>
                       <Component id="jLabel_StartPos" alignment="0" min="-2" max="-2" attributes="0"/>
                       <Group type="102" alignment="0" attributes="0">
                           <EmptySpace min="91" pref="91" max="-2" attributes="0"/>
@@ -141,22 +119,13 @@
                           <Component id="jTextField_StartY" min="-2" pref="43" max="-2" attributes="0"/>
                       </Group>
                   </Group>
+                  <EmptySpace max="-2" attributes="0"/>
               </Group>
           </Group>
         </DimensionLayout>
         <DimensionLayout dim="1">
           <Group type="103" groupAlignment="0" attributes="0">
-              <Group type="102" alignment="1" attributes="0">
-                  <Group type="103" groupAlignment="3" attributes="0">
-                      <Component id="jLabel_CurrentPos" alignment="3" min="-2" max="-2" attributes="0"/>
-                      <Component id="jLabel_CurrentPosXName" alignment="3" min="-2" max="-2" attributes="0"/>
-                      <Component id="jLabel_CurrentPosYName" alignment="3" min="-2" max="-2" attributes="0"/>
-                      <Component id="jLabel_CurrentX" alignment="3" min="-2" max="-2" attributes="0"/>
-                      <Component id="jLabel_CurrentY" alignment="3" min="-2" max="-2" attributes="0"/>
-                  </Group>
-                  <EmptySpace max="-2" attributes="0"/>
-                  <Component id="jButton_SetPosAsOrigin" min="-2" max="-2" attributes="0"/>
-                  <EmptySpace type="unrelated" max="-2" attributes="0"/>
+              <Group type="102" alignment="0" attributes="0">
                   <Group type="103" groupAlignment="3" attributes="0">
                       <Component id="jLabel_StartPos" alignment="3" min="-2" max="-2" attributes="0"/>
                       <Component id="jLabel_StartX" alignment="3" min="-2" max="-2" attributes="0"/>
@@ -211,41 +180,6 @@
           <Events>
             <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jButton_SetStartAsCurrentPosActionPerformed"/>
           </Events>
-        </Component>
-        <Component class="javax.swing.JLabel" name="jLabel_CurrentPos">
-          <Properties>
-            <Property name="text" type="java.lang.String" value="Current position:"/>
-          </Properties>
-        </Component>
-        <Component class="javax.swing.JLabel" name="jLabel_CurrentPosXName">
-          <Properties>
-            <Property name="text" type="java.lang.String" value="X"/>
-          </Properties>
-        </Component>
-        <Component class="javax.swing.JLabel" name="jLabel_CurrentPosYName">
-          <Properties>
-            <Property name="text" type="java.lang.String" value="Y"/>
-          </Properties>
-        </Component>
-        <Component class="javax.swing.JLabel" name="jLabel_CurrentX">
-          <Properties>
-            <Property name="horizontalAlignment" type="int" value="11"/>
-            <Property name="text" type="java.lang.String" value="00.00"/>
-          </Properties>
-        </Component>
-        <Component class="javax.swing.JButton" name="jButton_SetPosAsOrigin">
-          <Properties>
-            <Property name="text" type="java.lang.String" value="Set as origin"/>
-          </Properties>
-          <Events>
-            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jButton_SetPosAsOriginActionPerformed"/>
-          </Events>
-        </Component>
-        <Component class="javax.swing.JLabel" name="jLabel_CurrentY">
-          <Properties>
-            <Property name="horizontalAlignment" type="int" value="11"/>
-            <Property name="text" type="java.lang.String" value="00.00"/>
-          </Properties>
         </Component>
       </SubComponents>
     </Container>
@@ -516,10 +450,13 @@
       <Properties>
         <Property name="border" type="javax.swing.border.Border" editor="org.netbeans.modules.form.editors2.BorderEditor">
           <Border info="org.netbeans.modules.form.compat2.border.TitledBorderInfo">
-            <TitledBorder title="Bacteria detection"/>
+            <TitledBorder title="FOV filtering"/>
           </Border>
         </Property>
       </Properties>
+      <AccessibilityProperties>
+        <Property name="AccessibleContext.accessibleName" type="java.lang.String" value="FOV filtering"/>
+      </AccessibilityProperties>
 
       <Layout>
         <DimensionLayout dim="0">
@@ -527,8 +464,8 @@
               <Group type="102" alignment="0" attributes="0">
                   <EmptySpace max="-2" attributes="0"/>
                   <Component id="jCheckBox_ExcludeBadFov" min="-2" max="-2" attributes="0"/>
-                  <EmptySpace pref="13" max="32767" attributes="0"/>
-                  <Component id="jButton_OpenBactConfig" min="-2" max="-2" attributes="0"/>
+                  <EmptySpace max="32767" attributes="0"/>
+                  <Component id="jButton1" min="-2" max="-2" attributes="0"/>
                   <EmptySpace max="-2" attributes="0"/>
               </Group>
           </Group>
@@ -537,7 +474,7 @@
           <Group type="103" groupAlignment="0" attributes="0">
               <Group type="103" groupAlignment="3" attributes="0">
                   <Component id="jCheckBox_ExcludeBadFov" alignment="3" min="-2" max="-2" attributes="0"/>
-                  <Component id="jButton_OpenBactConfig" alignment="3" min="-2" max="-2" attributes="0"/>
+                  <Component id="jButton1" alignment="3" min="-2" max="-2" attributes="0"/>
               </Group>
           </Group>
         </DimensionLayout>
@@ -545,18 +482,20 @@
       <SubComponents>
         <Component class="javax.swing.JCheckBox" name="jCheckBox_ExcludeBadFov">
           <Properties>
-            <Property name="text" type="java.lang.String" value="Automatically exclude bad FOVs (TODO!)"/>
+            <Property name="text" type="java.lang.String" value="Skip bad FOVs"/>
+            <Property name="toolTipText" type="java.lang.String" value="Skip FOVs based on detected number of bacteria"/>
           </Properties>
           <Events>
             <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jCheckBox_ExcludeBadFovActionPerformed"/>
           </Events>
         </Component>
-        <Component class="javax.swing.JButton" name="jButton_OpenBactConfig">
+        <Component class="javax.swing.JButton" name="jButton1">
           <Properties>
-            <Property name="text" type="java.lang.String" value="Configure"/>
+            <Property name="text" type="java.lang.String" value="Test filtering"/>
+            <Property name="toolTipText" type="java.lang.String" value="Test filtering algorithm on currently selected image"/>
           </Properties>
           <Events>
-            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jButton_OpenBactConfigActionPerformed"/>
+            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jButton1ActionPerformed"/>
           </Events>
         </Component>
       </SubComponents>
