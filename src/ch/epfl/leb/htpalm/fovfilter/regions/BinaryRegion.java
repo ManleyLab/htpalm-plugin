@@ -9,7 +9,7 @@
  * Date: 2010/08/01
  */
 
-package ch.epfl.leb.htpalm.bactcounting.regions;
+package ch.epfl.leb.htpalm.fovfilter.regions;
 
 import java.awt.Rectangle;
 import java.awt.geom.Point2D;

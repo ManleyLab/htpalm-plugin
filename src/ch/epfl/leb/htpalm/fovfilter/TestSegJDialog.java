@@ -2,7 +2,7 @@
  * To change this template, choose Tools | Templates
  * and open the template in the editor.
  */
-package ch.epfl.leb.htpalm.bactcounting;
+package ch.epfl.leb.htpalm.fovfilter;
 
 import ij.IJ;
 import ij.ImageListener;
@@ -17,7 +17,7 @@ import org.micromanager.MMStudioMainFrame;
 public class TestSegJDialog extends javax.swing.JDialog  implements ImageListener{
 
    TestSegMMPlugin testPlugin_;
-   TestSeg seg_;
+   FovFilter seg_;
    MMStudioMainFrame gui_;
    double smoothRadius_,rollingBallRad_;
    int minPixels_, maxPixels_;
@@ -259,7 +259,7 @@ public class TestSegJDialog extends javax.swing.JDialog  implements ImageListene
 
       if (im_ != null){// ie exclude case where grabCurrentImage failed to find an image
          //TODO - dont make a new object every time
-         seg_ = new TestSeg(im_, rollingBallRad_, segAlg_ , segAlgParam_);
+         seg_ = new FovFilter(im_, rollingBallRad_, segAlg_ , segAlgParam_);
       
          seg_.updateFilter(minPixels_, maxPixels_, ROI_x_, ROI_y_ , ROI_w_, ROI_h_);
          updateLabelIm();

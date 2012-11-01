@@ -190,6 +190,11 @@ public class InitOptionDialog extends javax.swing.JDialog {
       jLabel13 = new javax.swing.JLabel();
       jTextField_Counting_maxPixSize = new javax.swing.JTextField();
       jTextField_Counting_minPixSize = new javax.swing.JTextField();
+      jPanel10 = new javax.swing.JPanel();
+      jLabel19 = new javax.swing.JLabel();
+      jLabel20 = new javax.swing.JLabel();
+      jTextField_Counting_minCells = new javax.swing.JTextField();
+      jTextField_Counting_maxCells = new javax.swing.JTextField();
       jPanel9 = new javax.swing.JPanel();
       jLabel14 = new javax.swing.JLabel();
       jComboBox_roiCamera = new javax.swing.JComboBox();
@@ -270,7 +275,7 @@ public class InitOptionDialog extends javax.swing.JDialog {
             .add(jPanel1Layout.createParallelGroup(org.jdesktop.layout.GroupLayout.BASELINE)
                .add(jLabel_MosaicNFov)
                .add(jTextField_MosaicNFov, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE))
-            .addContainerGap(250, Short.MAX_VALUE))
+            .addContainerGap(277, Short.MAX_VALUE))
       );
 
       jTabbedPane_Settings.addTab("Mosaic settings", jPanel1);
@@ -333,7 +338,7 @@ public class InitOptionDialog extends javax.swing.JDialog {
             .add(jPanel3Layout.createParallelGroup(org.jdesktop.layout.GroupLayout.BASELINE)
                .add(jLabel_BaseFileName)
                .add(jTextField_BaseFileName, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE))
-            .addContainerGap(273, Short.MAX_VALUE))
+            .addContainerGap(300, Short.MAX_VALUE))
       );
 
       jTabbedPane_Settings.addTab("File locations", jPanel3);
@@ -465,7 +470,7 @@ public class InitOptionDialog extends javax.swing.JDialog {
                .add(jTextField_PhCamDelayTime, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE))
             .addPreferredGap(org.jdesktop.layout.LayoutStyle.UNRELATED)
             .add(jCheckBox_ConvertPhExposureMsToSec)
-            .addContainerGap(144, Short.MAX_VALUE))
+            .addContainerGap(171, Short.MAX_VALUE))
       );
 
       jTabbedPane_Settings.addTab("Camera settings", jPanel4);
@@ -648,7 +653,7 @@ public class InitOptionDialog extends javax.swing.JDialog {
                   .add(jPanel2Layout.createParallelGroup(org.jdesktop.layout.GroupLayout.BASELINE)
                      .add(jLabel_PhLampTtlName)
                      .add(jTextField_PhLampTtlLabel, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE))))
-            .addContainerGap(150, Short.MAX_VALUE))
+            .addContainerGap(177, Short.MAX_VALUE))
       );
 
       jTabbedPane_Settings.addTab("Lasers & shutters", jPanel2);
@@ -760,7 +765,7 @@ public class InitOptionDialog extends javax.swing.JDialog {
                                  .add(jTextField_Counting_Par2)
                                  .add(jTextField_Counting_LocalPar1)
                                  .add(jTextField_Counting_LocalRad, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, 36, Short.MAX_VALUE))))))))
-            .addContainerGap(org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+            .addContainerGap(32, Short.MAX_VALUE))
       );
       jPanel7Layout.setVerticalGroup(
          jPanel7Layout.createParallelGroup(org.jdesktop.layout.GroupLayout.LEADING)
@@ -822,9 +827,9 @@ public class InitOptionDialog extends javax.swing.JDialog {
                   .add(jTextField_Counting_minPixSize, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, 34, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE))
                .add(jPanel8Layout.createSequentialGroup()
                   .add(jLabel13)
-                  .addPreferredGap(org.jdesktop.layout.LayoutStyle.RELATED, 5, Short.MAX_VALUE)
+                  .addPreferredGap(org.jdesktop.layout.LayoutStyle.RELATED, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                   .add(jTextField_Counting_maxPixSize, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, 34, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE)))
-            .add(186, 186, 186))
+            .addContainerGap())
       );
       jPanel8Layout.setVerticalGroup(
          jPanel8Layout.createParallelGroup(org.jdesktop.layout.GroupLayout.LEADING)
@@ -838,6 +843,46 @@ public class InitOptionDialog extends javax.swing.JDialog {
                .add(jTextField_Counting_maxPixSize, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE)))
       );
 
+      jPanel10.setBorder(javax.swing.BorderFactory.createTitledBorder("Cell count limits"));
+
+      jLabel19.setText("Min # cells:");
+
+      jLabel20.setText("Max # cells:");
+
+      jTextField_Counting_minCells.setHorizontalAlignment(javax.swing.JTextField.TRAILING);
+      jTextField_Counting_minCells.setText("0");
+
+      jTextField_Counting_maxCells.setHorizontalAlignment(javax.swing.JTextField.TRAILING);
+      jTextField_Counting_maxCells.setText("Inf");
+
+      org.jdesktop.layout.GroupLayout jPanel10Layout = new org.jdesktop.layout.GroupLayout(jPanel10);
+      jPanel10.setLayout(jPanel10Layout);
+      jPanel10Layout.setHorizontalGroup(
+         jPanel10Layout.createParallelGroup(org.jdesktop.layout.GroupLayout.LEADING)
+         .add(jPanel10Layout.createSequentialGroup()
+            .addContainerGap()
+            .add(jPanel10Layout.createParallelGroup(org.jdesktop.layout.GroupLayout.LEADING)
+               .add(jLabel19)
+               .add(jLabel20))
+            .addPreferredGap(org.jdesktop.layout.LayoutStyle.RELATED, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .add(jPanel10Layout.createParallelGroup(org.jdesktop.layout.GroupLayout.LEADING, false)
+               .add(jTextField_Counting_maxCells, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, 51, Short.MAX_VALUE)
+               .add(jTextField_Counting_minCells))
+            .addContainerGap())
+      );
+      jPanel10Layout.setVerticalGroup(
+         jPanel10Layout.createParallelGroup(org.jdesktop.layout.GroupLayout.LEADING)
+         .add(jPanel10Layout.createSequentialGroup()
+            .add(jPanel10Layout.createParallelGroup(org.jdesktop.layout.GroupLayout.BASELINE)
+               .add(jLabel19)
+               .add(jTextField_Counting_minCells, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE))
+            .addPreferredGap(org.jdesktop.layout.LayoutStyle.RELATED)
+            .add(jPanel10Layout.createParallelGroup(org.jdesktop.layout.GroupLayout.BASELINE)
+               .add(jLabel20)
+               .add(jTextField_Counting_maxCells, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE))
+            .add(0, 0, Short.MAX_VALUE))
+      );
+
       org.jdesktop.layout.GroupLayout jPanel5Layout = new org.jdesktop.layout.GroupLayout(jPanel5);
       jPanel5.setLayout(jPanel5Layout);
       jPanel5Layout.setHorizontalGroup(
@@ -847,7 +892,10 @@ public class InitOptionDialog extends javax.swing.JDialog {
             .add(jPanel5Layout.createParallelGroup(org.jdesktop.layout.GroupLayout.LEADING)
                .add(jPanel6, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                .add(jPanel7, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-               .add(jPanel8, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+               .add(jPanel5Layout.createSequentialGroup()
+                  .add(jPanel8, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE)
+                  .addPreferredGap(org.jdesktop.layout.LayoutStyle.RELATED)
+                  .add(jPanel10, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
             .addContainerGap())
       );
       jPanel5Layout.setVerticalGroup(
@@ -858,8 +906,10 @@ public class InitOptionDialog extends javax.swing.JDialog {
             .addPreferredGap(org.jdesktop.layout.LayoutStyle.RELATED)
             .add(jPanel7, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, 179, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE)
             .addPreferredGap(org.jdesktop.layout.LayoutStyle.RELATED)
-            .add(jPanel8, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE)
-            .addContainerGap(org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+            .add(jPanel5Layout.createParallelGroup(org.jdesktop.layout.GroupLayout.LEADING, false)
+               .add(jPanel8, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+               .add(jPanel10, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+            .addContainerGap(38, Short.MAX_VALUE))
       );
 
       jTabbedPane_Settings.addTab("FOV filtering", jPanel5);
@@ -942,7 +992,7 @@ public class InitOptionDialog extends javax.swing.JDialog {
             .add(jPanel9Layout.createParallelGroup(org.jdesktop.layout.GroupLayout.BASELINE)
                .add(jLabel18)
                .add(jTextField_roiH, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE))
-            .addContainerGap(198, Short.MAX_VALUE))
+            .addContainerGap(225, Short.MAX_VALUE))
       );
 
       jTabbedPane_Settings.addTab("Camera ROIs", jPanel9);
@@ -997,7 +1047,7 @@ public class InitOptionDialog extends javax.swing.JDialog {
          layout.createParallelGroup(org.jdesktop.layout.GroupLayout.LEADING)
          .add(layout.createSequentialGroup()
             .addContainerGap()
-            .add(jTabbedPane_Settings, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, 377, Short.MAX_VALUE)
+            .add(jTabbedPane_Settings)
             .addPreferredGap(org.jdesktop.layout.LayoutStyle.RELATED)
             .add(layout.createParallelGroup(org.jdesktop.layout.GroupLayout.BASELINE)
                .add(jButton_Apply)
@@ -1171,7 +1221,9 @@ public class InitOptionDialog extends javax.swing.JDialog {
    private javax.swing.JLabel jLabel16;
    private javax.swing.JLabel jLabel17;
    private javax.swing.JLabel jLabel18;
+   private javax.swing.JLabel jLabel19;
    private javax.swing.JLabel jLabel2;
+   private javax.swing.JLabel jLabel20;
    private javax.swing.JLabel jLabel3;
    private javax.swing.JLabel jLabel4;
    private javax.swing.JLabel jLabel5;
@@ -1197,6 +1249,7 @@ public class InitOptionDialog extends javax.swing.JDialog {
    private javax.swing.JLabel jLabel_StepSizeX;
    private javax.swing.JLabel jLabel_StepSizeY;
    private javax.swing.JPanel jPanel1;
+   private javax.swing.JPanel jPanel10;
    private javax.swing.JPanel jPanel2;
    private javax.swing.JPanel jPanel3;
    private javax.swing.JPanel jPanel4;
@@ -1217,7 +1270,9 @@ public class InitOptionDialog extends javax.swing.JDialog {
    private javax.swing.JTextField jTextField_Counting_Par2;
    private javax.swing.JTextField jTextField_Counting_bgRad;
    private javax.swing.JTextField jTextField_Counting_blurRad;
+   private javax.swing.JTextField jTextField_Counting_maxCells;
    private javax.swing.JTextField jTextField_Counting_maxPixSize;
+   private javax.swing.JTextField jTextField_Counting_minCells;
    private javax.swing.JTextField jTextField_Counting_minPixSize;
    private javax.swing.JTextField jTextField_EmccdCamName;
    private javax.swing.JTextField jTextField_EmccdExposureTime;

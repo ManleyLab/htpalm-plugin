@@ -2,9 +2,9 @@
  * To change this template, choose Tools | Templates
  * and open the template in the editor.
  */
-package ch.epfl.leb.htpalm.bactcounting;
+package ch.epfl.leb.htpalm.fovfilter;
 
-import ch.epfl.leb.htpalm.bactcounting.regions.BreadthFirstLabelingFilterable;
+import ch.epfl.leb.htpalm.fovfilter.regions.BreadthFirstLabelingFilterable;
 import ij.*;
 import ij.process.*;
 import ij.gui.*;
@@ -29,7 +29,7 @@ import java.util.List;
  *
  * @author seamus.holden@epfl.ch
  */
-public class TestSeg  {
+public class FovFilter  {
    //NB to self - this is written for ImageJ 1.46e on 121022
 
    private static final String BACKGROUND="Default";
@@ -51,7 +51,7 @@ public class TestSeg  {
    private LoGAlgParam logAlgParam_;
    private LocalAlgParam localAlgParam_;
 
-   public TestSeg(ImagePlus im0, double rollingBallRad_, SegAlgorithm segAlg_,Object AlgParam){
+   public FovFilter(ImagePlus im0, double rollingBallRad_, SegAlgorithm segAlg_,Object AlgParam){
       this.logAlgParam_ = new LoGAlgParam();
       this.localAlgParam_ = new LocalAlgParam();
       this.rollingBallRad_=rollingBallRad_;
@@ -113,7 +113,7 @@ public class TestSeg  {
       ImagePlus imEdge, imThresh;
       
       //get edges image
-      imEdge = TestSeg.getEdge(im, logAlgParam_.smoothRadius_);
+      imEdge = FovFilter.getEdge(im, logAlgParam_.smoothRadius_);
       //get thresholded image
       imThresh = makeOtsuBw(im,logAlgParam_.smoothRadius_);
       

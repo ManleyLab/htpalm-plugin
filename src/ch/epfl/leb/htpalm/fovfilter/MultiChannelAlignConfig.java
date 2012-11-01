@@ -1,5 +1,5 @@
 
-package ch.epfl.leb.htpalm.bactcounting;
+package ch.epfl.leb.htpalm.fovfilter;
 
 // use the simple framework to allow easy generation of POJO xml config file
 import java.io.File;
