@@ -44,12 +44,12 @@ public class HtpalmDialog extends javax.swing.JDialog implements MMListenerInter
    }
 
    private void reloadSettings(){
-      jTextField_StartX.setText(String.format("%.2f", config_.mosaicStartPosX_));
-      jTextField_StartY.setText(String.format("%.2f", config_.mosaicStartPosY_));
-      setStateLaserControlRadioGroup(config_.laserControlIsAutomatic_);
-      jTextField_ExcitationPowerNumber.setText(Double.toString(config_.laserManualExPower_));
-      jTextField_ActivationPowerNumber.setText(Double.toString(config_.laserManualActPower_));
-      jCheckBox_ExcludeBadFov.setSelected(config_.fovAnalysis_excludeBadFov_);
+      jTextField_StartX.setText(String.format("%.2f", config_.getMosaicStartPosX_()));
+      jTextField_StartY.setText(String.format("%.2f", config_.getMosaicStartPosY_()));
+      setStateLaserControlRadioGroup(config_.isLaserControlIsAutomatic_());
+      jTextField_ExcitationPowerNumber.setText(Double.toString(config_.getLaserManualExPower_()));
+      jTextField_ActivationPowerNumber.setText(Double.toString(config_.getLaserManualActPower_()));
+      jCheckBox_ExcludeBadFov.setSelected(config_.isFovAnalysis_excludeBadFov_());
       //update currentpos x, current pos y
       Point2D.Double posXY;
       try {
@@ -64,12 +64,12 @@ public class HtpalmDialog extends javax.swing.JDialog implements MMListenerInter
       }
    }
    private void updateSettings(){
-      config_.mosaicStartPosX_ = Double.parseDouble(jTextField_StartX.getText());
-      config_.mosaicStartPosY_ = Double.parseDouble(jTextField_StartY.getText());
-      config_.laserControlIsAutomatic_ = getStateLaserControlRadioGroup();
-      config_.fovAnalysis_excludeBadFov_ = jCheckBox_ExcludeBadFov.isSelected();
-      config_.laserManualActPower_=Double.parseDouble(jTextField_ActivationPowerNumber.getText());
-      config_.laserManualExPower_=Double.parseDouble(jTextField_ExcitationPowerNumber.getText());
+      config_.setMosaicStartPosX_(Double.parseDouble(jTextField_StartX.getText()));
+      config_.setMosaicStartPosY_(Double.parseDouble(jTextField_StartY.getText()));
+      config_.setLaserControlIsAutomatic_(getStateLaserControlRadioGroup());
+      config_.setFovAnalysis_excludeBadFov_(jCheckBox_ExcludeBadFov.isSelected());
+      config_.setLaserManualActPower_(Double.parseDouble(jTextField_ActivationPowerNumber.getText()));
+      config_.setLaserManualExPower_(Double.parseDouble(jTextField_ExcitationPowerNumber.getText()));
    
    }
    
@@ -136,6 +136,8 @@ public class HtpalmDialog extends javax.swing.JDialog implements MMListenerInter
       jPanel_BactDetection = new javax.swing.JPanel();
       jCheckBox_ExcludeBadFov = new javax.swing.JCheckBox();
       jButton1 = new javax.swing.JButton();
+      jLabel1 = new javax.swing.JLabel();
+      jLabel2 = new javax.swing.JLabel();
       jButton_AcquireAllFov = new javax.swing.JButton();
       jButton_Abort = new javax.swing.JButton();
       jButton_OpenInitOptions = new javax.swing.JButton();
@@ -413,22 +415,42 @@ public class HtpalmDialog extends javax.swing.JDialog implements MMListenerInter
          }
       });
 
+      jLabel1.setText("Test image OK:");
+
+      jLabel2.setBackground(new java.awt.Color(255, 0, 0));
+      jLabel2.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+      jLabel2.setText(" ");
+      jLabel2.setOpaque(true);
+
       org.jdesktop.layout.GroupLayout jPanel_BactDetectionLayout = new org.jdesktop.layout.GroupLayout(jPanel_BactDetection);
       jPanel_BactDetection.setLayout(jPanel_BactDetectionLayout);
       jPanel_BactDetectionLayout.setHorizontalGroup(
          jPanel_BactDetectionLayout.createParallelGroup(org.jdesktop.layout.GroupLayout.LEADING)
          .add(jPanel_BactDetectionLayout.createSequentialGroup()
             .addContainerGap()
-            .add(jCheckBox_ExcludeBadFov)
-            .addPreferredGap(org.jdesktop.layout.LayoutStyle.RELATED, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-            .add(jButton1)
+            .add(jPanel_BactDetectionLayout.createParallelGroup(org.jdesktop.layout.GroupLayout.LEADING)
+               .add(jPanel_BactDetectionLayout.createSequentialGroup()
+                  .add(jCheckBox_ExcludeBadFov)
+                  .addPreferredGap(org.jdesktop.layout.LayoutStyle.RELATED, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                  .add(jButton1))
+               .add(jPanel_BactDetectionLayout.createSequentialGroup()
+                  .add(0, 0, Short.MAX_VALUE)
+                  .add(jLabel1)
+                  .addPreferredGap(org.jdesktop.layout.LayoutStyle.UNRELATED)
+                  .add(jLabel2, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, 60, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE)))
             .addContainerGap())
       );
       jPanel_BactDetectionLayout.setVerticalGroup(
          jPanel_BactDetectionLayout.createParallelGroup(org.jdesktop.layout.GroupLayout.LEADING)
-         .add(jPanel_BactDetectionLayout.createParallelGroup(org.jdesktop.layout.GroupLayout.BASELINE)
-            .add(jCheckBox_ExcludeBadFov)
-            .add(jButton1))
+         .add(jPanel_BactDetectionLayout.createSequentialGroup()
+            .add(jPanel_BactDetectionLayout.createParallelGroup(org.jdesktop.layout.GroupLayout.BASELINE)
+               .add(jCheckBox_ExcludeBadFov)
+               .add(jButton1))
+            .addPreferredGap(org.jdesktop.layout.LayoutStyle.RELATED)
+            .add(jPanel_BactDetectionLayout.createParallelGroup(org.jdesktop.layout.GroupLayout.BASELINE)
+               .add(jLabel1)
+               .add(jLabel2))
+            .addContainerGap(org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
       );
 
       jButton_AcquireAllFov.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
@@ -509,8 +531,7 @@ public class HtpalmDialog extends javax.swing.JDialog implements MMListenerInter
                   .addPreferredGap(org.jdesktop.layout.LayoutStyle.RELATED)
                   .add(jButton_LoadSettings)
                   .addPreferredGap(org.jdesktop.layout.LayoutStyle.RELATED)
-                  .add(jButton_SaveSettings)
-                  .addPreferredGap(org.jdesktop.layout.LayoutStyle.RELATED, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
+                  .add(jButton_SaveSettings)))
             .addPreferredGap(org.jdesktop.layout.LayoutStyle.RELATED)
             .add(jPanel_LaserControl, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE)
             .addPreferredGap(org.jdesktop.layout.LayoutStyle.RELATED)
@@ -518,21 +539,19 @@ public class HtpalmDialog extends javax.swing.JDialog implements MMListenerInter
             .addContainerGap(org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
       );
 
-      jPanel_BactDetection.getAccessibleContext().setAccessibleName("FOV filtering");
-
       pack();
    }// </editor-fold>//GEN-END:initComponents
 
    private void jTextField_StartXActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextField_StartXActionPerformed
-      config_.mosaicStartPosX_ = Double.parseDouble(jTextField_StartX.getText());
+      config_.setMosaicStartPosX_(Double.parseDouble(jTextField_StartX.getText()));
    }//GEN-LAST:event_jTextField_StartXActionPerformed
 
    private void jTextField_StartYActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextField_StartYActionPerformed
-      config_.mosaicStartPosY_ = Double.parseDouble(jTextField_StartY.getText());
+      config_.setMosaicStartPosY_(Double.parseDouble(jTextField_StartY.getText()));
    }//GEN-LAST:event_jTextField_StartYActionPerformed
 
    private void jRadioButton_LaserControlManualActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jRadioButton_LaserControlManualActionPerformed
-      config_.laserControlIsAutomatic_ = getStateLaserControlRadioGroup();
+      config_.setLaserControlIsAutomatic_(getStateLaserControlRadioGroup());
    }//GEN-LAST:event_jRadioButton_LaserControlManualActionPerformed
 
    private void jButton_OpenAutoLaseActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton_OpenAutoLaseActionPerformed
@@ -540,7 +559,7 @@ public class HtpalmDialog extends javax.swing.JDialog implements MMListenerInter
    }//GEN-LAST:event_jButton_OpenAutoLaseActionPerformed
 
    private void jCheckBox_ExcludeBadFovActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jCheckBox_ExcludeBadFovActionPerformed
-      config_.fovAnalysis_excludeBadFov_ = jCheckBox_ExcludeBadFov.isSelected();
+      config_.setFovAnalysis_excludeBadFov_(jCheckBox_ExcludeBadFov.isSelected());
    }//GEN-LAST:event_jCheckBox_ExcludeBadFovActionPerformed
 
    private void jButton_Acqiure1FovActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton_Acqiure1FovActionPerformed
@@ -563,8 +582,8 @@ public class HtpalmDialog extends javax.swing.JDialog implements MMListenerInter
       try {
          Point2D.Double posXY;
          posXY = gui_.getXYStagePosition();
-         config_.mosaicStartPosX_ = posXY.x;
-         config_.mosaicStartPosY_ = posXY.y;
+         config_.setMosaicStartPosX_(posXY.x);
+         config_.setMosaicStartPosY_(posXY.y);
          reloadSettings();//this will update the jLabel_CurrentX,Y text fields
       } catch (MMScriptException ex) {
          ReportingUtils.logError(ex, "Unable to get stage position");
@@ -641,15 +660,15 @@ public class HtpalmDialog extends javax.swing.JDialog implements MMListenerInter
    }//GEN-LAST:event_jButton_SaveSettingsActionPerformed
 
    private void jRadioButton_LaserControlAutoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jRadioButton_LaserControlAutoActionPerformed
-      config_.laserControlIsAutomatic_ = getStateLaserControlRadioGroup();
+      config_.setLaserControlIsAutomatic_(getStateLaserControlRadioGroup());
    }//GEN-LAST:event_jRadioButton_LaserControlAutoActionPerformed
 
    private void jTextField_ActivationPowerNumberActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextField_ActivationPowerNumberActionPerformed
-      config_.laserManualActPower_=Double.parseDouble(jTextField_ActivationPowerNumber.getText());
+      config_.setLaserManualActPower_(Double.parseDouble(jTextField_ActivationPowerNumber.getText()));
    }//GEN-LAST:event_jTextField_ActivationPowerNumberActionPerformed
 
    private void jTextField_ExcitationPowerNumberActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextField_ExcitationPowerNumberActionPerformed
-      config_.laserManualExPower_=Double.parseDouble(jTextField_ExcitationPowerNumber.getText());
+      config_.setLaserManualExPower_(Double.parseDouble(jTextField_ExcitationPowerNumber.getText()));
    }//GEN-LAST:event_jTextField_ExcitationPowerNumberActionPerformed
 
    private void formWindowClosing(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowClosing
@@ -676,6 +695,8 @@ public class HtpalmDialog extends javax.swing.JDialog implements MMListenerInter
    private javax.swing.JButton jButton_SaveSettings;
    private javax.swing.JButton jButton_SetStartAsCurrentPos;
    private javax.swing.JCheckBox jCheckBox_ExcludeBadFov;
+   private javax.swing.JLabel jLabel1;
+   private javax.swing.JLabel jLabel2;
    private javax.swing.JLabel jLabel_ActivationPowerLabel;
    private javax.swing.JLabel jLabel_CurrentFovLabel;
    private javax.swing.JLabel jLabel_CurrentFovNumber;

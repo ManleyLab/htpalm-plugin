@@ -24,12 +24,12 @@ public class TestSegJDialog extends javax.swing.JDialog  implements ImageListene
    ImagePlus im_, labelIm_;
    ImageProcessor labelIp_;
    String origTitle_;
-   MultiChannelAlignConfig alignConf_ ;
+   //MultiChannelAlignConfig alignConf_ ;
    int ROI_x_;
    int ROI_y_;
    int ROI_w_;
    int ROI_h_;
-   private SegAlgorithm segAlg_;
+   private int segAlg_;
    private LoGAlgParam logAlgParam_;
    private LocalAlgParam localAlgParam_;
    private Object segAlgParam_;
@@ -44,20 +44,20 @@ public class TestSegJDialog extends javax.swing.JDialog  implements ImageListene
       this.testPlugin_=testPlugin_;
       gui_ = (MMStudioMainFrame) parent;
 
-      alignConf_  = new MultiChannelAlignConfig();
-      alignConf_.initialize();
-      ROI_x_ = alignConf_.getChannelConfig_(0).getROI_xPix_();
-      ROI_y_ = alignConf_.getChannelConfig_(0).getROI_yPix_();
-      ROI_w_ = alignConf_.getChannelConfig_(0).getROI_wPix_();
-      ROI_h_ = alignConf_.getChannelConfig_(0).getROI_hPix_();
-      //ROI_x_ = 255;
-      //ROI_y_ = 191;
-      //ROI_w_ = 512;
-      //ROI_h_ = 384;
+      //alignConf_  = new MultiChannelAlignConfig();
+      //alignConf_.initialize();
+      //ROI_x_ = alignConf_.getChannelConfig_(0).getROI_xPix_();
+      //ROI_y_ = alignConf_.getChannelConfig_(0).getROI_yPix_();
+      //ROI_w_ = alignConf_.getChannelConfig_(0).getROI_wPix_();
+      //ROI_h_ = alignConf_.getChannelConfig_(0).getROI_hPix_();
+      ROI_x_ = 255;
+      ROI_y_ = 191;
+      ROI_w_ = 512;
+      ROI_h_ = 384;
 
       this.logAlgParam_ = new LoGAlgParam();
       this.localAlgParam_ = new LocalAlgParam();
-      segAlg_ = SegAlgorithm.LOG;
+      segAlg_ = FovFilterConfig.LOG;
       segAlgParam_ = logAlgParam_;
       
       updateGui();
@@ -313,11 +313,11 @@ public class TestSegJDialog extends javax.swing.JDialog  implements ImageListene
 
    private void updateSelectedAlg(){
       if (jComboBox_SelectAlg.getSelectedIndex() == 0) {
-         segAlg_= SegAlgorithm.LOG;
+         segAlg_= FovFilterConfig.LOG;
          segAlgParam_ = logAlgParam_;
       }
       if (jComboBox_SelectAlg.getSelectedIndex() == 1) {
-         segAlg_= SegAlgorithm.LOCALTHRESH;
+         segAlg_= FovFilterConfig.LOCALTHRESH;
          segAlgParam_ = localAlgParam_;
       }
    }//GEN-LAST:event_jComboBox_SelectAlgActionPerformed

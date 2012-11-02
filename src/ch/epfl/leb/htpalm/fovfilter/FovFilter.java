@@ -47,11 +47,11 @@ public class FovFilter  {
    private int ROI_y_=0;
    private int ROI_w_=Integer.MAX_VALUE;
    private int ROI_h_=Integer.MAX_VALUE;
-   private SegAlgorithm segAlg_=SegAlgorithm.LOG;
+   private int segAlg_=FovFilterConfig.LOG;
    private LoGAlgParam logAlgParam_;
    private LocalAlgParam localAlgParam_;
 
-   public FovFilter(ImagePlus im0, double rollingBallRad_, SegAlgorithm segAlg_,Object AlgParam){
+   public FovFilter(ImagePlus im0, double rollingBallRad_, int segAlg_,Object AlgParam){
       this.logAlgParam_ = new LoGAlgParam();
       this.localAlgParam_ = new LocalAlgParam();
       this.rollingBallRad_=rollingBallRad_;
@@ -65,11 +65,11 @@ public class FovFilter  {
       doFilter();
    }
 
-   private void updateSegAlgParam(SegAlgorithm segAlg_, Object AlgParam){
+   private void updateSegAlgParam(int segAlg_, Object AlgParam){
       this.segAlg_ = segAlg_;
-      if (segAlg_ == SegAlgorithm.LOG && AlgParam instanceof LoGAlgParam){
+      if (segAlg_ == FovFilterConfig.LOG && AlgParam instanceof LoGAlgParam){
          logAlgParam_ = (LoGAlgParam) AlgParam;
-      } else if (segAlg_ == SegAlgorithm.LOCALTHRESH && AlgParam instanceof LocalAlgParam){
+      } else if (segAlg_ == FovFilterConfig.LOCALTHRESH && AlgParam instanceof LocalAlgParam){
          localAlgParam_ = (LocalAlgParam) AlgParam;
       } else {
          throw new RuntimeException("Unrecognised segmentation algorithm or algorithm parameters");
@@ -84,7 +84,7 @@ public class FovFilter  {
       doLabeling();
       doFilter();
    }
-   public void updateSeg(SegAlgorithm segAlg_, Object AlgParam){
+   public void updateSeg(int segAlg_, Object AlgParam){
       updateSegAlgParam(segAlg_, AlgParam);
       doSeg();
       doLabeling();
@@ -102,9 +102,9 @@ public class FovFilter  {
    }
 
    private void doSeg(){
-      if (segAlg_ == SegAlgorithm.LOG){
+      if (segAlg_ == FovFilterConfig.LOG){
          doLoGSeg();
-      } else if (segAlg_ == SegAlgorithm.LOCALTHRESH){
+      } else if (segAlg_ == FovFilterConfig.LOCALTHRESH){
          doLocalSeg();
       }
    }
@@ -290,7 +290,7 @@ public class FovFilter  {
 
    private void doLocalSeg() {
       Auto_Local_Threshold autoSeg = new Auto_Local_Threshold();
-      Object[] exec = autoSeg.exec(im, localAlgParam_.method, localAlgParam_.radius,  localAlgParam_.par1, localAlgParam_.par2, localAlgParam_.doIwhite );
+      Object[] exec = autoSeg.exec(im, localAlgParam_.getMethod(), localAlgParam_.getRadius(), localAlgParam_.getPar1(), localAlgParam_.getPar2(), localAlgParam_.isDoIwhite());
       imSeg = (ImagePlus) exec[0];
       IJ.run(imSeg, "Make Binary",null);
       IJ.run(imSeg, "Open",null);

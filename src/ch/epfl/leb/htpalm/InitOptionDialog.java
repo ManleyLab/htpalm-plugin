@@ -42,17 +42,17 @@ public class InitOptionDialog extends javax.swing.JDialog {
    }
    
    private void reloadSettings(){
-      jTextField_StepSizeX.setText(Double.toString(newConfig_.mosaicStepSizeX_));
-      jTextField_StepSizeY.setText(Double.toString(newConfig_.mosaicStepSizeY_));
+      jTextField_StepSizeX.setText(Double.toString(newConfig_.getMosaicStepSizeX_()));
+      jTextField_StepSizeY.setText(Double.toString(newConfig_.getMosaicStepSizeY_()));
       jTextField_MosaicNFov.setText(Integer.toString(newConfig_.getMosaicNFov()));
-      jTextField_AcqFolderName.setText(newConfig_.fileAcqFolder_);
-      jTextField_BaseFileName.setText(newConfig_.fileBaseName_);
-      jTextField_EmccdCamName.setText(newConfig_.camEmccdName_);
-      jTextField_EmccdExposureTime.setText(Double.toString(newConfig_.camEmccdExposureMs_));
-      jTextField_EmccdNumFrames.setText(Integer.toString(newConfig_.camEmccdNumFrames_));
-      jTextField_PhCamName.setText(newConfig_.camPhName_);
-      jTextField_PhExposureTime.setText(Double.toString(newConfig_.camPhExposureMs_));
-      jTextField_PhCamDelayTime.setText(Double.toString(newConfig_.camPhDelayMs_));
+      jTextField_AcqFolderName.setText(newConfig_.getFileAcqFolder_());
+      jTextField_BaseFileName.setText(newConfig_.getFileBaseName_());
+      jTextField_EmccdCamName.setText(newConfig_.getCamEmccdName_());
+      jTextField_EmccdExposureTime.setText(Double.toString(newConfig_.getCamEmccdExposureMs_()));
+      jTextField_EmccdNumFrames.setText(Integer.toString(newConfig_.getCamEmccdNumFrames_()));
+      jTextField_PhCamName.setText(newConfig_.getCamPhName_());
+      jTextField_PhExposureTime.setText(Double.toString(newConfig_.getCamPhExposureMs_()));
+      jTextField_PhCamDelayTime.setText(Double.toString(newConfig_.getCamPhDelayMs_()));
       jCheckBox_ConvertPhExposureMsToSec.setSelected(newConfig_.isCamConvertPhExposureToSec());
       jTextField_ExcitationDacLabel.setText(newConfig_.getLaserExDacName(0));
       jTextField_ExcitationTtlLabel.setText(newConfig_.getLaserExTtlName(0));
@@ -70,17 +70,17 @@ public class InitOptionDialog extends javax.swing.JDialog {
    }
 
    private void updateSettings(){
-      newConfig_.mosaicStepSizeX_= Double.parseDouble(jTextField_StepSizeX.getText());
-      newConfig_.mosaicStepSizeY_= Double.parseDouble(jTextField_StepSizeY.getText());
+      newConfig_.setMosaicStepSizeX_(Double.parseDouble(jTextField_StepSizeX.getText()));
+      newConfig_.setMosaicStepSizeY_(Double.parseDouble(jTextField_StepSizeY.getText()));
       newConfig_.setMosaicNFov(Integer.parseInt(jTextField_MosaicNFov.getText()));
-      newConfig_.fileAcqFolder_ = jTextField_AcqFolderName.getText();
-      newConfig_.fileBaseName_ = jTextField_BaseFileName.getText();
-      newConfig_.camEmccdName_ = jTextField_EmccdCamName.getText();
-      newConfig_.camEmccdExposureMs_ = Double.parseDouble(jTextField_EmccdExposureTime.getText());
-      newConfig_.camEmccdNumFrames_= Integer.parseInt(jTextField_EmccdNumFrames.getText());
-      newConfig_.camPhName_ = jTextField_PhCamName.getText(); 
-      newConfig_.camPhExposureMs_= Double.parseDouble(jTextField_PhExposureTime.getText());
-      newConfig_.camPhDelayMs_= Double.parseDouble(jTextField_PhCamDelayTime.getText());
+      newConfig_.setFileAcqFolder_(jTextField_AcqFolderName.getText());
+      newConfig_.setFileBaseName_(jTextField_BaseFileName.getText());
+      newConfig_.setCamEmccdName_(jTextField_EmccdCamName.getText());
+      newConfig_.setCamEmccdExposureMs_(Double.parseDouble(jTextField_EmccdExposureTime.getText()));
+      newConfig_.setCamEmccdNumFrames_(Integer.parseInt(jTextField_EmccdNumFrames.getText()));
+      newConfig_.setCamPhName_(jTextField_PhCamName.getText()); 
+      newConfig_.setCamPhExposureMs_(Double.parseDouble(jTextField_PhExposureTime.getText()));
+      newConfig_.setCamPhDelayMs_(Double.parseDouble(jTextField_PhCamDelayTime.getText()));
       newConfig_.setCamConvertPhExposureToSec(jCheckBox_ConvertPhExposureMsToSec.isSelected());
       newConfig_.setLaserExDacName(jTextField_ExcitationDacLabel.getText(),0);
       newConfig_.setLaserExTtlName(jTextField_ExcitationTtlLabel.getText(),0);
@@ -197,15 +197,23 @@ public class InitOptionDialog extends javax.swing.JDialog {
       jTextField_Counting_maxCells = new javax.swing.JTextField();
       jPanel9 = new javax.swing.JPanel();
       jLabel14 = new javax.swing.JLabel();
-      jComboBox_roiCamera = new javax.swing.JComboBox();
+      jComboBox_camConf_roiCamera = new javax.swing.JComboBox();
+      jTextField_camConf_roiX = new javax.swing.JTextField();
+      jTextField_camConf_roiY = new javax.swing.JTextField();
+      jTextField_camConf_roiW = new javax.swing.JTextField();
+      jTextField_camConf_roiH = new javax.swing.JTextField();
+      jTextField_camConf_pixSizeX = new javax.swing.JTextField();
+      jTextField_camConf_pixSizeY = new javax.swing.JTextField();
+      jTextField_camConf_nPixX = new javax.swing.JTextField();
+      jTextField_camConf_nPixY = new javax.swing.JTextField();
       jLabel15 = new javax.swing.JLabel();
       jLabel16 = new javax.swing.JLabel();
       jLabel17 = new javax.swing.JLabel();
       jLabel18 = new javax.swing.JLabel();
-      jTextField_roiX = new javax.swing.JTextField();
-      jTextField_roiY = new javax.swing.JTextField();
-      jTextField_roiW = new javax.swing.JTextField();
-      jTextField_roiH = new javax.swing.JTextField();
+      jLabel21 = new javax.swing.JLabel();
+      jLabel22 = new javax.swing.JLabel();
+      jLabel23 = new javax.swing.JLabel();
+      jLabel24 = new javax.swing.JLabel();
       jButton_Apply = new javax.swing.JButton();
       jButton_Cancel = new javax.swing.JButton();
       jButton_Ok = new javax.swing.JButton();
@@ -275,7 +283,7 @@ public class InitOptionDialog extends javax.swing.JDialog {
             .add(jPanel1Layout.createParallelGroup(org.jdesktop.layout.GroupLayout.BASELINE)
                .add(jLabel_MosaicNFov)
                .add(jTextField_MosaicNFov, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE))
-            .addContainerGap(277, Short.MAX_VALUE))
+            .addContainerGap(266, Short.MAX_VALUE))
       );
 
       jTabbedPane_Settings.addTab("Mosaic settings", jPanel1);
@@ -338,7 +346,7 @@ public class InitOptionDialog extends javax.swing.JDialog {
             .add(jPanel3Layout.createParallelGroup(org.jdesktop.layout.GroupLayout.BASELINE)
                .add(jLabel_BaseFileName)
                .add(jTextField_BaseFileName, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE))
-            .addContainerGap(300, Short.MAX_VALUE))
+            .addContainerGap(289, Short.MAX_VALUE))
       );
 
       jTabbedPane_Settings.addTab("File locations", jPanel3);
@@ -470,7 +478,7 @@ public class InitOptionDialog extends javax.swing.JDialog {
                .add(jTextField_PhCamDelayTime, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE))
             .addPreferredGap(org.jdesktop.layout.LayoutStyle.UNRELATED)
             .add(jCheckBox_ConvertPhExposureMsToSec)
-            .addContainerGap(171, Short.MAX_VALUE))
+            .addContainerGap(160, Short.MAX_VALUE))
       );
 
       jTabbedPane_Settings.addTab("Camera settings", jPanel4);
@@ -653,7 +661,7 @@ public class InitOptionDialog extends javax.swing.JDialog {
                   .add(jPanel2Layout.createParallelGroup(org.jdesktop.layout.GroupLayout.BASELINE)
                      .add(jLabel_PhLampTtlName)
                      .add(jTextField_PhLampTtlLabel, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE))))
-            .addContainerGap(177, Short.MAX_VALUE))
+            .addContainerGap(166, Short.MAX_VALUE))
       );
 
       jTabbedPane_Settings.addTab("Lasers & shutters", jPanel2);
@@ -909,19 +917,40 @@ public class InitOptionDialog extends javax.swing.JDialog {
             .add(jPanel5Layout.createParallelGroup(org.jdesktop.layout.GroupLayout.LEADING, false)
                .add(jPanel8, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                .add(jPanel10, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-            .addContainerGap(38, Short.MAX_VALUE))
+            .addContainerGap(27, Short.MAX_VALUE))
       );
 
       jTabbedPane_Settings.addTab("FOV filtering", jPanel5);
 
       jLabel14.setText("Acquisition channel:");
 
-      jComboBox_roiCamera.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Phase contrast", "Fluorescence" }));
-      jComboBox_roiCamera.addActionListener(new java.awt.event.ActionListener() {
+      jComboBox_camConf_roiCamera.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Phase contrast", "Fluorescence" }));
+      jComboBox_camConf_roiCamera.addActionListener(new java.awt.event.ActionListener() {
          public void actionPerformed(java.awt.event.ActionEvent evt) {
-            jComboBox_roiCameraActionPerformed(evt);
+            jComboBox_camConf_roiCameraActionPerformed(evt);
          }
       });
+
+      jTextField_camConf_roiX.setText("0");
+
+      jTextField_camConf_roiY.setText("0");
+
+      jTextField_camConf_roiW.setText("0");
+
+      jTextField_camConf_roiH.setText("0");
+
+      jTextField_camConf_pixSizeX.setText("0.");
+
+      jTextField_camConf_pixSizeY.setText("0.");
+
+      jTextField_camConf_nPixX.setText("0");
+      jTextField_camConf_nPixX.addActionListener(new java.awt.event.ActionListener() {
+         public void actionPerformed(java.awt.event.ActionEvent evt) {
+            jTextField_camConf_nPixXActionPerformed(evt);
+         }
+      });
+
+      jTextField_camConf_nPixY.setText("0");
 
       jLabel15.setText("ROI start X:");
       jLabel15.setToolTipText("ROI start X (pixels)");
@@ -935,13 +964,13 @@ public class InitOptionDialog extends javax.swing.JDialog {
       jLabel18.setText("ROI height:");
       jLabel18.setToolTipText("ROI height (pixels)");
 
-      jTextField_roiX.setText("0");
+      jLabel21.setText("Pixel size X:");
 
-      jTextField_roiY.setText("0");
+      jLabel22.setText("Pixel size Y:");
 
-      jTextField_roiW.setText("0");
+      jLabel23.setText("No. of pixels X:");
 
-      jTextField_roiH.setText("0");
+      jLabel24.setText("No. of pixels Y:");
 
       org.jdesktop.layout.GroupLayout jPanel9Layout = new org.jdesktop.layout.GroupLayout(jPanel9);
       jPanel9.setLayout(jPanel9Layout);
@@ -950,24 +979,37 @@ public class InitOptionDialog extends javax.swing.JDialog {
          .add(jPanel9Layout.createSequentialGroup()
             .addContainerGap()
             .add(jPanel9Layout.createParallelGroup(org.jdesktop.layout.GroupLayout.LEADING)
-               .add(jPanel9Layout.createSequentialGroup()
-                  .add(jLabel14)
-                  .addPreferredGap(org.jdesktop.layout.LayoutStyle.UNRELATED)
-                  .add(jComboBox_roiCamera, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, 121, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE))
+               .add(jLabel14)
                .add(jPanel9Layout.createSequentialGroup()
                   .add(10, 10, 10)
-                  .add(jPanel9Layout.createParallelGroup(org.jdesktop.layout.GroupLayout.TRAILING)
-                     .add(jLabel16)
-                     .add(jLabel15)
-                     .add(org.jdesktop.layout.GroupLayout.LEADING, jLabel17)
-                     .add(org.jdesktop.layout.GroupLayout.LEADING, jLabel18))
-                  .addPreferredGap(org.jdesktop.layout.LayoutStyle.UNRELATED)
                   .add(jPanel9Layout.createParallelGroup(org.jdesktop.layout.GroupLayout.LEADING)
-                     .add(jTextField_roiX, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, 53, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE)
-                     .add(jTextField_roiY, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, 53, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE)
-                     .add(jTextField_roiW, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, 53, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE)
-                     .add(jTextField_roiH, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, 53, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE))))
-            .addContainerGap(118, Short.MAX_VALUE))
+                     .add(jPanel9Layout.createParallelGroup(org.jdesktop.layout.GroupLayout.TRAILING)
+                        .add(jLabel23)
+                        .add(org.jdesktop.layout.GroupLayout.LEADING, jLabel22)
+                        .add(jLabel24))
+                     .add(jLabel21)
+                     .add(jPanel9Layout.createParallelGroup(org.jdesktop.layout.GroupLayout.TRAILING)
+                        .add(jLabel16)
+                        .add(jLabel15)
+                        .add(org.jdesktop.layout.GroupLayout.LEADING, jLabel17)
+                        .add(org.jdesktop.layout.GroupLayout.LEADING, jLabel18)))))
+            .add(jPanel9Layout.createParallelGroup(org.jdesktop.layout.GroupLayout.LEADING)
+               .add(jPanel9Layout.createSequentialGroup()
+                  .add(29, 29, 29)
+                  .add(jPanel9Layout.createParallelGroup(org.jdesktop.layout.GroupLayout.TRAILING, false)
+                     .add(org.jdesktop.layout.GroupLayout.LEADING, jTextField_camConf_nPixY)
+                     .add(org.jdesktop.layout.GroupLayout.LEADING, jTextField_camConf_roiX, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, 53, Short.MAX_VALUE)
+                     .add(org.jdesktop.layout.GroupLayout.LEADING, jTextField_camConf_roiY, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, 53, Short.MAX_VALUE)
+                     .add(org.jdesktop.layout.GroupLayout.LEADING, jTextField_camConf_roiW, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, 53, Short.MAX_VALUE)
+                     .add(org.jdesktop.layout.GroupLayout.LEADING, jTextField_camConf_roiH, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, 53, Short.MAX_VALUE)
+                     .add(org.jdesktop.layout.GroupLayout.LEADING, jTextField_camConf_nPixX)
+                     .add(org.jdesktop.layout.GroupLayout.LEADING, jTextField_camConf_pixSizeY)
+                     .add(org.jdesktop.layout.GroupLayout.LEADING, jTextField_camConf_pixSizeX))
+                  .addContainerGap(org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+               .add(jPanel9Layout.createSequentialGroup()
+                  .addPreferredGap(org.jdesktop.layout.LayoutStyle.UNRELATED)
+                  .add(jComboBox_camConf_roiCamera, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, 121, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE)
+                  .add(0, 118, Short.MAX_VALUE))))
       );
       jPanel9Layout.setVerticalGroup(
          jPanel9Layout.createParallelGroup(org.jdesktop.layout.GroupLayout.LEADING)
@@ -975,24 +1017,40 @@ public class InitOptionDialog extends javax.swing.JDialog {
             .addContainerGap()
             .add(jPanel9Layout.createParallelGroup(org.jdesktop.layout.GroupLayout.BASELINE)
                .add(jLabel14)
-               .add(jComboBox_roiCamera, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE))
+               .add(jComboBox_camConf_roiCamera, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE))
+            .addPreferredGap(org.jdesktop.layout.LayoutStyle.RELATED)
+            .add(jPanel9Layout.createParallelGroup(org.jdesktop.layout.GroupLayout.BASELINE)
+               .add(jLabel21)
+               .add(jTextField_camConf_pixSizeX, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE))
+            .addPreferredGap(org.jdesktop.layout.LayoutStyle.RELATED)
+            .add(jPanel9Layout.createParallelGroup(org.jdesktop.layout.GroupLayout.BASELINE)
+               .add(jLabel22)
+               .add(jTextField_camConf_pixSizeY, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE))
+            .addPreferredGap(org.jdesktop.layout.LayoutStyle.RELATED)
+            .add(jPanel9Layout.createParallelGroup(org.jdesktop.layout.GroupLayout.BASELINE)
+               .add(jLabel23)
+               .add(jTextField_camConf_nPixX, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE))
+            .add(6, 6, 6)
+            .add(jPanel9Layout.createParallelGroup(org.jdesktop.layout.GroupLayout.BASELINE)
+               .add(jLabel24)
+               .add(jTextField_camConf_nPixY, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE))
             .addPreferredGap(org.jdesktop.layout.LayoutStyle.RELATED)
             .add(jPanel9Layout.createParallelGroup(org.jdesktop.layout.GroupLayout.BASELINE)
                .add(jLabel15)
-               .add(jTextField_roiX, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE))
+               .add(jTextField_camConf_roiX, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE))
             .addPreferredGap(org.jdesktop.layout.LayoutStyle.RELATED)
             .add(jPanel9Layout.createParallelGroup(org.jdesktop.layout.GroupLayout.BASELINE)
                .add(jLabel16)
-               .add(jTextField_roiY, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE))
+               .add(jTextField_camConf_roiY, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE))
             .addPreferredGap(org.jdesktop.layout.LayoutStyle.RELATED)
             .add(jPanel9Layout.createParallelGroup(org.jdesktop.layout.GroupLayout.BASELINE)
                .add(jLabel17)
-               .add(jTextField_roiW, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE))
+               .add(jTextField_camConf_roiW, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE))
             .addPreferredGap(org.jdesktop.layout.LayoutStyle.RELATED)
             .add(jPanel9Layout.createParallelGroup(org.jdesktop.layout.GroupLayout.BASELINE)
                .add(jLabel18)
-               .add(jTextField_roiH, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE))
-            .addContainerGap(225, Short.MAX_VALUE))
+               .add(jTextField_camConf_roiH, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE))
+            .addContainerGap(110, Short.MAX_VALUE))
       );
 
       jTabbedPane_Settings.addTab("Camera ROIs", jPanel9);
@@ -1047,13 +1105,14 @@ public class InitOptionDialog extends javax.swing.JDialog {
          layout.createParallelGroup(org.jdesktop.layout.GroupLayout.LEADING)
          .add(layout.createSequentialGroup()
             .addContainerGap()
-            .add(jTabbedPane_Settings)
+            .add(jTabbedPane_Settings, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, 393, Short.MAX_VALUE)
             .addPreferredGap(org.jdesktop.layout.LayoutStyle.RELATED)
             .add(layout.createParallelGroup(org.jdesktop.layout.GroupLayout.BASELINE)
                .add(jButton_Apply)
                .add(jButton_Cancel)
                .add(jButton_Ok)
-               .add(jButton_SaveSettingsAsDefault)))
+               .add(jButton_SaveSettingsAsDefault))
+            .addContainerGap())
       );
 
       pack();
@@ -1073,31 +1132,31 @@ public class InitOptionDialog extends javax.swing.JDialog {
    }//GEN-LAST:event_jTextField_ExcitationDacLabelActionPerformed
 
    private void jTextField_EmccdCamNameActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextField_EmccdCamNameActionPerformed
-      newConfig_.camEmccdName_ = jTextField_EmccdCamName.getText();
+      newConfig_.setCamEmccdName_(jTextField_EmccdCamName.getText());
    }//GEN-LAST:event_jTextField_EmccdCamNameActionPerformed
 
    private void jTextField_EmccdExposureTimeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextField_EmccdExposureTimeActionPerformed
-     newConfig_.camEmccdExposureMs_ = Double.parseDouble(jTextField_EmccdExposureTime.getText());
+      newConfig_.setCamEmccdExposureMs_(Double.parseDouble(jTextField_EmccdExposureTime.getText()));
    }//GEN-LAST:event_jTextField_EmccdExposureTimeActionPerformed
 
    private void jTextField_PhCamDelayTimeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextField_PhCamDelayTimeActionPerformed
-     newConfig_.camPhDelayMs_= Double.parseDouble(jTextField_PhCamDelayTime.getText());
+      newConfig_.setCamPhDelayMs_(Double.parseDouble(jTextField_PhCamDelayTime.getText()));
    }//GEN-LAST:event_jTextField_PhCamDelayTimeActionPerformed
 
    private void jTextField_PhCamNameActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextField_PhCamNameActionPerformed
-     newConfig_.camPhName_ = jTextField_PhCamName.getText(); 
+      newConfig_.setCamPhName_(jTextField_PhCamName.getText()); 
    }//GEN-LAST:event_jTextField_PhCamNameActionPerformed
 
    private void jTextField_PhExposureTimeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextField_PhExposureTimeActionPerformed
-     newConfig_.camPhExposureMs_= Double.parseDouble(jTextField_PhExposureTime.getText());
+      newConfig_.setCamPhExposureMs_(Double.parseDouble(jTextField_PhExposureTime.getText()));
    }//GEN-LAST:event_jTextField_PhExposureTimeActionPerformed
 
    private void jTextField_BaseFileNameActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextField_BaseFileNameActionPerformed
-      newConfig_.fileBaseName_ = jTextField_BaseFileName.getText();
+      newConfig_.setFileBaseName_(jTextField_BaseFileName.getText());
    }//GEN-LAST:event_jTextField_BaseFileNameActionPerformed
 
    private void jTextField_AcqFolderNameActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextField_AcqFolderNameActionPerformed
-      newConfig_.fileAcqFolder_ = jTextField_AcqFolderName.getText();
+      newConfig_.setFileAcqFolder_(jTextField_AcqFolderName.getText());
    }//GEN-LAST:event_jTextField_AcqFolderNameActionPerformed
 
    private void jButton_BrowseAcqFolderActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton_BrowseAcqFolderActionPerformed
@@ -1110,8 +1169,8 @@ public class InitOptionDialog extends javax.swing.JDialog {
          try {
             File f = chooser.getSelectedFile();
             String folderName = f.getCanonicalPath();
-            newConfig_.fileAcqFolder_ = folderName;
-            jTextField_AcqFolderName.setText(newConfig_.fileAcqFolder_);
+            newConfig_.setFileAcqFolder_(folderName);
+            jTextField_AcqFolderName.setText(newConfig_.getFileAcqFolder_());
             
          } catch (IOException ex) {
             ReportingUtils.logError(ex, "Unable to get path");
@@ -1120,11 +1179,11 @@ public class InitOptionDialog extends javax.swing.JDialog {
    }//GEN-LAST:event_jButton_BrowseAcqFolderActionPerformed
 
    private void jTextField_StepSizeXActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextField_StepSizeXActionPerformed
-     newConfig_.mosaicStepSizeX_= Double.parseDouble(jTextField_StepSizeX.getText());
+      newConfig_.setMosaicStepSizeX_(Double.parseDouble(jTextField_StepSizeX.getText()));
    }//GEN-LAST:event_jTextField_StepSizeXActionPerformed
 
    private void jTextField_StepSizeYActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextField_StepSizeYActionPerformed
-     newConfig_.mosaicStepSizeY_= Double.parseDouble(jTextField_StepSizeY.getText());
+      newConfig_.setMosaicStepSizeY_(Double.parseDouble(jTextField_StepSizeY.getText()));
    }//GEN-LAST:event_jTextField_StepSizeYActionPerformed
 
    private void jButton_SaveSettingsAsDefaultActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton_SaveSettingsAsDefaultActionPerformed
@@ -1191,15 +1250,19 @@ public class InitOptionDialog extends javax.swing.JDialog {
    }//GEN-LAST:event_jTextField_LaserShutterTtlPropActionPerformed
 
    private void jTextField_EmccdNumFramesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextField_EmccdNumFramesActionPerformed
-      newConfig_.camEmccdNumFrames_= Integer.parseInt(jTextField_EmccdNumFrames.getText());
+      newConfig_.setCamEmccdNumFrames_(Integer.parseInt(jTextField_EmccdNumFrames.getText()));
    }//GEN-LAST:event_jTextField_EmccdNumFramesActionPerformed
 
    private void jComboBox_Counting_SelectAlgActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jComboBox_Counting_SelectAlgActionPerformed
    }//GEN-LAST:event_jComboBox_Counting_SelectAlgActionPerformed
 
-   private void jComboBox_roiCameraActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jComboBox_roiCameraActionPerformed
+   private void jComboBox_camConf_roiCameraActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jComboBox_camConf_roiCameraActionPerformed
       // TODO add your handling code here:
-   }//GEN-LAST:event_jComboBox_roiCameraActionPerformed
+   }//GEN-LAST:event_jComboBox_camConf_roiCameraActionPerformed
+
+   private void jTextField_camConf_nPixXActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextField_camConf_nPixXActionPerformed
+      // TODO add your handling code here:
+   }//GEN-LAST:event_jTextField_camConf_nPixXActionPerformed
 
    // Variables declaration - do not modify//GEN-BEGIN:variables
    private javax.swing.JButton jButton_Apply;
@@ -1210,7 +1273,7 @@ public class InitOptionDialog extends javax.swing.JDialog {
    private javax.swing.JCheckBox jCheckBox_ConvertPhExposureMsToSec;
    private javax.swing.JComboBox jComboBox_Counting_SelectAlg;
    private javax.swing.JComboBox jComboBox_Counting_localMethod;
-   private javax.swing.JComboBox jComboBox_roiCamera;
+   private javax.swing.JComboBox jComboBox_camConf_roiCamera;
    private javax.swing.JLabel jLabel1;
    private javax.swing.JLabel jLabel10;
    private javax.swing.JLabel jLabel11;
@@ -1224,6 +1287,10 @@ public class InitOptionDialog extends javax.swing.JDialog {
    private javax.swing.JLabel jLabel19;
    private javax.swing.JLabel jLabel2;
    private javax.swing.JLabel jLabel20;
+   private javax.swing.JLabel jLabel21;
+   private javax.swing.JLabel jLabel22;
+   private javax.swing.JLabel jLabel23;
+   private javax.swing.JLabel jLabel24;
    private javax.swing.JLabel jLabel3;
    private javax.swing.JLabel jLabel4;
    private javax.swing.JLabel jLabel5;
@@ -1291,9 +1358,13 @@ public class InitOptionDialog extends javax.swing.JDialog {
    private javax.swing.JTextField jTextField_PhLampTtlProp;
    private javax.swing.JTextField jTextField_StepSizeX;
    private javax.swing.JTextField jTextField_StepSizeY;
-   private javax.swing.JTextField jTextField_roiH;
-   private javax.swing.JTextField jTextField_roiW;
-   private javax.swing.JTextField jTextField_roiX;
-   private javax.swing.JTextField jTextField_roiY;
+   private javax.swing.JTextField jTextField_camConf_nPixX;
+   private javax.swing.JTextField jTextField_camConf_nPixY;
+   private javax.swing.JTextField jTextField_camConf_pixSizeX;
+   private javax.swing.JTextField jTextField_camConf_pixSizeY;
+   private javax.swing.JTextField jTextField_camConf_roiH;
+   private javax.swing.JTextField jTextField_camConf_roiW;
+   private javax.swing.JTextField jTextField_camConf_roiX;
+   private javax.swing.JTextField jTextField_camConf_roiY;
    // End of variables declaration//GEN-END:variables
 }

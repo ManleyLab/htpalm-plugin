@@ -37,8 +37,8 @@ public class HtpalmMetadata {
    
    
    public HtpalmMetadata(ConfigurationOptions config_,SpiralMosaic mosaic_){
-      acqFolder_ = config_.fileAcqFolder_;
-      baseName_ =config_.fileBaseName_ ;
+      acqFolder_ = config_.getFileAcqFolder_();
+      baseName_ =config_.getFileBaseName_() ;
       configFileName_ = baseName_+"_config.xml";
       metaDataFileName_ = baseName_+ "_htpalmMetadata.xml";
       fovMetadataList_ = new ArrayList<FovMetadata>();

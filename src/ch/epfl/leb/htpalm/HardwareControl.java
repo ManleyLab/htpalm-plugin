@@ -76,7 +76,7 @@ public class HardwareControl {
    }
 
    private void initializeHardwareControl(){
-      mosaic_ = new SpiralMosaic(configHW_.mosaicStartPosX_,configHW_.mosaicStartPosY_,configHW_.mosaicStepSizeX_,configHW_.mosaicStepSizeY_, configHW_.getMosaicNFov());
+      mosaic_ = new SpiralMosaic(configHW_.getMosaicStartPosX_(), configHW_.getMosaicStartPosY_(), configHW_.getMosaicStepSizeX_(), configHW_.getMosaicStepSizeY_(), configHW_.getMosaicNFov());
       //set up all the correct file names and metadata  - how is skip fov going to work for saving? - save after every acquisition.
       metadata_ = new HtpalmMetadata(configHW_,mosaic_);
       gotoFOV(0);
@@ -85,7 +85,7 @@ public class HardwareControl {
    private void checkIfPreviousAcqExists(){//and if it does, make a new folder and change the acquisition name
       //if the configHW_.fileAcqFolder_ does not exist, 
       String configPath;
-      String acqName = configHW_.fileAcqFolder_;
+      String acqName = configHW_.getFileAcqFolder_();
       File acqFolder = new File(acqName);
       //String fname = configHW_.fileAcqFolder_+File.separator+metadata_.metaDataFileName_;
       //File metadataFile = new File(fname);
@@ -117,7 +117,7 @@ public class HardwareControl {
          }
       }
 
-      configHW_.fileAcqFolder_ = acqName;
+      configHW_.setFileAcqFolder_(acqName);
       metadata_.acqFolder_ = acqName;
       //setup the config files and were good to go
       //save a copy of the config in the acquisition folder
@@ -144,7 +144,7 @@ public class HardwareControl {
       }
 
       //Check whether we will skip this FOV
-      if (configHW_.fovAnalysis_excludeBadFov_){
+      if (configHW_.isFovAnalysis_excludeBadFov_()){
          //TODO - detect the bacteria
          skipCurrentFOV_=false;
       } else {
@@ -233,14 +233,14 @@ public class HardwareControl {
             //note - in manual mode we ignore skipCurrentFOV_
 
             //sort out  the lasers
-            if (configHW_.laserControlIsAutomatic_){
+            if (configHW_.isLaserControlIsAutomatic_()){
                //TODO - Autolase
             }
             else {
                //Make sure the laser powers etc are right
-               core_.setProperty(configHW_.getLaserExDacName(0),configHW_.getLaserExDacName(1),configHW_.laserManualExPower_);
+               core_.setProperty(configHW_.getLaserExDacName(0),configHW_.getLaserExDacName(1), configHW_.getLaserManualExPower_());
                core_.setProperty(configHW_.getLaserExTtlName(0),configHW_.getLaserExTtlName(1),1);
-               core_.setProperty(configHW_.getLaserActDacName(0),configHW_.getLaserActDacName(1),configHW_.laserManualActPower_);
+               core_.setProperty(configHW_.getLaserActDacName(0),configHW_.getLaserActDacName(1), configHW_.getLaserManualActPower_());
                core_.setProperty(configHW_.getLaserActTtlName(0),configHW_.getLaserActTtlName(1),1);
                core_.waitForSystem();
             }         
@@ -302,14 +302,14 @@ public class HardwareControl {
          try{
             isRunning_=true;
             //sort out  the lasers
-            if (configHW_.laserControlIsAutomatic_){
+            if (configHW_.isLaserControlIsAutomatic_()){
                      //TODO - Autolase
             }
             else {
                //Make sure the laser powers etc are right
-               core_.setProperty(configHW_.getLaserExDacName(0),configHW_.getLaserExDacName(1),configHW_.laserManualExPower_);
+               core_.setProperty(configHW_.getLaserExDacName(0),configHW_.getLaserExDacName(1), configHW_.getLaserManualExPower_());
                core_.setProperty(configHW_.getLaserExTtlName(0),configHW_.getLaserExTtlName(1),1);
-               core_.setProperty(configHW_.getLaserActDacName(0),configHW_.getLaserActDacName(1),configHW_.laserManualActPower_);
+               core_.setProperty(configHW_.getLaserActDacName(0),configHW_.getLaserActDacName(1), configHW_.getLaserManualActPower_());
                core_.setProperty(configHW_.getLaserActTtlName(0),configHW_.getLaserActTtlName(1),1);
                core_.waitForSystem();
             } 
@@ -322,7 +322,7 @@ public class HardwareControl {
             }
 
             //aquire all the Fovs
-            for (int ii=0;ii< control_.configHW_.mosaicNFov_;ii++){
+            for (int ii=0;ii< control_.configHW_.getMosaicNFov_();ii++){
                boolean phPreAcquire=true,phPostAcquire=true;// for now this is always the case
                int[] flCh={0};// for now, this is always the case
                control_.gotoFOV(ii);
@@ -389,16 +389,16 @@ public class HardwareControl {
          core_.waitForSystem();
    
          //run the acquisition
-         String camName = configHW_.camPhName_;
-         String rootDirName = configHW_.fileAcqFolder_;
+         String camName = configHW_.getCamPhName_();
+         String rootDirName = configHW_.getFileAcqFolder_();
          //TODO add an acquisition name!
          int numFrames = 1;
          double intervalMs = 0;
-         double exposureTime = configHW_.camPhExposureMs_;
+         double exposureTime = configHW_.getCamPhExposureMs_();
          if (configHW_.isCamConvertPhExposureToSec()){//correct for stupid bug in the camera driver
             exposureTime /= 1000;
          }
-         double delayTime = configHW_.camPhDelayMs_;
+         double delayTime = configHW_.getCamPhDelayMs_();
          boolean closeOnExit = true;
          acquire1Movie(camName, acqName, rootDirName, numFrames, intervalMs, exposureTime,delayTime, closeOnExit);
       } catch (Exception ex) {
@@ -414,12 +414,12 @@ public class HardwareControl {
          core_.waitForSystem();
          
          //run the acquisition
-         String camName = configHW_.camEmccdName_;
-         String rootDirName = configHW_.fileAcqFolder_;
+         String camName = configHW_.getCamEmccdName_();
+         String rootDirName = configHW_.getFileAcqFolder_();
          int numFrames = configHW_.getCamEmccdNumFrames();
          double intervalMs = 0;
-         double exposureTime = configHW_.camEmccdExposureMs_;
-         double delayTime = configHW_.camPhDelayMs_;
+         double exposureTime = configHW_.getCamEmccdExposureMs_();
+         double delayTime = configHW_.getCamPhDelayMs_();
          boolean closeOnExit = true;
          acquire1Movie(camName, acqName, rootDirName, numFrames, intervalMs, exposureTime,delayTime, closeOnExit);
       } catch (Exception ex) {
