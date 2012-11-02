@@ -224,28 +224,10 @@ public class InitOptionDialog extends javax.swing.JDialog {
 
       jLabel_StepSizeX.setText("Step size X (um):");
 
-      jTextField_StepSizeX.addActionListener(new java.awt.event.ActionListener() {
-         public void actionPerformed(java.awt.event.ActionEvent evt) {
-            jTextField_StepSizeXActionPerformed(evt);
-         }
-      });
-
       jLabel_StepSizeY.setText("Step size Y (um):");
-
-      jTextField_StepSizeY.addActionListener(new java.awt.event.ActionListener() {
-         public void actionPerformed(java.awt.event.ActionEvent evt) {
-            jTextField_StepSizeYActionPerformed(evt);
-         }
-      });
 
       jLabel_MosaicNFov.setText("Number of FOV:");
       jLabel_MosaicNFov.setToolTipText("Number of fields of view to be acquired");
-
-      jTextField_MosaicNFov.addActionListener(new java.awt.event.ActionListener() {
-         public void actionPerformed(java.awt.event.ActionEvent evt) {
-            jTextField_MosaicNFovActionPerformed(evt);
-         }
-      });
 
       org.jdesktop.layout.GroupLayout jPanel1Layout = new org.jdesktop.layout.GroupLayout(jPanel1);
       jPanel1.setLayout(jPanel1Layout);
@@ -293,18 +275,8 @@ public class InitOptionDialog extends javax.swing.JDialog {
       jLabel_BaseFileName.setText("Base file name:");
 
       jTextField_BaseFileName.setHorizontalAlignment(javax.swing.JTextField.TRAILING);
-      jTextField_BaseFileName.addActionListener(new java.awt.event.ActionListener() {
-         public void actionPerformed(java.awt.event.ActionEvent evt) {
-            jTextField_BaseFileNameActionPerformed(evt);
-         }
-      });
 
       jTextField_AcqFolderName.setHorizontalAlignment(javax.swing.JTextField.TRAILING);
-      jTextField_AcqFolderName.addActionListener(new java.awt.event.ActionListener() {
-         public void actionPerformed(java.awt.event.ActionEvent evt) {
-            jTextField_AcqFolderNameActionPerformed(evt);
-         }
-      });
 
       jButton_BrowseAcqFolder.setText("...");
       jButton_BrowseAcqFolder.setToolTipText("Browse");
@@ -364,55 +336,20 @@ public class InitOptionDialog extends javax.swing.JDialog {
 
       jCheckBox_ConvertPhExposureMsToSec.setText("Convert PH exposure time to seconds");
       jCheckBox_ConvertPhExposureMsToSec.setToolTipText("Workaround to correct for TISCam bug");
-      jCheckBox_ConvertPhExposureMsToSec.addActionListener(new java.awt.event.ActionListener() {
-         public void actionPerformed(java.awt.event.ActionEvent evt) {
-            jCheckBox_ConvertPhExposureMsToSecActionPerformed(evt);
-         }
-      });
 
       jTextField_EmccdCamName.setHorizontalAlignment(javax.swing.JTextField.TRAILING);
-      jTextField_EmccdCamName.addActionListener(new java.awt.event.ActionListener() {
-         public void actionPerformed(java.awt.event.ActionEvent evt) {
-            jTextField_EmccdCamNameActionPerformed(evt);
-         }
-      });
 
       jTextField_EmccdExposureTime.setHorizontalAlignment(javax.swing.JTextField.TRAILING);
-      jTextField_EmccdExposureTime.addActionListener(new java.awt.event.ActionListener() {
-         public void actionPerformed(java.awt.event.ActionEvent evt) {
-            jTextField_EmccdExposureTimeActionPerformed(evt);
-         }
-      });
 
       jTextField_PhCamName.setHorizontalAlignment(javax.swing.JTextField.TRAILING);
-      jTextField_PhCamName.addActionListener(new java.awt.event.ActionListener() {
-         public void actionPerformed(java.awt.event.ActionEvent evt) {
-            jTextField_PhCamNameActionPerformed(evt);
-         }
-      });
 
       jTextField_PhExposureTime.setHorizontalAlignment(javax.swing.JTextField.TRAILING);
-      jTextField_PhExposureTime.addActionListener(new java.awt.event.ActionListener() {
-         public void actionPerformed(java.awt.event.ActionEvent evt) {
-            jTextField_PhExposureTimeActionPerformed(evt);
-         }
-      });
 
       jTextField_PhCamDelayTime.setHorizontalAlignment(javax.swing.JTextField.TRAILING);
-      jTextField_PhCamDelayTime.addActionListener(new java.awt.event.ActionListener() {
-         public void actionPerformed(java.awt.event.ActionEvent evt) {
-            jTextField_PhCamDelayTimeActionPerformed(evt);
-         }
-      });
 
       jLabel_EmccdNumFrames.setText("EMCCD num. frames:");
 
       jTextField_EmccdNumFrames.setHorizontalAlignment(javax.swing.JTextField.TRAILING);
-      jTextField_EmccdNumFrames.addActionListener(new java.awt.event.ActionListener() {
-         public void actionPerformed(java.awt.event.ActionEvent evt) {
-            jTextField_EmccdNumFramesActionPerformed(evt);
-         }
-      });
 
       org.jdesktop.layout.GroupLayout jPanel4Layout = new org.jdesktop.layout.GroupLayout(jPanel4);
       jPanel4.setLayout(jPanel4Layout);
@@ -496,88 +433,28 @@ public class InitOptionDialog extends javax.swing.JDialog {
       jLabel_PhLampTtlName.setText("PH lamp TTL name:");
 
       jTextField_ExcitationDacLabel.setHorizontalAlignment(javax.swing.JTextField.TRAILING);
-      jTextField_ExcitationDacLabel.addActionListener(new java.awt.event.ActionListener() {
-         public void actionPerformed(java.awt.event.ActionEvent evt) {
-            jTextField_ExcitationDacLabelActionPerformed(evt);
-         }
-      });
 
       jTextField_ExcitationTtlLabel.setHorizontalAlignment(javax.swing.JTextField.TRAILING);
-      jTextField_ExcitationTtlLabel.addActionListener(new java.awt.event.ActionListener() {
-         public void actionPerformed(java.awt.event.ActionEvent evt) {
-            jTextField_ExcitationTtlLabelActionPerformed(evt);
-         }
-      });
 
       jTextField_ActivationLabel.setHorizontalAlignment(javax.swing.JTextField.TRAILING);
-      jTextField_ActivationLabel.addActionListener(new java.awt.event.ActionListener() {
-         public void actionPerformed(java.awt.event.ActionEvent evt) {
-            jTextField_ActivationLabelActionPerformed(evt);
-         }
-      });
 
       jTextField_ActivationTtlLabel.setHorizontalAlignment(javax.swing.JTextField.TRAILING);
-      jTextField_ActivationTtlLabel.addActionListener(new java.awt.event.ActionListener() {
-         public void actionPerformed(java.awt.event.ActionEvent evt) {
-            jTextField_ActivationTtlLabelActionPerformed(evt);
-         }
-      });
 
       jTextField_LaserShutterTtLabel.setHorizontalAlignment(javax.swing.JTextField.TRAILING);
-      jTextField_LaserShutterTtLabel.addActionListener(new java.awt.event.ActionListener() {
-         public void actionPerformed(java.awt.event.ActionEvent evt) {
-            jTextField_LaserShutterTtLabelActionPerformed(evt);
-         }
-      });
 
       jTextField_PhLampTtlLabel.setHorizontalAlignment(javax.swing.JTextField.TRAILING);
-      jTextField_PhLampTtlLabel.addActionListener(new java.awt.event.ActionListener() {
-         public void actionPerformed(java.awt.event.ActionEvent evt) {
-            jTextField_PhLampTtlLabelActionPerformed(evt);
-         }
-      });
 
       jTextField_ExcitationDacProp.setHorizontalAlignment(javax.swing.JTextField.TRAILING);
-      jTextField_ExcitationDacProp.addActionListener(new java.awt.event.ActionListener() {
-         public void actionPerformed(java.awt.event.ActionEvent evt) {
-            jTextField_ExcitationDacPropActionPerformed(evt);
-         }
-      });
 
       jTextField_PhLampTtlProp.setHorizontalAlignment(javax.swing.JTextField.TRAILING);
-      jTextField_PhLampTtlProp.addActionListener(new java.awt.event.ActionListener() {
-         public void actionPerformed(java.awt.event.ActionEvent evt) {
-            jTextField_PhLampTtlPropActionPerformed(evt);
-         }
-      });
 
       jTextField_ExcitationTtlProp.setHorizontalAlignment(javax.swing.JTextField.TRAILING);
-      jTextField_ExcitationTtlProp.addActionListener(new java.awt.event.ActionListener() {
-         public void actionPerformed(java.awt.event.ActionEvent evt) {
-            jTextField_ExcitationTtlPropActionPerformed(evt);
-         }
-      });
 
       jTextField_ActivationDacProp.setHorizontalAlignment(javax.swing.JTextField.TRAILING);
-      jTextField_ActivationDacProp.addActionListener(new java.awt.event.ActionListener() {
-         public void actionPerformed(java.awt.event.ActionEvent evt) {
-            jTextField_ActivationDacPropActionPerformed(evt);
-         }
-      });
 
       jTextField_ActivationTtlProp.setHorizontalAlignment(javax.swing.JTextField.TRAILING);
-      jTextField_ActivationTtlProp.addActionListener(new java.awt.event.ActionListener() {
-         public void actionPerformed(java.awt.event.ActionEvent evt) {
-            jTextField_ActivationTtlPropActionPerformed(evt);
-         }
-      });
 
       jTextField_LaserShutterTtlProp.setHorizontalAlignment(javax.swing.JTextField.TRAILING);
-      jTextField_LaserShutterTtlProp.addActionListener(new java.awt.event.ActionListener() {
-         public void actionPerformed(java.awt.event.ActionEvent evt) {
-            jTextField_LaserShutterTtlPropActionPerformed(evt);
-         }
-      });
 
       jLabel1.setText("Label:");
 
@@ -697,11 +574,6 @@ public class InitOptionDialog extends javax.swing.JDialog {
       jLabel6.setText("Algorithm:");
 
       jComboBox_Counting_SelectAlg.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "LoG", "Sauvola" }));
-      jComboBox_Counting_SelectAlg.addActionListener(new java.awt.event.ActionListener() {
-         public void actionPerformed(java.awt.event.ActionEvent evt) {
-            jComboBox_Counting_SelectAlgActionPerformed(evt);
-         }
-      });
 
       jLabel3.setText("LoG parameters:");
 
@@ -925,11 +797,6 @@ public class InitOptionDialog extends javax.swing.JDialog {
       jLabel14.setText("Acquisition channel:");
 
       jComboBox_camConf_roiCamera.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Phase contrast", "Fluorescence" }));
-      jComboBox_camConf_roiCamera.addActionListener(new java.awt.event.ActionListener() {
-         public void actionPerformed(java.awt.event.ActionEvent evt) {
-            jComboBox_camConf_roiCameraActionPerformed(evt);
-         }
-      });
 
       jTextField_camConf_roiX.setText("0");
 
@@ -944,11 +811,6 @@ public class InitOptionDialog extends javax.swing.JDialog {
       jTextField_camConf_pixSizeY.setText("0.");
 
       jTextField_camConf_nPixX.setText("0");
-      jTextField_camConf_nPixX.addActionListener(new java.awt.event.ActionListener() {
-         public void actionPerformed(java.awt.event.ActionEvent evt) {
-            jTextField_camConf_nPixXActionPerformed(evt);
-         }
-      });
 
       jTextField_camConf_nPixY.setText("0");
 
@@ -1105,7 +967,7 @@ public class InitOptionDialog extends javax.swing.JDialog {
          layout.createParallelGroup(org.jdesktop.layout.GroupLayout.LEADING)
          .add(layout.createSequentialGroup()
             .addContainerGap()
-            .add(jTabbedPane_Settings, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, 393, Short.MAX_VALUE)
+            .add(jTabbedPane_Settings)
             .addPreferredGap(org.jdesktop.layout.LayoutStyle.RELATED)
             .add(layout.createParallelGroup(org.jdesktop.layout.GroupLayout.BASELINE)
                .add(jButton_Apply)
@@ -1127,38 +989,6 @@ public class InitOptionDialog extends javax.swing.JDialog {
       updateConfig();
    }//GEN-LAST:event_jButton_ApplyActionPerformed
 
-   private void jTextField_ExcitationDacLabelActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextField_ExcitationDacLabelActionPerformed
-      newConfig_.setLaserExDacName(jTextField_ExcitationDacLabel.getText(),0);
-   }//GEN-LAST:event_jTextField_ExcitationDacLabelActionPerformed
-
-   private void jTextField_EmccdCamNameActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextField_EmccdCamNameActionPerformed
-      newConfig_.setCamEmccdName_(jTextField_EmccdCamName.getText());
-   }//GEN-LAST:event_jTextField_EmccdCamNameActionPerformed
-
-   private void jTextField_EmccdExposureTimeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextField_EmccdExposureTimeActionPerformed
-      newConfig_.setCamEmccdExposureMs_(Double.parseDouble(jTextField_EmccdExposureTime.getText()));
-   }//GEN-LAST:event_jTextField_EmccdExposureTimeActionPerformed
-
-   private void jTextField_PhCamDelayTimeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextField_PhCamDelayTimeActionPerformed
-      newConfig_.setCamPhDelayMs_(Double.parseDouble(jTextField_PhCamDelayTime.getText()));
-   }//GEN-LAST:event_jTextField_PhCamDelayTimeActionPerformed
-
-   private void jTextField_PhCamNameActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextField_PhCamNameActionPerformed
-      newConfig_.setCamPhName_(jTextField_PhCamName.getText()); 
-   }//GEN-LAST:event_jTextField_PhCamNameActionPerformed
-
-   private void jTextField_PhExposureTimeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextField_PhExposureTimeActionPerformed
-      newConfig_.setCamPhExposureMs_(Double.parseDouble(jTextField_PhExposureTime.getText()));
-   }//GEN-LAST:event_jTextField_PhExposureTimeActionPerformed
-
-   private void jTextField_BaseFileNameActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextField_BaseFileNameActionPerformed
-      newConfig_.setFileBaseName_(jTextField_BaseFileName.getText());
-   }//GEN-LAST:event_jTextField_BaseFileNameActionPerformed
-
-   private void jTextField_AcqFolderNameActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextField_AcqFolderNameActionPerformed
-      newConfig_.setFileAcqFolder_(jTextField_AcqFolderName.getText());
-   }//GEN-LAST:event_jTextField_AcqFolderNameActionPerformed
-
    private void jButton_BrowseAcqFolderActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton_BrowseAcqFolderActionPerformed
       //select a root directory
       JFileChooser chooser = new JFileChooser();
@@ -1178,14 +1008,6 @@ public class InitOptionDialog extends javax.swing.JDialog {
       }
    }//GEN-LAST:event_jButton_BrowseAcqFolderActionPerformed
 
-   private void jTextField_StepSizeXActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextField_StepSizeXActionPerformed
-      newConfig_.setMosaicStepSizeX_(Double.parseDouble(jTextField_StepSizeX.getText()));
-   }//GEN-LAST:event_jTextField_StepSizeXActionPerformed
-
-   private void jTextField_StepSizeYActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextField_StepSizeYActionPerformed
-      newConfig_.setMosaicStepSizeY_(Double.parseDouble(jTextField_StepSizeY.getText()));
-   }//GEN-LAST:event_jTextField_StepSizeYActionPerformed
-
    private void jButton_SaveSettingsAsDefaultActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton_SaveSettingsAsDefaultActionPerformed
       updateSettings();
       newConfig_.saveConfig();
@@ -1196,73 +1018,6 @@ public class InitOptionDialog extends javax.swing.JDialog {
       updateConfig();
       dispose();
    }//GEN-LAST:event_jButton_OkActionPerformed
-
-   private void jCheckBox_ConvertPhExposureMsToSecActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jCheckBox_ConvertPhExposureMsToSecActionPerformed
-      newConfig_.setCamConvertPhExposureToSec(jCheckBox_ConvertPhExposureMsToSec.isSelected());
-   }//GEN-LAST:event_jCheckBox_ConvertPhExposureMsToSecActionPerformed
-
-   private void jTextField_ExcitationTtlLabelActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextField_ExcitationTtlLabelActionPerformed
-      newConfig_.setLaserExTtlName(jTextField_ExcitationTtlLabel.getText(),0);
-   }//GEN-LAST:event_jTextField_ExcitationTtlLabelActionPerformed
-
-   private void jTextField_ActivationLabelActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextField_ActivationLabelActionPerformed
-      newConfig_.setLaserActDacName(jTextField_ActivationLabel.getText(),0);
-   }//GEN-LAST:event_jTextField_ActivationLabelActionPerformed
-
-   private void jTextField_ActivationTtlLabelActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextField_ActivationTtlLabelActionPerformed
-      newConfig_.setLaserActTtlName(jTextField_ActivationTtlLabel.getText(),0);
-   }//GEN-LAST:event_jTextField_ActivationTtlLabelActionPerformed
-
-   private void jTextField_LaserShutterTtLabelActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextField_LaserShutterTtLabelActionPerformed
-      newConfig_.setLaserShutterTtlName(jTextField_LaserShutterTtLabel.getText(),0);
-   }//GEN-LAST:event_jTextField_LaserShutterTtLabelActionPerformed
-
-   private void jTextField_PhLampTtlLabelActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextField_PhLampTtlLabelActionPerformed
-      newConfig_.setPhLampTtlName(jTextField_PhLampTtlLabel.getText(),0);
-   }//GEN-LAST:event_jTextField_PhLampTtlLabelActionPerformed
-
-   private void jTextField_MosaicNFovActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextField_MosaicNFovActionPerformed
-      newConfig_.setMosaicNFov(Integer.parseInt(jTextField_MosaicNFov.getText()));
-   }//GEN-LAST:event_jTextField_MosaicNFovActionPerformed
-
-   private void jTextField_ExcitationDacPropActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextField_ExcitationDacPropActionPerformed
-      newConfig_.setLaserExDacName(jTextField_ExcitationDacProp.getText(),1);
-   }//GEN-LAST:event_jTextField_ExcitationDacPropActionPerformed
-
-   private void jTextField_PhLampTtlPropActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextField_PhLampTtlPropActionPerformed
-      newConfig_.setPhLampTtlName(jTextField_PhLampTtlProp.getText(),1);
-   }//GEN-LAST:event_jTextField_PhLampTtlPropActionPerformed
-
-   private void jTextField_ExcitationTtlPropActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextField_ExcitationTtlPropActionPerformed
-      newConfig_.setLaserExTtlName(jTextField_ExcitationTtlProp.getText(),1);
-   }//GEN-LAST:event_jTextField_ExcitationTtlPropActionPerformed
-
-   private void jTextField_ActivationDacPropActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextField_ActivationDacPropActionPerformed
-      newConfig_.setLaserActDacName(jTextField_ActivationDacProp.getText(),1);
-   }//GEN-LAST:event_jTextField_ActivationDacPropActionPerformed
-
-   private void jTextField_ActivationTtlPropActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextField_ActivationTtlPropActionPerformed
-      newConfig_.setLaserActTtlName(jTextField_ActivationTtlProp.getText(),1);
-   }//GEN-LAST:event_jTextField_ActivationTtlPropActionPerformed
-
-   private void jTextField_LaserShutterTtlPropActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextField_LaserShutterTtlPropActionPerformed
-      newConfig_.setLaserShutterTtlName(jTextField_LaserShutterTtlProp.getText(),1);
-   }//GEN-LAST:event_jTextField_LaserShutterTtlPropActionPerformed
-
-   private void jTextField_EmccdNumFramesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextField_EmccdNumFramesActionPerformed
-      newConfig_.setCamEmccdNumFrames_(Integer.parseInt(jTextField_EmccdNumFrames.getText()));
-   }//GEN-LAST:event_jTextField_EmccdNumFramesActionPerformed
-
-   private void jComboBox_Counting_SelectAlgActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jComboBox_Counting_SelectAlgActionPerformed
-   }//GEN-LAST:event_jComboBox_Counting_SelectAlgActionPerformed
-
-   private void jComboBox_camConf_roiCameraActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jComboBox_camConf_roiCameraActionPerformed
-      // TODO add your handling code here:
-   }//GEN-LAST:event_jComboBox_camConf_roiCameraActionPerformed
-
-   private void jTextField_camConf_nPixXActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextField_camConf_nPixXActionPerformed
-      // TODO add your handling code here:
-   }//GEN-LAST:event_jTextField_camConf_nPixXActionPerformed
 
    // Variables declaration - do not modify//GEN-BEGIN:variables
    private javax.swing.JButton jButton_Apply;

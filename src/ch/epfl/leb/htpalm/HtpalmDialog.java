@@ -135,7 +135,7 @@ public class HtpalmDialog extends javax.swing.JDialog implements MMListenerInter
       jButton_OpenAutoLase = new javax.swing.JButton();
       jPanel_BactDetection = new javax.swing.JPanel();
       jCheckBox_ExcludeBadFov = new javax.swing.JCheckBox();
-      jButton1 = new javax.swing.JButton();
+      jButton_doTestFiltering = new javax.swing.JButton();
       jLabel1 = new javax.swing.JLabel();
       jLabel2 = new javax.swing.JLabel();
       jButton_AcquireAllFov = new javax.swing.JButton();
@@ -170,11 +170,6 @@ public class HtpalmDialog extends javax.swing.JDialog implements MMListenerInter
 
       jTextField_StartY.setHorizontalAlignment(javax.swing.JTextField.TRAILING);
       jTextField_StartY.setText("00.00");
-      jTextField_StartY.addActionListener(new java.awt.event.ActionListener() {
-         public void actionPerformed(java.awt.event.ActionEvent evt) {
-            jTextField_StartYActionPerformed(evt);
-         }
-      });
 
       jButton_SetStartAsCurrentPos.setText("Use current position");
       jButton_SetStartAsCurrentPos.addActionListener(new java.awt.event.ActionListener() {
@@ -295,18 +290,6 @@ public class HtpalmDialog extends javax.swing.JDialog implements MMListenerInter
 
       jLabel_ExcitationPowerLabel.setText("Excitation power:");
 
-      jTextField_ActivationPowerNumber.addActionListener(new java.awt.event.ActionListener() {
-         public void actionPerformed(java.awt.event.ActionEvent evt) {
-            jTextField_ActivationPowerNumberActionPerformed(evt);
-         }
-      });
-
-      jTextField_ExcitationPowerNumber.addActionListener(new java.awt.event.ActionListener() {
-         public void actionPerformed(java.awt.event.ActionEvent evt) {
-            jTextField_ExcitationPowerNumberActionPerformed(evt);
-         }
-      });
-
       org.jdesktop.layout.GroupLayout jPanel2Layout = new org.jdesktop.layout.GroupLayout(jPanel2);
       jPanel2.setLayout(jPanel2Layout);
       jPanel2Layout.setHorizontalGroup(
@@ -407,11 +390,11 @@ public class HtpalmDialog extends javax.swing.JDialog implements MMListenerInter
          }
       });
 
-      jButton1.setText("Test filtering");
-      jButton1.setToolTipText("Test filtering algorithm on currently selected image");
-      jButton1.addActionListener(new java.awt.event.ActionListener() {
+      jButton_doTestFiltering.setText("Test filtering");
+      jButton_doTestFiltering.setToolTipText("Test filtering algorithm on currently selected image");
+      jButton_doTestFiltering.addActionListener(new java.awt.event.ActionListener() {
          public void actionPerformed(java.awt.event.ActionEvent evt) {
-            jButton1ActionPerformed(evt);
+            jButton_doTestFilteringActionPerformed(evt);
          }
       });
 
@@ -432,7 +415,7 @@ public class HtpalmDialog extends javax.swing.JDialog implements MMListenerInter
                .add(jPanel_BactDetectionLayout.createSequentialGroup()
                   .add(jCheckBox_ExcludeBadFov)
                   .addPreferredGap(org.jdesktop.layout.LayoutStyle.RELATED, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                  .add(jButton1))
+                  .add(jButton_doTestFiltering))
                .add(jPanel_BactDetectionLayout.createSequentialGroup()
                   .add(0, 0, Short.MAX_VALUE)
                   .add(jLabel1)
@@ -445,7 +428,7 @@ public class HtpalmDialog extends javax.swing.JDialog implements MMListenerInter
          .add(jPanel_BactDetectionLayout.createSequentialGroup()
             .add(jPanel_BactDetectionLayout.createParallelGroup(org.jdesktop.layout.GroupLayout.BASELINE)
                .add(jCheckBox_ExcludeBadFov)
-               .add(jButton1))
+               .add(jButton_doTestFiltering))
             .addPreferredGap(org.jdesktop.layout.LayoutStyle.RELATED)
             .add(jPanel_BactDetectionLayout.createParallelGroup(org.jdesktop.layout.GroupLayout.BASELINE)
                .add(jLabel1)
@@ -545,10 +528,6 @@ public class HtpalmDialog extends javax.swing.JDialog implements MMListenerInter
    private void jTextField_StartXActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextField_StartXActionPerformed
       config_.setMosaicStartPosX_(Double.parseDouble(jTextField_StartX.getText()));
    }//GEN-LAST:event_jTextField_StartXActionPerformed
-
-   private void jTextField_StartYActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextField_StartYActionPerformed
-      config_.setMosaicStartPosY_(Double.parseDouble(jTextField_StartY.getText()));
-   }//GEN-LAST:event_jTextField_StartYActionPerformed
 
    private void jRadioButton_LaserControlManualActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jRadioButton_LaserControlManualActionPerformed
       config_.setLaserControlIsAutomatic_(getStateLaserControlRadioGroup());
@@ -663,27 +642,18 @@ public class HtpalmDialog extends javax.swing.JDialog implements MMListenerInter
       config_.setLaserControlIsAutomatic_(getStateLaserControlRadioGroup());
    }//GEN-LAST:event_jRadioButton_LaserControlAutoActionPerformed
 
-   private void jTextField_ActivationPowerNumberActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextField_ActivationPowerNumberActionPerformed
-      config_.setLaserManualActPower_(Double.parseDouble(jTextField_ActivationPowerNumber.getText()));
-   }//GEN-LAST:event_jTextField_ActivationPowerNumberActionPerformed
-
-   private void jTextField_ExcitationPowerNumberActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextField_ExcitationPowerNumberActionPerformed
-      config_.setLaserManualExPower_(Double.parseDouble(jTextField_ExcitationPowerNumber.getText()));
-   }//GEN-LAST:event_jTextField_ExcitationPowerNumberActionPerformed
-
    private void formWindowClosing(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowClosing
       //TODO - if acquisition is running, check before exit
       // shut down the plugin
       htpalm_.dispose();
    }//GEN-LAST:event_formWindowClosing
 
-   private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+   private void jButton_doTestFilteringActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton_doTestFilteringActionPerformed
       // TODO add your handling code here:
-   }//GEN-LAST:event_jButton1ActionPerformed
+   }//GEN-LAST:event_jButton_doTestFilteringActionPerformed
 
    // Variables declaration - do not modify//GEN-BEGIN:variables
    private javax.swing.ButtonGroup buttonGroup_LaserControl;
-   private javax.swing.JButton jButton1;
    private javax.swing.JButton jButton_Abort;
    private javax.swing.JButton jButton_Acqiure1Fov;
    private javax.swing.JButton jButton_AcquireAllFov;
@@ -694,6 +664,7 @@ public class HtpalmDialog extends javax.swing.JDialog implements MMListenerInter
    private javax.swing.JButton jButton_OpenInitOptions;
    private javax.swing.JButton jButton_SaveSettings;
    private javax.swing.JButton jButton_SetStartAsCurrentPos;
+   private javax.swing.JButton jButton_doTestFiltering;
    private javax.swing.JCheckBox jCheckBox_ExcludeBadFov;
    private javax.swing.JLabel jLabel1;
    private javax.swing.JLabel jLabel2;
