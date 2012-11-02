@@ -57,7 +57,7 @@ public class InitOptionDialog extends javax.swing.JDialog {
       comboItems = getAcqChannelList();
       cdm=new DefaultComboBoxModel(comboItems);
       jComboBox_camConf_Camera.setModel(cdm);
-      
+      jComboBox_camConf_Camera.setSelectedIndex(combo_camCurrent);
       reloadSettings();
    }
    
@@ -110,7 +110,6 @@ public class InitOptionDialog extends javax.swing.JDialog {
       jTextField_Counting_minCells.setText(Integer.toString(newConfig_.getFilterConf_().getFilter_nCell_min_()));
       jTextField_Counting_maxCells.setText(Integer.toString(newConfig_.getFilterConf_().getFilter_nCell_max_()));
 
-      jComboBox_camConf_Camera.setSelectedIndex(combo_camCurrent);
       jTextField_camConf_pixSizeX.setText(Double.toString(newConfig_.getCamConf_()[combo_camCurrent].getPixSizeNm_x_()));
       jTextField_camConf_pixSizeY.setText(Double.toString(newConfig_.getCamConf_()[combo_camCurrent].getPixSizeNm_y_()));
       jTextField_camConf_nPixX.setText(Integer.toString(newConfig_.getCamConf_()[combo_camCurrent].getnPix_x_()));
@@ -149,6 +148,27 @@ public class InitOptionDialog extends javax.swing.JDialog {
       newConfig_.setLaserActTtlName(jTextField_ActivationTtlProp.getText(),1);
       newConfig_.setLaserShutterTtlName(jTextField_LaserShutterTtlProp.getText(),1);
       newConfig_.setPhLampTtlName(jTextField_PhLampTtlProp.getText(),1);
+
+      newConfig_.getFilterConf_().setBgSub_ballRad_( Double.parseDouble(jTextField_Counting_bgRad.getText()));
+      newConfig_.getFilterConf_().setSegAlg_( jComboBox_Counting_SelectAlg.getSelectedIndex());
+      newConfig_.getFilterConf_().getLogAlgParam_().setSmoothRadius_(Double.parseDouble( jTextField_Counting_LoGBlurRad.getText()));
+      newConfig_.getFilterConf_().getLocalAlgParam_().setMethod( jComboBox_Counting_localMethod.getSelectedIndex());
+      newConfig_.getFilterConf_().getLocalAlgParam_().setRadius( Integer.parseInt(jTextField_Counting_LocalRad.getText()));
+      newConfig_.getFilterConf_().getLocalAlgParam_().setPar1(Double.parseDouble( jTextField_Counting_LocalPar1.getText()));
+      newConfig_.getFilterConf_().getLocalAlgParam_().setPar2(Double.parseDouble( jTextField_Counting_LocalPar1.getText()));
+      newConfig_.getFilterConf_().setFilter_bactSize_min_(Integer.parseInt( jTextField_Counting_minPixSize.getText()));
+      newConfig_.getFilterConf_().setFilter_bactSize_max_(Integer.parseInt( jTextField_Counting_maxPixSize.getText()));
+      newConfig_.getFilterConf_().setFilter_nCell_min_( Integer.parseInt(jTextField_Counting_minCells.getText()));
+      newConfig_.getFilterConf_().setFilter_nCell_max_( Integer.parseInt(jTextField_Counting_maxCells.getText()));
+
+      newConfig_.getCamConf_()[combo_camCurrent].setPixSizeNm_x_(Double.parseDouble( jTextField_camConf_pixSizeX.getText()));
+      newConfig_.getCamConf_()[combo_camCurrent].setPixSizeNm_y_(Double.parseDouble( jTextField_camConf_pixSizeY.getText()));
+      newConfig_.getCamConf_()[combo_camCurrent].setnPix_x_( Integer.parseInt(jTextField_camConf_nPixX.getText()));
+      newConfig_.getCamConf_()[combo_camCurrent].setnPix_y_( Integer.parseInt(jTextField_camConf_nPixY.getText()));
+      newConfig_.getCamConf_()[combo_camCurrent].setROI_xPix_( Integer.parseInt(jTextField_camConf_roiX.getText()));
+      newConfig_.getCamConf_()[combo_camCurrent].setROI_yPix_( Integer.parseInt(jTextField_camConf_roiY.getText()));
+      newConfig_.getCamConf_()[combo_camCurrent].setROI_wPix_( Integer.parseInt(jTextField_camConf_roiW.getText()));
+      newConfig_.getCamConf_()[combo_camCurrent].setROI_hPix_( Integer.parseInt(jTextField_camConf_roiH.getText()));
    }
 
    /*
@@ -851,27 +871,35 @@ public class InitOptionDialog extends javax.swing.JDialog {
 
       jLabel14.setText("Acquisition channel:");
 
-      jComboBox_camConf_Camera.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Phase contrast", "Fluorescence" }));
-      jComboBox_camConf_Camera.addActionListener(new java.awt.event.ActionListener() {
-         public void actionPerformed(java.awt.event.ActionEvent evt) {
-            jComboBox_camConf_CameraActionPerformed(evt);
+      jComboBox_camConf_Camera.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "tempVal1", "tempVal2" }));
+      jComboBox_camConf_Camera.addItemListener(new java.awt.event.ItemListener() {
+         public void itemStateChanged(java.awt.event.ItemEvent evt) {
+            jComboBox_camConf_CameraItemStateChanged(evt);
          }
       });
 
+      jTextField_camConf_roiX.setHorizontalAlignment(javax.swing.JTextField.RIGHT);
       jTextField_camConf_roiX.setText("0");
 
+      jTextField_camConf_roiY.setHorizontalAlignment(javax.swing.JTextField.RIGHT);
       jTextField_camConf_roiY.setText("0");
 
+      jTextField_camConf_roiW.setHorizontalAlignment(javax.swing.JTextField.RIGHT);
       jTextField_camConf_roiW.setText("0");
 
+      jTextField_camConf_roiH.setHorizontalAlignment(javax.swing.JTextField.RIGHT);
       jTextField_camConf_roiH.setText("0");
 
+      jTextField_camConf_pixSizeX.setHorizontalAlignment(javax.swing.JTextField.RIGHT);
       jTextField_camConf_pixSizeX.setText("0.");
 
+      jTextField_camConf_pixSizeY.setHorizontalAlignment(javax.swing.JTextField.RIGHT);
       jTextField_camConf_pixSizeY.setText("0.");
 
+      jTextField_camConf_nPixX.setHorizontalAlignment(javax.swing.JTextField.RIGHT);
       jTextField_camConf_nPixX.setText("0");
 
+      jTextField_camConf_nPixY.setHorizontalAlignment(javax.swing.JTextField.RIGHT);
       jTextField_camConf_nPixY.setText("0");
 
       jLabel15.setText("ROI start X:");
@@ -1079,13 +1107,13 @@ public class InitOptionDialog extends javax.swing.JDialog {
       dispose();
    }//GEN-LAST:event_jButton_OkActionPerformed
 
-   private void jComboBox_camConf_CameraActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jComboBox_camConf_CameraActionPerformed
+   private void jComboBox_camConf_CameraItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_jComboBox_camConf_CameraItemStateChanged
       //show the settings for the selected camera
       int val = jComboBox_camConf_Camera.getSelectedIndex();
       updateSettings(); //this to avoid resetting all the other values on reload
       combo_camCurrent = val;
       reloadSettings();
-   }//GEN-LAST:event_jComboBox_camConf_CameraActionPerformed
+   }//GEN-LAST:event_jComboBox_camConf_CameraItemStateChanged
 
    // Variables declaration - do not modify//GEN-BEGIN:variables
    private javax.swing.JButton jButton_Apply;
