@@ -4,11 +4,14 @@
  */
 package ch.epfl.leb.htpalm;
 
+import ch.epfl.leb.htpalm.fovfilter.FovFilterConfig;
+import ch.epfl.leb.htpalm.fovfilter.LocalAlgParam;
 import java.io.File;
 import java.io.IOException;
 import java.lang.reflect.InvocationTargetException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.swing.DefaultComboBoxModel;
 import javax.swing.JFileChooser;
 import org.apache.commons.beanutils.BeanUtils;
 import org.micromanager.utils.ReportingUtils;
@@ -21,6 +24,7 @@ public class InitOptionDialog extends javax.swing.JDialog {
 
    ConfigurationOptions newConfig_;
    ConfigurationOptions config_;
+   int combo_camCurrent= 0;
 
    /**
     * Creates new form InitOptionDialog
@@ -33,12 +37,39 @@ public class InitOptionDialog extends javax.swing.JDialog {
       
       try {
          BeanUtils.copyProperties(newConfig_,this.config_);//copy the properties of config into newConfig_
-         reloadSettings();
       } catch (IllegalAccessException ex) {
          ReportingUtils.logError(ex, "Failed to make copy of settings");
       } catch (InvocationTargetException ex) {
          ReportingUtils.logError(ex, "Failed to make copy of settings");
       }
+
+      //how to set the drop down menus
+      String[] comboItems;
+      comboItems= FovFilterConfig.segAlgNames_;
+      DefaultComboBoxModel cdm=new DefaultComboBoxModel(comboItems);
+      jComboBox_Counting_SelectAlg.setModel(cdm);
+      
+      comboItems = LocalAlgParam.methodValues;
+      cdm=new DefaultComboBoxModel(comboItems);
+      jComboBox_Counting_localMethod.setModel(cdm);
+
+      //get the acquisition channel list
+      comboItems = getAcqChannelList();
+      cdm=new DefaultComboBoxModel(comboItems);
+      jComboBox_camConf_Camera.setModel(cdm);
+      
+      reloadSettings();
+   }
+   
+   private String[] getAcqChannelList(){
+      String[] acqList;
+      int nCh = newConfig_.getCamConf_nCam_();
+      acqList = new String[nCh];
+      for (int ii=0;ii<nCh;ii++){
+         acqList[ii] = newConfig_.getCamConf_()[ii].getChFullName_();
+      }
+      
+      return acqList;
    }
    
    private void reloadSettings(){
@@ -66,7 +97,31 @@ public class InitOptionDialog extends javax.swing.JDialog {
       jTextField_ActivationTtlProp.setText(newConfig_.getLaserActTtlName(1));
       jTextField_LaserShutterTtlProp.setText(newConfig_.getLaserShutterTtlName(1));
       jTextField_PhLampTtlProp.setText(newConfig_.getPhLampTtlName(1));
+
+      jTextField_Counting_bgRad.setText(Double.toString(newConfig_.getFilterConf_().getBgSub_ballRad_()));
+      jComboBox_Counting_SelectAlg.setSelectedIndex(newConfig_.getFilterConf_().getSegAlg_());
+      jTextField_Counting_LoGBlurRad.setText(Double.toString(newConfig_.getFilterConf_().getLogAlgParam_().getSmoothRadius_()));
+      jComboBox_Counting_localMethod.setSelectedIndex(newConfig_.getFilterConf_().getLocalAlgParam_().getnMethod());
+      jTextField_Counting_LocalRad.setText(Integer.toString(newConfig_.getFilterConf_().getLocalAlgParam_().getRadius()));
+      jTextField_Counting_LocalPar1.setText(Double.toString(newConfig_.getFilterConf_().getLocalAlgParam_().getPar1()));
+      jTextField_Counting_LocalPar1.setText(Double.toString(newConfig_.getFilterConf_().getLocalAlgParam_().getPar2()));
+      jTextField_Counting_minPixSize.setText(Integer.toString(newConfig_.getFilterConf_().getFilter_bactSize_min_()));
+      jTextField_Counting_maxPixSize.setText(Integer.toString(newConfig_.getFilterConf_().getFilter_bactSize_max_()));
+      jTextField_Counting_minCells.setText(Integer.toString(newConfig_.getFilterConf_().getFilter_nCell_min_()));
+      jTextField_Counting_maxCells.setText(Integer.toString(newConfig_.getFilterConf_().getFilter_nCell_max_()));
+
+      jComboBox_camConf_Camera.setSelectedIndex(combo_camCurrent);
+      jTextField_camConf_pixSizeX.setText(Double.toString(newConfig_.getCamConf_()[combo_camCurrent].getPixSizeNm_x_()));
+      jTextField_camConf_pixSizeY.setText(Double.toString(newConfig_.getCamConf_()[combo_camCurrent].getPixSizeNm_y_()));
+      jTextField_camConf_nPixX.setText(Integer.toString(newConfig_.getCamConf_()[combo_camCurrent].getnPix_x_()));
+      jTextField_camConf_nPixY.setText(Integer.toString(newConfig_.getCamConf_()[combo_camCurrent].getnPix_y_()));
+      jTextField_camConf_roiX.setText(Integer.toString(newConfig_.getCamConf_()[combo_camCurrent].getROI_xPix_()));
+      jTextField_camConf_roiY.setText(Integer.toString(newConfig_.getCamConf_()[combo_camCurrent].getROI_yPix_()));
+      jTextField_camConf_roiW.setText(Integer.toString(newConfig_.getCamConf_()[combo_camCurrent].getROI_wPix_()));
+      jTextField_camConf_roiH.setText(Integer.toString(newConfig_.getCamConf_()[combo_camCurrent].getROI_hPix_()));
+
       
+
    }
 
    private void updateSettings(){
@@ -175,7 +230,7 @@ public class InitOptionDialog extends javax.swing.JDialog {
       jComboBox_Counting_SelectAlg = new javax.swing.JComboBox();
       jLabel3 = new javax.swing.JLabel();
       jLabel5 = new javax.swing.JLabel();
-      jTextField_Counting_blurRad = new javax.swing.JTextField();
+      jTextField_Counting_LoGBlurRad = new javax.swing.JTextField();
       jLabel7 = new javax.swing.JLabel();
       jLabel8 = new javax.swing.JLabel();
       jComboBox_Counting_localMethod = new javax.swing.JComboBox();
@@ -184,7 +239,7 @@ public class InitOptionDialog extends javax.swing.JDialog {
       jLabel11 = new javax.swing.JLabel();
       jTextField_Counting_LocalRad = new javax.swing.JTextField();
       jTextField_Counting_LocalPar1 = new javax.swing.JTextField();
-      jTextField_Counting_Par2 = new javax.swing.JTextField();
+      jTextField_Counting_LocalPar2 = new javax.swing.JTextField();
       jPanel8 = new javax.swing.JPanel();
       jLabel12 = new javax.swing.JLabel();
       jLabel13 = new javax.swing.JLabel();
@@ -197,7 +252,7 @@ public class InitOptionDialog extends javax.swing.JDialog {
       jTextField_Counting_maxCells = new javax.swing.JTextField();
       jPanel9 = new javax.swing.JPanel();
       jLabel14 = new javax.swing.JLabel();
-      jComboBox_camConf_roiCamera = new javax.swing.JComboBox();
+      jComboBox_camConf_Camera = new javax.swing.JComboBox();
       jTextField_camConf_roiX = new javax.swing.JTextField();
       jTextField_camConf_roiY = new javax.swing.JTextField();
       jTextField_camConf_roiW = new javax.swing.JTextField();
@@ -580,8 +635,8 @@ public class InitOptionDialog extends javax.swing.JDialog {
       jLabel5.setText("Blur radius:");
       jLabel5.setToolTipText("Gaussian blur radius (pixels)");
 
-      jTextField_Counting_blurRad.setHorizontalAlignment(javax.swing.JTextField.TRAILING);
-      jTextField_Counting_blurRad.setText("2.0");
+      jTextField_Counting_LoGBlurRad.setHorizontalAlignment(javax.swing.JTextField.TRAILING);
+      jTextField_Counting_LoGBlurRad.setText("2.0");
 
       jLabel7.setText("Local threshold parameters:");
 
@@ -603,8 +658,8 @@ public class InitOptionDialog extends javax.swing.JDialog {
       jTextField_Counting_LocalPar1.setHorizontalAlignment(javax.swing.JTextField.TRAILING);
       jTextField_Counting_LocalPar1.setText("0.0");
 
-      jTextField_Counting_Par2.setHorizontalAlignment(javax.swing.JTextField.TRAILING);
-      jTextField_Counting_Par2.setText("0.0");
+      jTextField_Counting_LocalPar2.setHorizontalAlignment(javax.swing.JTextField.TRAILING);
+      jTextField_Counting_LocalPar2.setText("0.0");
 
       org.jdesktop.layout.GroupLayout jPanel7Layout = new org.jdesktop.layout.GroupLayout(jPanel7);
       jPanel7.setLayout(jPanel7Layout);
@@ -624,7 +679,7 @@ public class InitOptionDialog extends javax.swing.JDialog {
                         .add(10, 10, 10)
                         .add(jLabel5)
                         .addPreferredGap(org.jdesktop.layout.LayoutStyle.UNRELATED)
-                        .add(jTextField_Counting_blurRad, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, 31, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE)))
+                        .add(jTextField_Counting_LoGBlurRad, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, 31, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE)))
                   .add(21, 21, 21)
                   .add(jPanel7Layout.createParallelGroup(org.jdesktop.layout.GroupLayout.LEADING)
                      .add(jLabel7)
@@ -642,7 +697,7 @@ public class InitOptionDialog extends javax.swing.JDialog {
                                  .add(jLabel11))
                               .addPreferredGap(org.jdesktop.layout.LayoutStyle.RELATED, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                               .add(jPanel7Layout.createParallelGroup(org.jdesktop.layout.GroupLayout.LEADING, false)
-                                 .add(jTextField_Counting_Par2)
+                                 .add(jTextField_Counting_LocalPar2)
                                  .add(jTextField_Counting_LocalPar1)
                                  .add(jTextField_Counting_LocalRad, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, 36, Short.MAX_VALUE))))))))
             .addContainerGap(32, Short.MAX_VALUE))
@@ -660,7 +715,7 @@ public class InitOptionDialog extends javax.swing.JDialog {
             .addPreferredGap(org.jdesktop.layout.LayoutStyle.RELATED)
             .add(jPanel7Layout.createParallelGroup(org.jdesktop.layout.GroupLayout.BASELINE)
                .add(jLabel5)
-               .add(jTextField_Counting_blurRad, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE)
+               .add(jTextField_Counting_LoGBlurRad, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE)
                .add(jLabel8)
                .add(jComboBox_Counting_localMethod, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE))
             .addPreferredGap(org.jdesktop.layout.LayoutStyle.RELATED)
@@ -674,7 +729,7 @@ public class InitOptionDialog extends javax.swing.JDialog {
             .addPreferredGap(org.jdesktop.layout.LayoutStyle.RELATED)
             .add(jPanel7Layout.createParallelGroup(org.jdesktop.layout.GroupLayout.BASELINE)
                .add(jLabel11)
-               .add(jTextField_Counting_Par2, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE))
+               .add(jTextField_Counting_LocalPar2, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE))
             .addContainerGap(org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
       );
 
@@ -796,7 +851,12 @@ public class InitOptionDialog extends javax.swing.JDialog {
 
       jLabel14.setText("Acquisition channel:");
 
-      jComboBox_camConf_roiCamera.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Phase contrast", "Fluorescence" }));
+      jComboBox_camConf_Camera.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Phase contrast", "Fluorescence" }));
+      jComboBox_camConf_Camera.addActionListener(new java.awt.event.ActionListener() {
+         public void actionPerformed(java.awt.event.ActionEvent evt) {
+            jComboBox_camConf_CameraActionPerformed(evt);
+         }
+      });
 
       jTextField_camConf_roiX.setText("0");
 
@@ -870,7 +930,7 @@ public class InitOptionDialog extends javax.swing.JDialog {
                   .addContainerGap(org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                .add(jPanel9Layout.createSequentialGroup()
                   .addPreferredGap(org.jdesktop.layout.LayoutStyle.UNRELATED)
-                  .add(jComboBox_camConf_roiCamera, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, 121, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE)
+                  .add(jComboBox_camConf_Camera, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, 121, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE)
                   .add(0, 118, Short.MAX_VALUE))))
       );
       jPanel9Layout.setVerticalGroup(
@@ -879,7 +939,7 @@ public class InitOptionDialog extends javax.swing.JDialog {
             .addContainerGap()
             .add(jPanel9Layout.createParallelGroup(org.jdesktop.layout.GroupLayout.BASELINE)
                .add(jLabel14)
-               .add(jComboBox_camConf_roiCamera, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE))
+               .add(jComboBox_camConf_Camera, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE))
             .addPreferredGap(org.jdesktop.layout.LayoutStyle.RELATED)
             .add(jPanel9Layout.createParallelGroup(org.jdesktop.layout.GroupLayout.BASELINE)
                .add(jLabel21)
@@ -1019,6 +1079,14 @@ public class InitOptionDialog extends javax.swing.JDialog {
       dispose();
    }//GEN-LAST:event_jButton_OkActionPerformed
 
+   private void jComboBox_camConf_CameraActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jComboBox_camConf_CameraActionPerformed
+      //show the settings for the selected camera
+      int val = jComboBox_camConf_Camera.getSelectedIndex();
+      updateSettings(); //this to avoid resetting all the other values on reload
+      combo_camCurrent = val;
+      reloadSettings();
+   }//GEN-LAST:event_jComboBox_camConf_CameraActionPerformed
+
    // Variables declaration - do not modify//GEN-BEGIN:variables
    private javax.swing.JButton jButton_Apply;
    private javax.swing.JButton jButton_BrowseAcqFolder;
@@ -1028,7 +1096,7 @@ public class InitOptionDialog extends javax.swing.JDialog {
    private javax.swing.JCheckBox jCheckBox_ConvertPhExposureMsToSec;
    private javax.swing.JComboBox jComboBox_Counting_SelectAlg;
    private javax.swing.JComboBox jComboBox_Counting_localMethod;
-   private javax.swing.JComboBox jComboBox_camConf_roiCamera;
+   private javax.swing.JComboBox jComboBox_camConf_Camera;
    private javax.swing.JLabel jLabel1;
    private javax.swing.JLabel jLabel10;
    private javax.swing.JLabel jLabel11;
@@ -1087,11 +1155,11 @@ public class InitOptionDialog extends javax.swing.JDialog {
    private javax.swing.JTextField jTextField_ActivationTtlLabel;
    private javax.swing.JTextField jTextField_ActivationTtlProp;
    private javax.swing.JTextField jTextField_BaseFileName;
+   private javax.swing.JTextField jTextField_Counting_LoGBlurRad;
    private javax.swing.JTextField jTextField_Counting_LocalPar1;
+   private javax.swing.JTextField jTextField_Counting_LocalPar2;
    private javax.swing.JTextField jTextField_Counting_LocalRad;
-   private javax.swing.JTextField jTextField_Counting_Par2;
    private javax.swing.JTextField jTextField_Counting_bgRad;
-   private javax.swing.JTextField jTextField_Counting_blurRad;
    private javax.swing.JTextField jTextField_Counting_maxCells;
    private javax.swing.JTextField jTextField_Counting_maxPixSize;
    private javax.swing.JTextField jTextField_Counting_minCells;

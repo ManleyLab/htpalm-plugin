@@ -232,6 +232,8 @@ public class ConfigurationOptions {
       filterConf_.setSegAlg_(FovFilterConfig.LOG);
       filterConf_.setFilter_nCell_min_(0);
       filterConf_.setFilter_nCell_max_(Integer.MAX_VALUE);
+      filterConf_.setFilter_bactSize_min_(0);
+      filterConf_.setFilter_bactSize_max_(Integer.MAX_VALUE);
 
    }
 

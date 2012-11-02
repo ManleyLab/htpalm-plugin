@@ -13,6 +13,8 @@ import org.simpleframework.xml.*;
 @Root
 public class FovFilterConfig {
    public static final int LOG=0, LOCALTHRESH=1;
+   public static final String[] segAlgNames_ = {"LoG", "Local thresholding"};
+   
    @Element
    private LoGAlgParam logAlgParam_;
    @Element
@@ -21,6 +23,10 @@ public class FovFilterConfig {
    private double bgSub_ballRad_;
    @Element
    private int segAlg_;
+   @Element
+   private int filter_bactSize_min_;
+   @Element
+   private int filter_bactSize_max_;
    @Element
    private int filter_nCell_min_;
    @Element
@@ -110,5 +116,33 @@ public class FovFilterConfig {
     */
    public void setFilter_nCell_max_(int filter_nCell_max_) {
       this.filter_nCell_max_ = filter_nCell_max_;
+   }
+
+   /**
+    * @return the filter_bactSize_min_
+    */
+   public int getFilter_bactSize_min_() {
+      return filter_bactSize_min_;
+   }
+
+   /**
+    * @param filter_bactSize_min_ the filter_bactSize_min_ to set
+    */
+   public void setFilter_bactSize_min_(int filter_bactSize_min_) {
+      this.filter_bactSize_min_ = filter_bactSize_min_;
+   }
+
+   /**
+    * @return the filter_bactSize_max_
+    */
+   public int getFilter_bactSize_max_() {
+      return filter_bactSize_max_;
+   }
+
+   /**
+    * @param filter_bactSize_max_ the filter_bactSize_max_ to set
+    */
+   public void setFilter_bactSize_max_(int filter_bactSize_max_) {
+      this.filter_bactSize_max_ = filter_bactSize_max_;
    }
 }

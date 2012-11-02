@@ -13,7 +13,7 @@ import org.simpleframework.xml.*;
 @Root
 public class LocalAlgParam {
    public static final int BERNSEN=0, MEAN=1, MEDIAN=2, MIDGREY=3, NIBLACK=4, SAUVOLA=5;
-   private static final String[] methodValues= {"Bersen","Mean","Median","MidGrey","Niblack","Sauvola"};
+   public static final String[] methodValues= {"Bersen","Mean","Median","MidGrey","Niblack","Sauvola"};
 
    @Element
    private int nMethod = 5;
@@ -43,12 +43,6 @@ public class LocalAlgParam {
     */
    public String getMethod() {
       return method;
-   }
-   /**
-    * @return the methodValues
-    */
-   public static String[] getMethodValues() {
-      return methodValues;
    }
 
    /**

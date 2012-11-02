@@ -721,7 +721,7 @@
                                           <EmptySpace min="10" pref="10" max="-2" attributes="0"/>
                                           <Component id="jLabel5" min="-2" max="-2" attributes="0"/>
                                           <EmptySpace type="unrelated" max="-2" attributes="0"/>
-                                          <Component id="jTextField_Counting_blurRad" min="-2" pref="31" max="-2" attributes="0"/>
+                                          <Component id="jTextField_Counting_LoGBlurRad" min="-2" pref="31" max="-2" attributes="0"/>
                                       </Group>
                                   </Group>
                                   <EmptySpace min="-2" pref="21" max="-2" attributes="0"/>
@@ -743,7 +743,7 @@
                                                   </Group>
                                                   <EmptySpace max="32767" attributes="0"/>
                                                   <Group type="103" groupAlignment="0" max="-2" attributes="0">
-                                                      <Component id="jTextField_Counting_Par2" max="32767" attributes="0"/>
+                                                      <Component id="jTextField_Counting_LocalPar2" max="32767" attributes="0"/>
                                                       <Component id="jTextField_Counting_LocalPar1" max="32767" attributes="0"/>
                                                       <Component id="jTextField_Counting_LocalRad" pref="36" max="32767" attributes="0"/>
                                                   </Group>
@@ -772,7 +772,7 @@
                           <EmptySpace max="-2" attributes="0"/>
                           <Group type="103" groupAlignment="3" attributes="0">
                               <Component id="jLabel5" alignment="3" min="-2" max="-2" attributes="0"/>
-                              <Component id="jTextField_Counting_blurRad" alignment="3" min="-2" max="-2" attributes="0"/>
+                              <Component id="jTextField_Counting_LoGBlurRad" alignment="3" min="-2" max="-2" attributes="0"/>
                               <Component id="jLabel8" alignment="3" min="-2" max="-2" attributes="0"/>
                               <Component id="jComboBox_Counting_localMethod" alignment="3" min="-2" max="-2" attributes="0"/>
                           </Group>
@@ -789,7 +789,7 @@
                           <EmptySpace max="-2" attributes="0"/>
                           <Group type="103" groupAlignment="3" attributes="0">
                               <Component id="jLabel11" alignment="3" min="-2" max="-2" attributes="0"/>
-                              <Component id="jTextField_Counting_Par2" alignment="3" min="-2" max="-2" attributes="0"/>
+                              <Component id="jTextField_Counting_LocalPar2" alignment="3" min="-2" max="-2" attributes="0"/>
                           </Group>
                           <EmptySpace max="32767" attributes="0"/>
                       </Group>
@@ -823,7 +823,7 @@
                     <Property name="toolTipText" type="java.lang.String" value="Gaussian blur radius (pixels)"/>
                   </Properties>
                 </Component>
-                <Component class="javax.swing.JTextField" name="jTextField_Counting_blurRad">
+                <Component class="javax.swing.JTextField" name="jTextField_Counting_LoGBlurRad">
                   <Properties>
                     <Property name="horizontalAlignment" type="int" value="11"/>
                     <Property name="text" type="java.lang.String" value="2.0"/>
@@ -880,7 +880,7 @@
                     <Property name="text" type="java.lang.String" value="0.0"/>
                   </Properties>
                 </Component>
-                <Component class="javax.swing.JTextField" name="jTextField_Counting_Par2">
+                <Component class="javax.swing.JTextField" name="jTextField_Counting_LocalPar2">
                   <Properties>
                     <Property name="horizontalAlignment" type="int" value="11"/>
                     <Property name="text" type="java.lang.String" value="0.0"/>
@@ -1085,7 +1085,7 @@
                           </Group>
                           <Group type="102" alignment="0" attributes="0">
                               <EmptySpace type="unrelated" max="-2" attributes="0"/>
-                              <Component id="jComboBox_camConf_roiCamera" min="-2" pref="121" max="-2" attributes="0"/>
+                              <Component id="jComboBox_camConf_Camera" min="-2" pref="121" max="-2" attributes="0"/>
                               <EmptySpace min="0" pref="118" max="32767" attributes="0"/>
                           </Group>
                       </Group>
@@ -1098,7 +1098,7 @@
                       <EmptySpace max="-2" attributes="0"/>
                       <Group type="103" groupAlignment="3" attributes="0">
                           <Component id="jLabel14" alignment="3" min="-2" max="-2" attributes="0"/>
-                          <Component id="jComboBox_camConf_roiCamera" alignment="3" min="-2" max="-2" attributes="0"/>
+                          <Component id="jComboBox_camConf_Camera" alignment="3" min="-2" max="-2" attributes="0"/>
                       </Group>
                       <EmptySpace max="-2" attributes="0"/>
                       <Group type="103" groupAlignment="3" attributes="0">
@@ -1151,7 +1151,7 @@
                 <Property name="text" type="java.lang.String" value="Acquisition channel:"/>
               </Properties>
             </Component>
-            <Component class="javax.swing.JComboBox" name="jComboBox_camConf_roiCamera">
+            <Component class="javax.swing.JComboBox" name="jComboBox_camConf_Camera">
               <Properties>
                 <Property name="model" type="javax.swing.ComboBoxModel" editor="org.netbeans.modules.form.editors2.ComboBoxModelEditor">
                   <StringArray count="2">
@@ -1160,6 +1160,9 @@
                   </StringArray>
                 </Property>
               </Properties>
+              <Events>
+                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jComboBox_camConf_CameraActionPerformed"/>
+              </Events>
             </Component>
             <Component class="javax.swing.JTextField" name="jTextField_camConf_roiX">
               <Properties>
