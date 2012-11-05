@@ -12,13 +12,19 @@ import org.micromanager.api.MMListenerInterface;
 import org.micromanager.utils.MMScriptException;
 import org.micromanager.utils.ReportingUtils;
 import static ch.epfl.leb.htpalm.Debug.DEBUG;
+import ch.epfl.leb.htpalm.fovfilter.FovFilter;
+import ch.epfl.leb.htpalm.fovfilter.FovFilterConfig;
+import ij.*;
+import ij.process.ImageProcessor;
+import java.awt.Color;
+import java.awt.Rectangle;
         
 
 /**
  *
  * @author seamus.holden@epfl.ch
  */
-public class HtpalmDialog extends javax.swing.JDialog implements MMListenerInterface{
+public class HtpalmDialog extends javax.swing.JDialog implements MMListenerInterface, ImageListener{
 
    //TODO: Make current position / current FOV update automatically
    //TODO: Add nFov config parameter
@@ -27,6 +33,12 @@ public class HtpalmDialog extends javax.swing.JDialog implements MMListenerInter
    private InitOptionDialog initOptionDlg_ = null;
    private HardwareControl control_ = null;
    private MMStudioMainFrame gui_;
+
+   //for testing the FOV filtering
+   private ImagePlus labelIm_=null;
+   private ImageProcessor labelIp_=null;
+   private String labelTitle_;
+   private Boolean currentFovOk_ = null;
    /**
     * Creates new form HtpalmDialog
     */
@@ -40,6 +52,7 @@ public class HtpalmDialog extends javax.swing.JDialog implements MMListenerInter
       gui_ = (MMStudioMainFrame) parent;
       gui_.addMMBackgroundListener(this);// make the background the right colour
       gui_.addMMListener(this);// MM will alert the dialog when it does stuff
+      ImagePlus.addImageListener(this); 
       reloadSettings();
    }
 
@@ -137,7 +150,8 @@ public class HtpalmDialog extends javax.swing.JDialog implements MMListenerInter
       jCheckBox_ExcludeBadFov = new javax.swing.JCheckBox();
       jButton_doTestFiltering = new javax.swing.JButton();
       jLabel1 = new javax.swing.JLabel();
-      jLabel2 = new javax.swing.JLabel();
+      jLabel_fovOk = new javax.swing.JLabel();
+      jButton1 = new javax.swing.JButton();
       jButton_AcquireAllFov = new javax.swing.JButton();
       jButton_Abort = new javax.swing.JButton();
       jButton_OpenInitOptions = new javax.swing.JButton();
@@ -398,12 +412,19 @@ public class HtpalmDialog extends javax.swing.JDialog implements MMListenerInter
          }
       });
 
-      jLabel1.setText("Test image OK:");
+      jLabel1.setText("Current  image OK:");
 
-      jLabel2.setBackground(new java.awt.Color(255, 0, 0));
-      jLabel2.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-      jLabel2.setText(" ");
-      jLabel2.setOpaque(true);
+      jLabel_fovOk.setBackground(new java.awt.Color(150, 150, 150));
+      jLabel_fovOk.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+      jLabel_fovOk.setText(" ");
+      jLabel_fovOk.setOpaque(true);
+
+      jButton1.setText("TestSkipping");
+      jButton1.addActionListener(new java.awt.event.ActionListener() {
+         public void actionPerformed(java.awt.event.ActionEvent evt) {
+            jButton1ActionPerformed(evt);
+         }
+      });
 
       org.jdesktop.layout.GroupLayout jPanel_BactDetectionLayout = new org.jdesktop.layout.GroupLayout(jPanel_BactDetection);
       jPanel_BactDetection.setLayout(jPanel_BactDetectionLayout);
@@ -417,10 +438,11 @@ public class HtpalmDialog extends javax.swing.JDialog implements MMListenerInter
                   .addPreferredGap(org.jdesktop.layout.LayoutStyle.RELATED, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                   .add(jButton_doTestFiltering))
                .add(jPanel_BactDetectionLayout.createSequentialGroup()
-                  .add(0, 0, Short.MAX_VALUE)
+                  .add(jButton1)
+                  .addPreferredGap(org.jdesktop.layout.LayoutStyle.RELATED, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                   .add(jLabel1)
                   .addPreferredGap(org.jdesktop.layout.LayoutStyle.UNRELATED)
-                  .add(jLabel2, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, 60, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE)))
+                  .add(jLabel_fovOk, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, 60, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE)))
             .addContainerGap())
       );
       jPanel_BactDetectionLayout.setVerticalGroup(
@@ -432,7 +454,8 @@ public class HtpalmDialog extends javax.swing.JDialog implements MMListenerInter
             .addPreferredGap(org.jdesktop.layout.LayoutStyle.RELATED)
             .add(jPanel_BactDetectionLayout.createParallelGroup(org.jdesktop.layout.GroupLayout.BASELINE)
                .add(jLabel1)
-               .add(jLabel2))
+               .add(jLabel_fovOk)
+               .add(jButton1))
             .addContainerGap(org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
       );
 
@@ -649,11 +672,63 @@ public class HtpalmDialog extends javax.swing.JDialog implements MMListenerInter
    }//GEN-LAST:event_formWindowClosing
 
    private void jButton_doTestFilteringActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton_doTestFilteringActionPerformed
-      // TODO add your handling code here:
+      ImagePlus im = IJ.getImage();
+      if (im != null){// ie exclude case where grabCurrentImage failed to find an image
+         labelTitle_= im.getTitle()+"-labeling";
+         FovFilterConfig fovFilterConf = config_.getFilterConf_();
+         Rectangle roiRect= config_.getCamConf_()[0].getRectangle();
+         FovFilter fovFilter = new FovFilter(im, fovFilterConf,roiRect);
+         currentFovOk_ = fovFilter.isFovOk();
+         updateLabelIm(fovFilter);
+         updateFovLabel();
+         System.out.println("N particle: "+ fovFilter.getNParticle());
+         System.out.println("Is ok: "+ currentFovOk_);
+      }
    }//GEN-LAST:event_jButton_doTestFilteringActionPerformed
 
+   private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+      //TESTING
+      updateSettings();
+      if (control_.isInitialized_==false){
+         //TODO - indicate whether acquisition is automatic or manual
+         control_.initializeAcquisition(config_);
+      }
+      control_.filterCurrentFov();
+   }//GEN-LAST:event_jButton1ActionPerformed
+
+   private void updateFovLabel(){
+      if (currentFovOk_ == null){
+         //set to grey 
+         jLabel_fovOk.setText(" ");
+         jLabel_fovOk.setBackground(Color.GRAY);
+      } else if (currentFovOk_ == true){
+         //set to green 
+         jLabel_fovOk.setText("OK");
+         jLabel_fovOk.setBackground(Color.GREEN);
+      } else {
+         //set to red
+         jLabel_fovOk.setText("BAD");
+         jLabel_fovOk.setBackground(Color.RED);
+      }
+   }
+   
+   private void updateLabelIm(FovFilter fovFilter){
+      labelIp_= fovFilter.getLabeledImage();
+
+      if (labelIm_ == null){
+         labelIm_ = new ImagePlus();
+         labelIm_.setProcessor(labelIp_);
+         labelIm_.setTitle(labelTitle_);
+         labelIm_.show();
+      } else {
+         labelIm_.setProcessor(labelIp_);
+         labelIm_.updateAndDraw();
+      }
+   }
+      
    // Variables declaration - do not modify//GEN-BEGIN:variables
    private javax.swing.ButtonGroup buttonGroup_LaserControl;
+   private javax.swing.JButton jButton1;
    private javax.swing.JButton jButton_Abort;
    private javax.swing.JButton jButton_Acqiure1Fov;
    private javax.swing.JButton jButton_AcquireAllFov;
@@ -667,7 +742,6 @@ public class HtpalmDialog extends javax.swing.JDialog implements MMListenerInter
    private javax.swing.JButton jButton_doTestFiltering;
    private javax.swing.JCheckBox jCheckBox_ExcludeBadFov;
    private javax.swing.JLabel jLabel1;
-   private javax.swing.JLabel jLabel2;
    private javax.swing.JLabel jLabel_ActivationPowerLabel;
    private javax.swing.JLabel jLabel_CurrentFovLabel;
    private javax.swing.JLabel jLabel_CurrentFovNumber;
@@ -675,6 +749,7 @@ public class HtpalmDialog extends javax.swing.JDialog implements MMListenerInter
    private javax.swing.JLabel jLabel_StartPos;
    private javax.swing.JLabel jLabel_StartX;
    private javax.swing.JLabel jLabel_StartY;
+   private javax.swing.JLabel jLabel_fovOk;
    private javax.swing.JPanel jPanel2;
    private javax.swing.JPanel jPanel3;
    private javax.swing.JPanel jPanel_BactDetection;
@@ -710,6 +785,22 @@ public class HtpalmDialog extends javax.swing.JDialog implements MMListenerInter
    }
 
    public void xyStagePositionChanged(String deviceName, double xPos, double yPos) {
+      //DO NOTHING
+   }
+
+   public void imageOpened(ImagePlus imp) {
+      //DO NOTHING
+   }
+
+   public void imageClosed(ImagePlus imp) {
+      if (imp == this.labelIm_){
+         labelIm_ = null;
+         currentFovOk_ = null;
+         updateFovLabel();
+      }
+   }
+
+   public void imageUpdated(ImagePlus imp) {
       //DO NOTHING
    }
 }

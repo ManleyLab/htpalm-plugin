@@ -2,6 +2,7 @@
 package ch.epfl.leb.htpalm;
 
 // use the simple framework to allow easy generation of POJO xml config file
+import java.awt.Rectangle;
 import java.io.File;
 import java.io.IOException;
 import java.lang.reflect.InvocationTargetException;
@@ -181,6 +182,11 @@ class ChannelConfig{
     */
    public void setChFullName_(String chFullName_) {
       this.chFullName_ = chFullName_;
+   }
+
+   Rectangle getRectangle() {
+      Rectangle roiRect_ = new Rectangle(ROI_xPix_, ROI_yPix_, ROI_wPix_, ROI_hPix_);
+      return roiRect_;
    }
    
 }

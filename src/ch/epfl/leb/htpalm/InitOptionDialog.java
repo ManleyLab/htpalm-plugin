@@ -75,7 +75,7 @@ public class InitOptionDialog extends javax.swing.JDialog {
    private void reloadSettings(){
       jTextField_StepSizeX.setText(Double.toString(newConfig_.getMosaicStepSizeX_()));
       jTextField_StepSizeY.setText(Double.toString(newConfig_.getMosaicStepSizeY_()));
-      jTextField_MosaicNFov.setText(Integer.toString(newConfig_.getMosaicNFov()));
+      jTextField_MosaicNFov.setText(Integer.toString(newConfig_.getMosaicNFov_()));
       jTextField_AcqFolderName.setText(newConfig_.getFileAcqFolder_());
       jTextField_BaseFileName.setText(newConfig_.getFileBaseName_());
       jTextField_EmccdCamName.setText(newConfig_.getCamEmccdName_());
@@ -84,19 +84,19 @@ public class InitOptionDialog extends javax.swing.JDialog {
       jTextField_PhCamName.setText(newConfig_.getCamPhName_());
       jTextField_PhExposureTime.setText(Double.toString(newConfig_.getCamPhExposureMs_()));
       jTextField_PhCamDelayTime.setText(Double.toString(newConfig_.getCamPhDelayMs_()));
-      jCheckBox_ConvertPhExposureMsToSec.setSelected(newConfig_.isCamConvertPhExposureToSec());
-      jTextField_ExcitationDacLabel.setText(newConfig_.getLaserExDacName(0));
-      jTextField_ExcitationTtlLabel.setText(newConfig_.getLaserExTtlName(0));
-      jTextField_ActivationLabel.setText(newConfig_.getLaserActDacName(0));
-      jTextField_ActivationTtlLabel.setText(newConfig_.getLaserActTtlName(0));
-      jTextField_LaserShutterTtLabel.setText(newConfig_.getLaserShutterTtlName(0));
-      jTextField_PhLampTtlLabel.setText(newConfig_.getPhLampTtlName(0));
-      jTextField_ExcitationDacProp.setText(newConfig_.getLaserExDacName(1));
-      jTextField_ExcitationTtlProp.setText(newConfig_.getLaserExTtlName(1));
-      jTextField_ActivationDacProp.setText(newConfig_.getLaserActDacName(1));
-      jTextField_ActivationTtlProp.setText(newConfig_.getLaserActTtlName(1));
-      jTextField_LaserShutterTtlProp.setText(newConfig_.getLaserShutterTtlName(1));
-      jTextField_PhLampTtlProp.setText(newConfig_.getPhLampTtlName(1));
+      jCheckBox_ConvertPhExposureMsToSec.setSelected(newConfig_.isCamConvertPhExposureToSec_());
+      jTextField_ExcitationDacLabel.setText(newConfig_.getLaserExDacName_(0));
+      jTextField_ExcitationTtlLabel.setText(newConfig_.getLaserExTtlName_(0));
+      jTextField_ActivationLabel.setText(newConfig_.getLaserActDacName_(0));
+      jTextField_ActivationTtlLabel.setText(newConfig_.getLaserActTtlName_(0));
+      jTextField_LaserShutterTtLabel.setText(newConfig_.getLaserShutterTtlName_(0));
+      jTextField_PhLampTtlLabel.setText(newConfig_.getPhLampTtlName_(0));
+      jTextField_ExcitationDacProp.setText(newConfig_.getLaserExDacName_(1));
+      jTextField_ExcitationTtlProp.setText(newConfig_.getLaserExTtlName_(1));
+      jTextField_ActivationDacProp.setText(newConfig_.getLaserActDacName_(1));
+      jTextField_ActivationTtlProp.setText(newConfig_.getLaserActTtlName_(1));
+      jTextField_LaserShutterTtlProp.setText(newConfig_.getLaserShutterTtlName_(1));
+      jTextField_PhLampTtlProp.setText(newConfig_.getPhLampTtlName_(1));
 
       jTextField_Counting_bgRad.setText(Double.toString(newConfig_.getFilterConf_().getBgSub_ballRad_()));
       jComboBox_Counting_SelectAlg.setSelectedIndex(newConfig_.getFilterConf_().getSegAlg_());
@@ -126,7 +126,7 @@ public class InitOptionDialog extends javax.swing.JDialog {
    private void updateSettings(){
       newConfig_.setMosaicStepSizeX_(Double.parseDouble(jTextField_StepSizeX.getText()));
       newConfig_.setMosaicStepSizeY_(Double.parseDouble(jTextField_StepSizeY.getText()));
-      newConfig_.setMosaicNFov(Integer.parseInt(jTextField_MosaicNFov.getText()));
+      newConfig_.setMosaicNFov_(Integer.parseInt(jTextField_MosaicNFov.getText()));
       newConfig_.setFileAcqFolder_(jTextField_AcqFolderName.getText());
       newConfig_.setFileBaseName_(jTextField_BaseFileName.getText());
       newConfig_.setCamEmccdName_(jTextField_EmccdCamName.getText());
@@ -135,19 +135,19 @@ public class InitOptionDialog extends javax.swing.JDialog {
       newConfig_.setCamPhName_(jTextField_PhCamName.getText()); 
       newConfig_.setCamPhExposureMs_(Double.parseDouble(jTextField_PhExposureTime.getText()));
       newConfig_.setCamPhDelayMs_(Double.parseDouble(jTextField_PhCamDelayTime.getText()));
-      newConfig_.setCamConvertPhExposureToSec(jCheckBox_ConvertPhExposureMsToSec.isSelected());
-      newConfig_.setLaserExDacName(jTextField_ExcitationDacLabel.getText(),0);
-      newConfig_.setLaserExTtlName(jTextField_ExcitationTtlLabel.getText(),0);
-      newConfig_.setLaserActDacName(jTextField_ActivationLabel.getText(),0);
-      newConfig_.setLaserActTtlName(jTextField_ActivationTtlLabel.getText(),0);
-      newConfig_.setLaserShutterTtlName(jTextField_LaserShutterTtLabel.getText(),0);
-      newConfig_.setPhLampTtlName(jTextField_PhLampTtlLabel.getText(),0);
-      newConfig_.setLaserExDacName(jTextField_ExcitationDacProp.getText(),1);
-      newConfig_.setLaserExTtlName(jTextField_ExcitationTtlProp.getText(),1);
-      newConfig_.setLaserActDacName(jTextField_ActivationDacProp.getText(),1);
-      newConfig_.setLaserActTtlName(jTextField_ActivationTtlProp.getText(),1);
-      newConfig_.setLaserShutterTtlName(jTextField_LaserShutterTtlProp.getText(),1);
-      newConfig_.setPhLampTtlName(jTextField_PhLampTtlProp.getText(),1);
+      newConfig_.setCamConvertPhExposureToSec_(jCheckBox_ConvertPhExposureMsToSec.isSelected());
+      newConfig_.setLaserExDacName_(jTextField_ExcitationDacLabel.getText(),0);
+      newConfig_.setLaserExTtlName_(jTextField_ExcitationTtlLabel.getText(),0);
+      newConfig_.setLaserActDacName_(jTextField_ActivationLabel.getText(),0);
+      newConfig_.setLaserActTtlName_(jTextField_ActivationTtlLabel.getText(),0);
+      newConfig_.setLaserShutterTtlName_(jTextField_LaserShutterTtLabel.getText(),0);
+      newConfig_.setPhLampTtlName_(jTextField_PhLampTtlLabel.getText(),0);
+      newConfig_.setLaserExDacName_(jTextField_ExcitationDacProp.getText(),1);
+      newConfig_.setLaserExTtlName_(jTextField_ExcitationTtlProp.getText(),1);
+      newConfig_.setLaserActDacName_(jTextField_ActivationDacProp.getText(),1);
+      newConfig_.setLaserActTtlName_(jTextField_ActivationTtlProp.getText(),1);
+      newConfig_.setLaserShutterTtlName_(jTextField_LaserShutterTtlProp.getText(),1);
+      newConfig_.setPhLampTtlName_(jTextField_PhLampTtlProp.getText(),1);
 
       newConfig_.getFilterConf_().setBgSub_ballRad_( Double.parseDouble(jTextField_Counting_bgRad.getText()));
       newConfig_.getFilterConf_().setSegAlg_( jComboBox_Counting_SelectAlg.getSelectedIndex());

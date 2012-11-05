@@ -37,40 +37,52 @@ public class FovFilter  {
    ImagePlus im,labelIm;
    private ImagePlus imSeg;
    private ImageProcessor labelIp;
-   double rollingBallRad_;
    private int nParticle=0;
    BreadthFirstLabelingFilterable labeling;
 	String origTitle;
-   static final int PIXEL_MIN = 0, PIXEL_MAX = Integer.MAX_VALUE;
-   int minPix_=PIXEL_MIN, maxPix_=PIXEL_MAX;
+   private Rectangle roiRect;
    private int ROI_x_=0;
    private int ROI_y_=0;
    private int ROI_w_=Integer.MAX_VALUE;
    private int ROI_h_=Integer.MAX_VALUE;
-   private int segAlg_=FovFilterConfig.LOG;
-   private LoGAlgParam logAlgParam_;
-   private LocalAlgParam localAlgParam_;
+   private FovFilterConfig fovFilterConf_;
+   private boolean fovOk = false;
+
+   public FovFilter(ImagePlus im0, FovFilterConfig fovFilterConf_, Rectangle roiRect){
+      im = im0.duplicate();
+      this.fovFilterConf_ = fovFilterConf_;
+      this.roiRect = roiRect;
+      ROI_x_ = (int) roiRect.getX();
+      ROI_y_ = (int) roiRect.getY();
+      ROI_w_ = (int) roiRect.getWidth();
+      ROI_h_ = (int) roiRect.getHeight();
+      doAll();
+   }
 
    public FovFilter(ImagePlus im0, double rollingBallRad_, int segAlg_,Object AlgParam){
-      this.logAlgParam_ = new LoGAlgParam();
-      this.localAlgParam_ = new LocalAlgParam();
-      this.rollingBallRad_=rollingBallRad_;
       im = im0.duplicate();
+      fovFilterConf_ = new FovFilterConfig();
+      fovFilterConf_.setBgSub_ballRad_(rollingBallRad_);
 
       updateSegAlgParam(segAlg_, AlgParam);
+      doAll();
       
+   }
+
+   private void doAll(){
       doBGSubtract();
       doSeg();
       doLabeling();
       doFilter();
+
    }
 
    private void updateSegAlgParam(int segAlg_, Object AlgParam){
-      this.segAlg_ = segAlg_;
+      fovFilterConf_.setSegAlg_(segAlg_);
       if (segAlg_ == FovFilterConfig.LOG && AlgParam instanceof LoGAlgParam){
-         logAlgParam_ = (LoGAlgParam) AlgParam;
+         fovFilterConf_.setLogAlgParam_((LoGAlgParam) AlgParam);
       } else if (segAlg_ == FovFilterConfig.LOCALTHRESH && AlgParam instanceof LocalAlgParam){
-         localAlgParam_ = (LocalAlgParam) AlgParam;
+         fovFilterConf_.setLocalAlgParam_((LocalAlgParam) AlgParam);
       } else {
          throw new RuntimeException("Unrecognised segmentation algorithm or algorithm parameters");
       }
@@ -78,7 +90,7 @@ public class FovFilter  {
    }
 
    public void updateBGSubtract(double rollingBallRad_){
-      this.rollingBallRad_=rollingBallRad_;
+      fovFilterConf_.setBgSub_ballRad_(rollingBallRad_);
       doBGSubtract();
       doSeg();
       doLabeling();
@@ -92,8 +104,8 @@ public class FovFilter  {
    }
    
    public void updateFilter(int minPix, int maxPix,int ROI_x_, int ROI_y_,int  ROI_w_, int ROI_h_){
-      this.minPix_ = minPix;
-      this.maxPix_=maxPix;
+      fovFilterConf_.setFilter_bactSize_min_(minPix);
+      fovFilterConf_.setFilter_bactSize_max_(maxPix);
       this.ROI_x_ = ROI_x_;
       this.ROI_y_ = ROI_y_;
       this.ROI_w_ = ROI_w_;
@@ -102,6 +114,7 @@ public class FovFilter  {
    }
 
    private void doSeg(){
+      int segAlg_ = fovFilterConf_.getSegAlg_();
       if (segAlg_ == FovFilterConfig.LOG){
          doLoGSeg();
       } else if (segAlg_ == FovFilterConfig.LOCALTHRESH){
@@ -111,11 +124,11 @@ public class FovFilter  {
 
   private void doLoGSeg(){
       ImagePlus imEdge, imThresh;
-      
+      LoGAlgParam logAlgParam = fovFilterConf_.getLogAlgParam_();
       //get edges image
-      imEdge = FovFilter.getEdge(im, logAlgParam_.smoothRadius_);
+      imEdge = FovFilter.getEdge(im, logAlgParam.smoothRadius_);
       //get thresholded image
-      imThresh = makeOtsuBw(im,logAlgParam_.smoothRadius_);
+      imThresh = makeOtsuBw(im,logAlgParam.smoothRadius_);
       
       //final calculation combines the two
       ImageCalculator icalc = new ImageCalculator();
@@ -150,10 +163,24 @@ public class FovFilter  {
    }
 
    private void doFilter(){
-      labeling.filterParticles(minPix_, maxPix_,ROI_x_,ROI_y_,ROI_w_,ROI_h_);
+      filterRegions();
       nParticle = labeling.getRegions().size();
+      int minCell = fovFilterConf_.getFilter_nCell_min_();
+      int maxCell = fovFilterConf_.getFilter_nCell_max_();
+      if (nParticle >= minCell && nParticle <= maxCell){
+         fovOk = true;
+      } else {
+         fovOk=false;
+      }
    }
 
+   private void filterRegions(){
+      int minPix, maxPix;
+      minPix = fovFilterConf_.getFilter_bactSize_min_();
+      maxPix = fovFilterConf_.getFilter_bactSize_max_();
+      labeling.filterParticles(minPix, maxPix,ROI_x_,ROI_y_,ROI_w_,ROI_h_);
+      
+   }
 
    public ImageProcessor getLabeledImage(){
       if (labeling==null){
@@ -284,16 +311,24 @@ public class FovFilter  {
 
    private void doBGSubtract() {
       // background subtract the image
-      subtractBackground(im, rollingBallRad_);
+      subtractBackground(im, fovFilterConf_.getBgSub_ballRad_());
       IJ.run(im,"Enhance Contrast", "saturated=0 normalize");
    }
 
    private void doLocalSeg() {
+      LocalAlgParam localAlgParam = fovFilterConf_.getLocalAlgParam_();
       Auto_Local_Threshold autoSeg = new Auto_Local_Threshold();
-      Object[] exec = autoSeg.exec(im, localAlgParam_.getMethod(), localAlgParam_.getRadius(), localAlgParam_.getPar1(), localAlgParam_.getPar2(), localAlgParam_.isDoIwhite());
+      Object[] exec = autoSeg.exec(im, localAlgParam.getMethod(), localAlgParam.getRadius(), localAlgParam.getPar1(), localAlgParam.getPar2(), localAlgParam.isDoIwhite());
       imSeg = (ImagePlus) exec[0];
       IJ.run(imSeg, "Make Binary",null);
       IJ.run(imSeg, "Open",null);
+   }
+
+   /**
+    * @return the fovOk
+    */
+   public boolean isFovOk() {
+      return fovOk;
    }
 
 

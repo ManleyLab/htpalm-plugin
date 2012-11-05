@@ -12,16 +12,24 @@ import org.micromanager.api.AcquisitionEngine;
 import org.micromanager.utils.MMScriptException;
 import org.micromanager.utils.ReportingUtils;
 import static ch.epfl.leb.htpalm.Debug.DEBUG;
+import ch.epfl.leb.htpalm.fovfilter.FovFilter;
+import ch.epfl.leb.htpalm.fovfilter.FovFilterConfig;
+import ij.IJ;
+import ij.ImageListener;
+import ij.ImagePlus;
+import ij.process.ImageProcessor;
+import java.awt.Rectangle;
 import java.io.File;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
+import org.micromanager.utils.ImageUtils;
 import org.micromanager.utils.MMException;
 
 /**
  *
  * @author seamus.holden@epfl.ch
  */
-public class HardwareControl {
+public class HardwareControl implements ImageListener{
 
    CMMCore core_;
    MMStudioMainFrame gui_;
@@ -37,11 +45,17 @@ public class HardwareControl {
    boolean skipCurrentFOV_;
    Thread currentAcqThread_=null;
    boolean isInitialized_ = false, isRunning_=false;
+
+   private Boolean showLabelIm_ = true;
+   private ImagePlus filterIm_ = null, labelIm_=null;
+   private ImageProcessor filterIp_ = null, labelIp_=null;
+   FovFilter fovFilter_;
    
    public HardwareControl(MMStudioMainFrame gui_){
       this.gui_ = gui_;
       core_ = gui_.getMMCore();
       acq_ = gui_.getAcquisitionEngine();
+      ImagePlus.addImageListener(this); 
    }
    
    public void initializeAcquisition(){
@@ -76,7 +90,7 @@ public class HardwareControl {
    }
 
    private void initializeHardwareControl(){
-      mosaic_ = new SpiralMosaic(configHW_.getMosaicStartPosX_(), configHW_.getMosaicStartPosY_(), configHW_.getMosaicStepSizeX_(), configHW_.getMosaicStepSizeY_(), configHW_.getMosaicNFov());
+      mosaic_ = new SpiralMosaic(configHW_.getMosaicStartPosX_(), configHW_.getMosaicStartPosY_(), configHW_.getMosaicStepSizeX_(), configHW_.getMosaicStepSizeY_(), configHW_.getMosaicNFov_());
       //set up all the correct file names and metadata  - how is skip fov going to work for saving? - save after every acquisition.
       metadata_ = new HtpalmMetadata(configHW_,mosaic_);
       gotoFOV(0);
@@ -173,7 +187,7 @@ public class HardwareControl {
    }
 
    public void gotoNextFov(){
-      if (currentFovNum_<configHW_.getMosaicNFov()){
+      if (currentFovNum_<configHW_.getMosaicNFov_()){
          gotoFOV(currentFovNum_+1);
       }
    }
@@ -218,6 +232,23 @@ public class HardwareControl {
       //TODO - if an acquisition was interupted, delete the metadata for that acquisition
    }
 
+   public void imageOpened(ImagePlus imp) {
+      //DO NOTHING
+   }
+
+   public void imageClosed(ImagePlus imp) {
+       if (imp == this.labelIm_){
+         labelIm_ = null;
+      } else if (imp == this.filterIm_){
+         filterIm_ = null; 
+      }
+   }
+
+   public void imageUpdated(ImagePlus imp) {
+      //DO NOTHING
+   }
+
+
 
    
    class Acquire1FovManual implements Runnable{
@@ -238,10 +269,10 @@ public class HardwareControl {
             }
             else {
                //Make sure the laser powers etc are right
-               core_.setProperty(configHW_.getLaserExDacName(0),configHW_.getLaserExDacName(1), configHW_.getLaserManualExPower_());
-               core_.setProperty(configHW_.getLaserExTtlName(0),configHW_.getLaserExTtlName(1),1);
-               core_.setProperty(configHW_.getLaserActDacName(0),configHW_.getLaserActDacName(1), configHW_.getLaserManualActPower_());
-               core_.setProperty(configHW_.getLaserActTtlName(0),configHW_.getLaserActTtlName(1),1);
+               core_.setProperty(configHW_.getLaserExDacName_(0),configHW_.getLaserExDacName_(1), configHW_.getLaserManualExPower_());
+               core_.setProperty(configHW_.getLaserExTtlName_(0),configHW_.getLaserExTtlName_(1),1);
+               core_.setProperty(configHW_.getLaserActDacName_(0),configHW_.getLaserActDacName_(1), configHW_.getLaserManualActPower_());
+               core_.setProperty(configHW_.getLaserActTtlName_(0),configHW_.getLaserActTtlName_(1),1);
                core_.waitForSystem();
             }         
 
@@ -307,10 +338,10 @@ public class HardwareControl {
             }
             else {
                //Make sure the laser powers etc are right
-               core_.setProperty(configHW_.getLaserExDacName(0),configHW_.getLaserExDacName(1), configHW_.getLaserManualExPower_());
-               core_.setProperty(configHW_.getLaserExTtlName(0),configHW_.getLaserExTtlName(1),1);
-               core_.setProperty(configHW_.getLaserActDacName(0),configHW_.getLaserActDacName(1), configHW_.getLaserManualActPower_());
-               core_.setProperty(configHW_.getLaserActTtlName(0),configHW_.getLaserActTtlName(1),1);
+               core_.setProperty(configHW_.getLaserExDacName_(0),configHW_.getLaserExDacName_(1), configHW_.getLaserManualExPower_());
+               core_.setProperty(configHW_.getLaserExTtlName_(0),configHW_.getLaserExTtlName_(1),1);
+               core_.setProperty(configHW_.getLaserActDacName_(0),configHW_.getLaserActDacName_(1), configHW_.getLaserManualActPower_());
+               core_.setProperty(configHW_.getLaserActTtlName_(0),configHW_.getLaserActTtlName_(1),1);
                core_.waitForSystem();
             } 
 
@@ -363,8 +394,6 @@ public class HardwareControl {
    
    private void acquire1FovAuto(AcqMetadata acqMetadata){
       
-      String fname;
-
       if (acqMetadata.phPreAcquire_=true){
          //acquire ph pre
          acquire1Phase(acqMetadata.acqNamePhPre_);
@@ -384,8 +413,8 @@ public class HardwareControl {
    private void acquire1Phase(String acqName){
       try {
          //set the ttls - note this assumes the auto shutter is on and working happily
-         core_.setProperty(configHW_.getLaserShutterTtlName(0),configHW_.getLaserShutterTtlName(1),0);//Lasers off
-         core_.setProperty(configHW_.getPhLampTtlName(0),configHW_.getPhLampTtlName(1),1);//Ph lamp on
+         core_.setProperty(configHW_.getLaserShutterTtlName_(0),configHW_.getLaserShutterTtlName_(1),0);//Lasers off
+         core_.setProperty(configHW_.getPhLampTtlName_(0),configHW_.getPhLampTtlName_(1),1);//Ph lamp on
          core_.waitForSystem();
    
          //run the acquisition
@@ -395,7 +424,7 @@ public class HardwareControl {
          int numFrames = 1;
          double intervalMs = 0;
          double exposureTime = configHW_.getCamPhExposureMs_();
-         if (configHW_.isCamConvertPhExposureToSec()){//correct for stupid bug in the camera driver
+         if (configHW_.isCamConvertPhExposureToSec_()){//correct for stupid bug in the camera driver
             exposureTime /= 1000;
          }
          double delayTime = configHW_.getCamPhDelayMs_();
@@ -409,14 +438,14 @@ public class HardwareControl {
    private void acquire1Fl(String acqName){
       try {
          //set the ttls - note this assumes the auto shutter is on and working happily
-         core_.setProperty(configHW_.getLaserShutterTtlName(0),configHW_.getLaserShutterTtlName(1),1);//Lasers ON
-         core_.setProperty(configHW_.getPhLampTtlName(0),configHW_.getPhLampTtlName(1),0);//Ph lamp OFF
+         core_.setProperty(configHW_.getLaserShutterTtlName_(0),configHW_.getLaserShutterTtlName_(1),1);//Lasers ON
+         core_.setProperty(configHW_.getPhLampTtlName_(0),configHW_.getPhLampTtlName_(1),0);//Ph lamp OFF
          core_.waitForSystem();
          
          //run the acquisition
          String camName = configHW_.getCamEmccdName_();
          String rootDirName = configHW_.getFileAcqFolder_();
-         int numFrames = configHW_.getCamEmccdNumFrames();
+         int numFrames = configHW_.getCamEmccdNumFrames_();
          double intervalMs = 0;
          double exposureTime = configHW_.getCamEmccdExposureMs_();
          double delayTime = configHW_.getCamPhDelayMs_();
@@ -534,4 +563,99 @@ public class HardwareControl {
 
       return newFname;
    }
+
+   /*
+    * Check if current Fov is ok using FovFilter analysis
+    */
+   public void filterCurrentFov(){
+      //snap 1 phase contrast image using current settings, do not save
+      filterIp_ = snapFilterImage();
+      updateFilterIm();
+      //TESTING
+      //ImagePlus testIm = new ImagePlus("test",filterIp);
+      //testIm.show();
+      //filterIm_ = IJ.getImage();
+      
+      //test if current fov is ok, or to be skipped
+      processFilterImage(filterIm_);
+      
+      //update the label image
+      if (showLabelIm_){
+         updateLabelIm();
+      }
+   }
+
+   private ImageProcessor snapFilterImage(){
+      try {
+         //set the ttls - note this assumes the auto shutter is on and working happily
+         core_.setProperty(configHW_.getLaserShutterTtlName_(0),configHW_.getLaserShutterTtlName_(1),0);//Lasers off
+         core_.setProperty(configHW_.getPhLampTtlName_(0),configHW_.getPhLampTtlName_(1),1);//Ph lamp on
+         String camName =configHW_.getCamPhName_() ;
+         double exposureTime = configHW_.getCamPhExposureMs_();
+         if (configHW_.isCamConvertPhExposureToSec_()){//correct for stupid bug in the camera driver
+            exposureTime /= 1000;
+         }
+         core_.setProperty("Core", "Camera", camName);
+         core_.setProperty(camName,"Exposure",exposureTime);
+         core_.waitForSystem(); 
+         return acquireImage();
+      } catch (Exception ex) {
+         throw new RuntimeException(ex);
+      }
+      
+   } 
+   /*
+    * Acquire 1 image without showing it, from org.micromanager.slideexplorer.Hardware
+    */
+   private ImageProcessor acquireImage(){
+        try {
+            core_.snapImage();
+            Object img = core_.getImage();
+            return ImageUtils.makeProcessor(core_, img);
+        } catch (Exception e) {
+            ReportingUtils.logError(e);
+            return null;
+        }
+   }
+
+   private void processFilterImage(ImagePlus im) {
+      if (im != null){// ie exclude case where grabCurrentImage failed to find an image
+         FovFilterConfig fovFilterConf = configHW_.getFilterConf_();
+         Rectangle roiRect= configHW_.getCamConf_()[0].getRectangle();
+         fovFilter_ = new FovFilter(im, fovFilterConf,roiRect);
+         skipCurrentFOV_ = !fovFilter_.isFovOk();
+         System.out.println("N particle: "+ fovFilter_.getNParticle());
+         System.out.println("Skip FOV : "+ skipCurrentFOV_);
+      } 
+   }
+ 
+    
+   private void  updateFilterIm(){
+      if (filterIp_!=null){
+         if (filterIm_ == null){
+            filterIm_ = new ImagePlus();
+            filterIm_.setProcessor(filterIp_);
+            filterIm_.setTitle("Current aquisition: filter image");
+            filterIm_.show();
+         } else {
+            filterIm_.setProcessor(filterIp_);
+            filterIm_.updateAndDraw();
+         } 
+      }
+   }
+   
+   private void updateLabelIm(){
+      labelIp_= fovFilter_.getLabeledImage();
+
+      if (labelIm_ == null){
+         labelIm_ = new ImagePlus();
+         labelIm_.setProcessor(labelIp_);
+         labelIm_.setTitle("current aquisition: labelled image");
+         labelIm_.show();
+      } else {
+         labelIm_.setProcessor(labelIp_);
+         labelIm_.updateAndDraw();
+      }
+   }
+   
 }

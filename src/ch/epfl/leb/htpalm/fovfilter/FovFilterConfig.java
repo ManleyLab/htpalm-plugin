@@ -20,18 +20,22 @@ public class FovFilterConfig {
    @Element
    private LocalAlgParam localAlgParam_;
    @Element
-   private double bgSub_ballRad_;
+   private double bgSub_ballRad_=50.;
    @Element
-   private int segAlg_;
+   private int segAlg_=0;
    @Element
-   private int filter_bactSize_min_;
+   private int filter_bactSize_min_= 0;
    @Element
-   private int filter_bactSize_max_;
+   private int filter_bactSize_max_=Integer.MAX_VALUE;
    @Element
-   private int filter_nCell_min_;
+   private int filter_nCell_min_ = 0;
    @Element
-   private int filter_nCell_max_;
+   private int filter_nCell_max_ = Integer.MAX_VALUE;
 
+   public FovFilterConfig(){
+      logAlgParam_ = new LoGAlgParam();
+      localAlgParam_ = new LocalAlgParam();
+   }
    // Just the getters and setters below this
 
    /**
