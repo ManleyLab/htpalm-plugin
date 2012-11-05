@@ -353,14 +353,19 @@ public class HardwareControl implements ImageListener{
             }
 
             //aquire all the Fovs
+            //TODO : Change this to a while loop so not limited to nFOV 
+            // TODO : add a maxFOV as a hard limit
             for (int ii=0;ii< control_.configHW_.getMosaicNFov_();ii++){
                boolean phPreAcquire=true,phPostAcquire=true;// for now this is always the case
                int[] flCh={0};// for now, this is always the case
                control_.gotoFOV(ii);
-               control_.metadata_.addNewAcquisition(control_.currentFovNum_, phPreAcquire, phPostAcquire, flCh);
-               control_.metadata_.saveMetadata();
+               if (control_.configHW_.isExcludeBadFov_()){
+                  control_.filterCurrentFov();
+               }
 
                if (control_.skipCurrentFOV_==false){
+                  control_.metadata_.addNewAcquisition(control_.currentFovNum_, phPreAcquire, phPostAcquire, flCh);
+                  control_.metadata_.saveMetadata();
                   
                   if (DEBUG){
                      System.out.println("Acquiring FOV "+control_.currentFovNum_);
@@ -567,7 +572,7 @@ public class HardwareControl implements ImageListener{
    /*
     * Check if current Fov is ok using FovFilter analysis
     */
-   public void filterCurrentFov(){
+   void filterCurrentFov(){
       //snap 1 phase contrast image using current settings, do not save
       filterIp_ = snapFilterImage();
       updateFilterIm();
