@@ -36,7 +36,7 @@ public class HtpalmMetadata {
 
    
    
-   public HtpalmMetadata(ConfigurationOptions config_,SpiralMosaic mosaic_){
+   public HtpalmMetadata(ConfigurationOptions config_){
       acqFolder_ = config_.getFileAcqFolder_();
       baseName_ =config_.getFileBaseName_() ;
       configFileName_ = baseName_+"_config.xml";

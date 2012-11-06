@@ -8,106 +8,125 @@ package ch.epfl.leb.htpalm;
  *
  * @author laboleb
  */
-class Spiral {
+public class Spiral  implements FovList{
 
-   private double[] X, Y;
-   private double Xoffset, Yoffset, Xstep, Ystep;
-   private int nPos;
+   private double xOffset_, yOffset_, xStep_, yStep_;
+   private double x_,y_;
+   private int dXint_=1, dYint_=0, xInt_=0,yInt_=0, nCur_=0;
  
    public Spiral(){
    }
 
-   public Spiral(int nPos,double Xoffset, double Yoffset, double Xstep, double Ystep){
-      this.initialize(nPos, Xoffset, Yoffset,Xstep,Ystep);
+   public Spiral(double Xoffset, double Yoffset, double Xstep, double Ystep){
+      this.initialize(Xoffset, Yoffset,Xstep,Ystep);
    }
 
-   public final void initialize(int nPos,double Xoffset, double Yoffset,double Xstep, double Ystep){
-      this.nPos = nPos;
-      this.X = new double[nPos];
-      this.Y = new double[nPos];
-      this.Xoffset  = Xoffset;
-      this.Yoffset  = Yoffset;
-      this.Xstep= Xstep;
-      this.Ystep = Ystep;
-      this.assignSpiralPos();
+   public final void initialize(double Xoffset, double Yoffset,double Xstep, double Ystep){
+      this.xOffset_  = Xoffset;
+      this.yOffset_  = Yoffset;
+      this.xStep_= Xstep;
+      this.yStep_ = Ystep;
    } 
-   private void assignSpiralPos(){
-      // calculate raw coordinates as integerst to allow equality comparisons
-      int[] Xint=new int[nPos],Yint=new int[nPos];
-      int dXint=1, dYint=0;
-      //start at 00
-      Xint[0] = 0;
-      Yint[0] = 0;
-      X[0] = Xint[0]*Xstep+Xoffset;
-      Y[0] = Yint[0]*Ystep+Yoffset;
 
-      for(int ii =1; ii < nPos; ii++){
-         // raw coordinates
-         Xint[ii] = Xint[ii-1]+dXint;
-         Yint[ii] = Yint[ii-1]+dYint;
-         // real space coordinates
-         X[ii] = Xint[ii]*Xstep+Xoffset;
-         Y[ii] = Yint[ii]*Ystep+Yoffset;
-         
-         if ( (Xint[ii]==Yint[ii]) || (Xint[ii] < 0 && Xint[ii] == -Yint[ii]) || (Xint[ii] > 0 && Xint[ii] == 1-Yint[ii]) ) { //if at edge
+
+   /**
+    * @return the xOffset_
+    */
+   public double getXoffset() {
+      return xOffset_;
+   }
+
+   /**
+    * @return the yOffset_
+    */
+   public double getYoffset() {
+      return yOffset_;
+   }
+
+   /**
+    * @return the xStep_ 
+    */
+   public double getXstep() {
+      return xStep_;
+   }
+
+   /**
+    * @return the yStep_ 
+    */
+   public double getYstep() {
+      return yStep_;
+   }
+
+   public double getX() {
+      return x_;
+   }
+
+   public double getY() {
+      return y_;
+   }
+
+   public int getNCur() {
+      return nCur_;
+   }
+
+   public void gotoFov(int n) {
+       if (n< 0){
+         throw new RuntimeException("FOV number < 0 requested - not possible for Spiral FOV");
+      } else if (nCur_ < n){
+         while (nCur_ < n){
+            gotoNextFov();
+         }
+      } else if (nCur_ > n){
+         while (nCur_ > n){
+            gotoPrevFov();
+         }
+      } // otherwise do nothing as already in correct position
+   }
+
+   public void gotoNextFov() {
+      xInt_ += dXint_;
+      yInt_ += dYint_;
+      x_ = xInt_*xStep_+xOffset_;
+      y_ = yInt_*yStep_+yOffset_;
+      nCur_ ++;
+      
+      //update dy dx
+      if ( (xInt_==yInt_) || (xInt_ < 0 && xInt_ == -yInt_) || (xInt_ > 0 && xInt_ == 1-yInt_) ) { //if at edge
             // apply a 90deg rotation to (dX, dY)
             //(dX') = (0 -1)(dX)
             //(dY')   (1  0)(dY)
             int t;
-            t = dXint;
-            dXint = -dYint;
-            dYint = t;
+            t = dXint_;
+            dXint_ = -dYint_;
+            dYint_ = t;
+      }
+      
+   }
+
+   public void gotoPrevFov() {
+      if (nCur_ > 0) {
+         //going backwards so need to update dx dy first
+         if ( (xInt_==yInt_) || (xInt_ < 0 && xInt_ == -yInt_) || (xInt_ > 0 && xInt_ == 1-yInt_) ) { //if at edge
+            // apply a -90deg rotation to (dX, dY)
+            //(dX') = (0   1)(dX)
+            //(dY')   (-1  0)(dY)
+
+            int t;
+            t = dXint_;
+            dXint_ = dYint_;
+            dYint_ = -t;
          }
+
+         xInt_ -= dXint_;
+         yInt_ -= dYint_;
+         x_ = xInt_*xStep_+xOffset_;
+         y_ = yInt_*yStep_+yOffset_;
+         nCur_ --;
+         
+      } else {
+         throw new RuntimeException("FOV number < 0 requested - not possible for Spiral FOV");
       }
    }
 
-    /**
-    * @return the iith value of X
-    */
-   public double getX(int ii) {
-      return X[ii];
-   }
-
-   /**
-    * @return the iith value of Y
-    */
-   public double getY(int ii) {
-      return Y[ii];
-   }
-
-   /**
-    * @return the nPos
-    */
-   public int getnPos() {
-      return nPos;
-   }
-
-   /**
-    * @return the Xoffset
-    */
-   public double getXoffset() {
-      return Xoffset;
-   }
-
-   /**
-    * @return the Yoffset
-    */
-   public double getYoffset() {
-      return Yoffset;
-   }
-
-   /**
-    * @return the Xstep 
-    */
-   public double getXstep() {
-      return Xstep;
-   }
-
-   /**
-    * @return the Ystep 
-    */
-   public double Ystep() {
-      return Ystep;
-   }
-
 }
+

@@ -38,7 +38,7 @@ public class HardwareControl implements ImageListener{
     * the plugin to make sure that it cannot be modified during acquisition
     */
    ConfigurationOptions configHW_ = new ConfigurationOptions();
-   SpiralMosaic mosaic_;
+   FovList fovList_;
    HtpalmMetadata metadata_;
    int currentFovNum_;
    double currentFovPosX_,currentFovPosY_;
@@ -90,9 +90,9 @@ public class HardwareControl implements ImageListener{
    }
 
    private void initializeHardwareControl(){
-      mosaic_ = new SpiralMosaic(configHW_.getMosaicStartPosX_(), configHW_.getMosaicStartPosY_(), configHW_.getMosaicStepSizeX_(), configHW_.getMosaicStepSizeY_(), configHW_.getMosaicNFov_());
+      fovList_ = new Spiral(configHW_.getMosaicStartPosX_(), configHW_.getMosaicStartPosY_(), configHW_.getMosaicStepSizeX_(), configHW_.getMosaicStepSizeY_());
       //set up all the correct file names and metadata  - how is skip fov going to work for saving? - save after every acquisition.
-      metadata_ = new HtpalmMetadata(configHW_,mosaic_);
+      metadata_ = new HtpalmMetadata(configHW_);
       gotoFOV(0);
    }
    
@@ -143,8 +143,9 @@ public class HardwareControl implements ImageListener{
    
    public void gotoFOV(int fovNum){
       currentFovNum_ = fovNum;
-      currentFovPosX_ =mosaic_.getX(fovNum);
-      currentFovPosY_ =mosaic_.getY(fovNum);
+      fovList_.gotoFov(fovNum);
+      currentFovPosX_ =fovList_.getX();
+      currentFovPosY_ =fovList_.getY();
          
       try {
          gui_.setXYStagePosition(currentFovPosX_,currentFovPosY_);
@@ -646,7 +647,7 @@ public class HardwareControl implements ImageListener{
             filterIm_.setProcessor(filterIp_);
             filterIm_.updateAndDraw();
          } 
-         IJ.run(filterIm_,"Enhance Contrast", "saturated=0.35");
+         IJ.run(filterIm_,"Enhance Contrast", "saturated=0.25");
       }
    }
    
@@ -665,3 +666,4 @@ public class HardwareControl implements ImageListener{
    }
    
 }
+
