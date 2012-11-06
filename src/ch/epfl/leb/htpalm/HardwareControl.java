@@ -646,6 +646,7 @@ public class HardwareControl implements ImageListener{
             filterIm_.setProcessor(filterIp_);
             filterIm_.updateAndDraw();
          } 
+         IJ.run(filterIm_,"Enhance Contrast", "saturated=0.35");
       }
    }
    
