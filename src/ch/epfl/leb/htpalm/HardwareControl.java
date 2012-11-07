@@ -188,9 +188,7 @@ public class HardwareControl implements ImageListener{
    }
 
    public void gotoNextFov(){
-      if (currentFovNum_<configHW_.getMosaicNFov_()){
-         gotoFOV(currentFovNum_+1);
-      }
+      gotoFOV(currentFovNum_+1);
    }
 
    public void acquire1Fov(){
@@ -357,10 +355,10 @@ public class HardwareControl implements ImageListener{
             // TODO : add a maxFOV as a hard limit
             int nFov = control_.configHW_.getMosaicNFov_();
             int ii=0;
+            control_.gotoFOV(0);
             while (ii < nFov){
                boolean phPreAcquire=true,phPostAcquire=true;// for now this is always the case
                int[] flCh={0};// for now, this is always the case
-               control_.gotoFOV(ii);
                if (control_.configHW_.isExcludeBadFov_()){
                   control_.filterCurrentFov();
                }
@@ -378,7 +376,11 @@ public class HardwareControl implements ImageListener{
                   AcqMetadata acqMetadata =control_.metadata_.acqMetadataList_.get(control_.metadata_.acqMetadataList_.size()-1);
                   //acquire
                   acquire1FovAuto(acqMetadata);
+                  System.out.println("acquiring 1 fov");
                }
+               control_.gotoNextFov();
+               System.out.println("moving fov");
+
             }
 
             //reset the autoshutter to its initial state
