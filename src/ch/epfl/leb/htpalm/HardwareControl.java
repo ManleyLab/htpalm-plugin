@@ -184,6 +184,8 @@ public class HardwareControl implements ImageListener{
    public void gotoPrevFov(){
       if (currentFovNum_>0){
          gotoFOV(currentFovNum_-1);
+      } else {
+         throw new RuntimeException("Error: FOV number < 0 requested");
       }
    }
 

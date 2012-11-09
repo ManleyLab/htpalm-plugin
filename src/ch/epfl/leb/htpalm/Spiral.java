@@ -10,7 +10,7 @@ package ch.epfl.leb.htpalm;
  */
 public class Spiral  implements FovList{
 
-   private double xOffset_, yOffset_, xStep_, yStep_;
+   private double xStart_, yStart_, xStep_, yStep_;
    private double x_,y_;
    private int dXint_=1, dYint_=0, xInt_=0,yInt_=0, nCur_=0;
  
@@ -21,26 +21,29 @@ public class Spiral  implements FovList{
       this.initialize(Xoffset, Yoffset,Xstep,Ystep);
    }
 
-   public final void initialize(double Xoffset, double Yoffset,double Xstep, double Ystep){
-      this.xOffset_  = Xoffset;
-      this.yOffset_  = Yoffset;
-      this.xStep_= Xstep;
-      this.yStep_ = Ystep;
+   public final void initialize(double xStart, double yStart,double xStep, double yStep){
+      this.xStart_  = xStart;
+      this.yStart_  = yStart;
+      this.xStep_ = xStep;
+      this.yStep_ = yStep;
+      x_ = xStart_;
+      y_ = yStart_;
+      nCur_ =0;
    } 
 
 
    /**
-    * @return the xOffset_
+    * @return the xStart_
     */
    public double getXoffset() {
-      return xOffset_;
+      return xStart_;
    }
 
    /**
-    * @return the yOffset_
+    * @return the yStart_
     */
    public double getYoffset() {
-      return yOffset_;
+      return yStart_;
    }
 
    /**
@@ -86,8 +89,8 @@ public class Spiral  implements FovList{
    public void gotoNextFov() {
       xInt_ += dXint_;
       yInt_ += dYint_;
-      x_ = xInt_*xStep_+xOffset_;
-      y_ = yInt_*yStep_+yOffset_;
+      x_ = xInt_*xStep_+xStart_;
+      y_ = yInt_*yStep_+yStart_;
       nCur_ ++;
       
       //update dy dx
@@ -119,8 +122,8 @@ public class Spiral  implements FovList{
 
          xInt_ -= dXint_;
          yInt_ -= dYint_;
-         x_ = xInt_*xStep_+xOffset_;
-         y_ = yInt_*yStep_+yOffset_;
+         x_ = xInt_*xStep_+xStart_;
+         y_ = yInt_*yStep_+yStart_;
          nCur_ --;
          
       } else {
