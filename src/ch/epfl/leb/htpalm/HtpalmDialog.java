@@ -1,6 +1,7 @@
 
 package ch.epfl.leb.htpalm;
 
+import ch.epfl.leb.autolase.AutoLase;
 import java.awt.geom.Point2D;
 import java.io.File;
 import java.io.IOException;
@@ -558,6 +559,7 @@ public class HtpalmDialog extends javax.swing.JDialog implements MMListenerInter
 
    private void jButton_OpenAutoLaseActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton_OpenAutoLaseActionPerformed
       // TODO add your handling code here:
+      AutoLase.INSTANCE.show();
    }//GEN-LAST:event_jButton_OpenAutoLaseActionPerformed
 
    private void jCheckBox_ExcludeBadFovActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jCheckBox_ExcludeBadFovActionPerformed

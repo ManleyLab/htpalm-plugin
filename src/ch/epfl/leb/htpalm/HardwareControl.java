@@ -1,6 +1,7 @@
 
 package ch.epfl.leb.htpalm;
 
+import ch.epfl.leb.autolase.AutoLase;
 import java.awt.geom.Point2D;
 import java.lang.reflect.InvocationTargetException;
 import java.util.logging.Level;
@@ -56,6 +57,7 @@ public class HardwareControl implements ImageListener{
       core_ = gui_.getMMCore();
       acq_ = gui_.getAcquisitionEngine();
       ImagePlus.addImageListener(this); 
+      AutoLase.INSTANCE.setup(gui_);
    }
    
    public void initializeAcquisition(){
@@ -334,17 +336,14 @@ public class HardwareControl implements ImageListener{
          try{
             isRunning_=true;
             //sort out  the lasers
-            if (configHW_.isLaserControlIsAutomatic_()){
-                     //TODO - Autolase
-            }
-            else {
+            core_.setProperty(configHW_.getLaserExDacName_(0),configHW_.getLaserExDacName_(1), configHW_.getLaserManualExPower_());
+            core_.setProperty(configHW_.getLaserExTtlName_(0),configHW_.getLaserExTtlName_(1),1);
+            if (!configHW_.isLaserControlIsAutomatic_()){
                //Make sure the laser powers etc are right
-               core_.setProperty(configHW_.getLaserExDacName_(0),configHW_.getLaserExDacName_(1), configHW_.getLaserManualExPower_());
-               core_.setProperty(configHW_.getLaserExTtlName_(0),configHW_.getLaserExTtlName_(1),1);
                core_.setProperty(configHW_.getLaserActDacName_(0),configHW_.getLaserActDacName_(1), configHW_.getLaserManualActPower_());
                core_.setProperty(configHW_.getLaserActTtlName_(0),configHW_.getLaserActTtlName_(1),1);
-               core_.waitForSystem();
-            } 
+            } //otherwise AutoLase handles the activation laser 
+            core_.waitForSystem();
 
             //turn autoshutter on (and findout the original state so we can reset it after acquisition)
             boolean autoShutterOnBefore = core_.getAutoShutter();
@@ -405,25 +404,37 @@ public class HardwareControl implements ImageListener{
 
    
    private void acquire1FovAuto(AcqMetadata acqMetadata){
-      
-      if (acqMetadata.phPreAcquire_=true){
-         //acquire ph pre
-         acquire1Phase(acqMetadata.acqNamePhPre_);
-      }
+      try{
+         // allow time for autofocus to stabilise before acquisition
+         if (configHW_.getCamAutoFocusDelayTimeMs_()> 1){//ie if its not been set to 0 
+            Thread.sleep(Math.round(configHW_.getCamAutoFocusDelayTimeMs_()));
+         }
+         
+         if (acqMetadata.phPreAcquire_=true){
+            //acquire ph pre
+            acquire1Phase(acqMetadata.acqNamePhPre_);
+         }
 
-      for (int ii: acqMetadata.flCh_){
-         //TODO - multichannel logic to go here
-         acquire1Fl(acqMetadata.acqNameFl[ii]);
+         for (int ii: acqMetadata.flCh_){
+            //TODO - multichannel logic to go here
+            acquire1Fl(acqMetadata.acqNameFl[ii]);
+         }
+      
+         if (acqMetadata.phPostAcquire_=true){
+            //acquire ph post 
+            acquire1Phase(acqMetadata.acqNamePhPost_);
+         }
       }
-   
-      if (acqMetadata.phPostAcquire_=true){
-         //acquire ph post 
-         acquire1Phase(acqMetadata.acqNamePhPost_);
+      catch (InterruptedException ex){
+         throw new RuntimeException(ex);
       }
    }
 
    private void acquire1Phase(String acqName){
       try {
+
+
+         //SETUP THE ACQ
          //set the ttls - note this assumes the auto shutter is on and working happily
          core_.setProperty(configHW_.getLaserShutterTtlName_(0),configHW_.getLaserShutterTtlName_(1),0);//Lasers off
          core_.setProperty(configHW_.getPhLampTtlName_(0),configHW_.getPhLampTtlName_(1),1);//Ph lamp on
@@ -441,7 +452,45 @@ public class HardwareControl implements ImageListener{
          }
          double delayTime = configHW_.getCamPhDelayMs_();
          boolean closeOnExit = true;
-         acquire1Movie(camName, acqName, rootDirName, numFrames, intervalMs, exposureTime,delayTime, closeOnExit);
+         //acquire1Movie(camName, acqName, rootDirName, numFrames, intervalMs, exposureTime,delayTime, closeOnExit);
+         
+         // RUN THE ACQ
+         core_.setProperty("Core", "Camera", camName);
+         core_.setProperty(camName,"Exposure",exposureTime);
+         
+         acq_.setRootName(rootDirName);
+         acq_.setDirName(acqName);
+         acq_.setFrames(numFrames,intervalMs);
+         acq_.setUpdateLiveWindow(true);
+         core_.waitForSystem();
+         String[] oldAcqNames=null, newAcqNames= null;
+         String currentAcqName=null;
+         oldAcqNames = gui_.getAcquisitionNames();
+         acq_.acquire();
+         
+         while(acq_.isAcquisitionRunning() ||!acq_.isFinished() ){
+            if (newAcqNames== null){ 
+               newAcqNames =gui_.getAcquisitionNames(); 
+               currentAcqName = getCurrentAcqName(newAcqNames,oldAcqNames);
+            }
+            Thread.sleep(200);
+         }  
+         
+         core_.waitForSystem();
+         gui_.message("Acq finished");
+         if (delayTime> 1){//ie if its not been set to 0 
+            Thread.sleep(Math.round(delayTime));//give the cam time to sort itself out
+         }
+         
+         if (closeOnExit==true){
+            acq_.stop(true);//Workaround for weird race condition that sometimes fails to close acquisitions
+            gui_.closeAcquisitionWindow(currentAcqName);
+         }
+         gui_.refreshGUI();
+        
+
+
+         
       } catch (Exception ex) {
          throw new RuntimeException(ex);
       }
@@ -462,16 +511,16 @@ public class HardwareControl implements ImageListener{
          double exposureTime = configHW_.getCamEmccdExposureMs_();
          double delayTime = configHW_.getCamPhDelayMs_();
          boolean closeOnExit = true;
-         acquire1Movie(camName, acqName, rootDirName, numFrames, intervalMs, exposureTime,delayTime, closeOnExit);
-      } catch (Exception ex) {
-         throw new RuntimeException(ex);
-      }
-   }
+         //acquire1Movie(camName, acqName, rootDirName, numFrames, intervalMs, exposureTime,delayTime, closeOnExit);
 
-   private void acquire1Movie(String camName, String acqName, String rootDirName, int numFrames, double intervalMs, double exposureTime,double delayTime, boolean closeOnExit){
-      try{
+         //RUN THE ACQ
+         if (configHW_.isLaserControlIsAutomatic_()){
+            AutoLase.INSTANCE.setLaserToMinPower();
+         }
+         
          core_.setProperty("Core", "Camera", camName);
          core_.setProperty(camName,"Exposure",exposureTime);
+
          
          acq_.setRootName(rootDirName);
          acq_.setDirName(acqName);
@@ -482,10 +531,18 @@ public class HardwareControl implements ImageListener{
          String currentAcqName=null;
          oldAcqNames = gui_.getAcquisitionNames();
          acq_.acquire();
+
+         //we dont want to run autolase before start of acquisition
+         while(!acq_.isAcquisitionRunning() ){
+            Thread.sleep(50);
+         }
          
-         //while(!acq_.isAcquisitionRunning())//wait until acq_ is started
-         //{	Thread.sleep(50);}
-         while(!acq_.isFinished()){
+         if (configHW_.isLaserControlIsAutomatic_()){
+            AutoLase.INSTANCE.startLaserControl();
+            AutoLase.INSTANCE.startDensityMonitor();
+         }
+         
+         while(acq_.isAcquisitionRunning() ||!acq_.isFinished() ){
             if (newAcqNames== null){ 
                newAcqNames =gui_.getAcquisitionNames(); 
                currentAcqName = getCurrentAcqName(newAcqNames,oldAcqNames);
@@ -493,29 +550,76 @@ public class HardwareControl implements ImageListener{
             Thread.sleep(200);
          }  
          
+         if (configHW_.isLaserControlIsAutomatic_()){
+            AutoLase.INSTANCE.pauseLaserControl();
+            AutoLase.INSTANCE.pauseDensityMonitor();
+            AutoLase.INSTANCE.setLaserToMinPower();
+         }
+         
          core_.waitForSystem();
          gui_.message("Acq finished");
-         if (delayTime> 1){//ie if its not been set to 0 as per fl acquisition
-            Thread.sleep(Math.round(delayTime));//give the PH cam time to sort itself out
+         if (delayTime> 1){//ie if its not been set to 0 
+            Thread.sleep(Math.round(delayTime));//give the cam time to sort itself out
          }
          
          if (closeOnExit==true){
-            gui_.closeAcquisitionImage5D(currentAcqName);
+            acq_.stop(true);//Workaround for weird race condition that sometimes fails to close acquisitions
+            gui_.closeAcquisitionWindow(currentAcqName);
          }
          gui_.refreshGUI();
          
-      }
-      catch(InterruptedException e){
-         throw new RuntimeException(e);
-      }
-      catch (MMException mex) {
-         throw new RuntimeException(mex);
-      }
-      catch (Exception ex) {
+      } catch (Exception ex) {
          throw new RuntimeException(ex);
       }
-
    }
+
+   //private void acquire1Movie(String camName, String acqName, String rootDirName, int numFrames, double intervalMs, double exposureTime,double delayTime, boolean closeOnExit){
+   //   try{
+   //      core_.setProperty("Core", "Camera", camName);
+   //      core_.setProperty(camName,"Exposure",exposureTime);
+   //      
+   //      acq_.setRootName(rootDirName);
+   //      acq_.setDirName(acqName);
+   //      acq_.setFrames(numFrames,intervalMs);
+   //      acq_.setUpdateLiveWindow(true);
+   //      core_.waitForSystem();
+   //      String[] oldAcqNames=null, newAcqNames= null;
+   //      String currentAcqName=null;
+   //      oldAcqNames = gui_.getAcquisitionNames();
+   //      acq_.acquire();
+   //      
+   //      while(acq_.isAcquisitionRunning() ||!acq_.isFinished() ){
+   //         if (newAcqNames== null){ 
+   //            newAcqNames =gui_.getAcquisitionNames(); 
+   //            currentAcqName = getCurrentAcqName(newAcqNames,oldAcqNames);
+   //         }
+   //         Thread.sleep(200);
+   //      }  
+   //      
+   //      core_.waitForSystem();
+   //      gui_.message("Acq finished");
+   //      if (delayTime> 1){//ie if its not been set to 0 
+   //         Thread.sleep(Math.round(delayTime));//give the cam time to sort itself out
+   //      }
+   //      
+   //      if (closeOnExit==true){
+   //         acq_.stop(true);//Workaround for weird race condition that sometimes fails to close acquisitions
+   //         gui_.closeAcquisitionWindow(currentAcqName);
+   //      }
+   //      gui_.refreshGUI();
+   //      
+   //   }
+   //   catch(InterruptedException e){
+   //      throw new RuntimeException(e);
+   //   }
+   //   catch (MMException mex) {
+   //      throw new RuntimeException(mex);
+   //   }
+   //   catch (Exception ex) {
+   //      throw new RuntimeException(ex);
+   //   }
+
+   //}
 
    /*
     *   find the acquisition name matching Acq_NN where NN is the largest number

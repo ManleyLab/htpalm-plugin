@@ -246,39 +246,33 @@
                   <Group type="102" attributes="0">
                       <EmptySpace max="-2" attributes="0"/>
                       <Group type="103" groupAlignment="0" attributes="0">
-                          <Group type="102" alignment="0" attributes="0">
+                          <Group type="102" attributes="0">
                               <Group type="103" groupAlignment="0" attributes="0">
                                   <Component id="jLabel_EmccdCamName" alignment="0" min="-2" max="-2" attributes="0"/>
                                   <Component id="jLabel_EmccdExposureTime" alignment="0" min="-2" max="-2" attributes="0"/>
                               </Group>
-                              <EmptySpace min="-2" pref="66" max="-2" attributes="0"/>
+                              <EmptySpace min="-2" pref="90" max="-2" attributes="0"/>
                               <Group type="103" groupAlignment="0" attributes="0">
-                                  <Component id="jTextField_EmccdCamName" alignment="1" max="32767" attributes="0"/>
-                                  <Component id="jTextField_EmccdExposureTime" alignment="1" max="32767" attributes="0"/>
+                                  <Component id="jTextField_EmccdExposureTime" pref="133" max="32767" attributes="0"/>
+                                  <Component id="jTextField_EmccdCamName" max="32767" attributes="0"/>
                               </Group>
                           </Group>
-                          <Group type="102" alignment="0" attributes="0">
+                          <Group type="102" attributes="0">
                               <Group type="103" groupAlignment="0" attributes="0">
                                   <Component id="jLabel_PhCamName" alignment="0" min="-2" max="-2" attributes="0"/>
                                   <Component id="jLabel_PhExposureTime" alignment="0" min="-2" max="-2" attributes="0"/>
                                   <Component id="jLabel_PhCamDelayTime" alignment="0" min="-2" max="-2" attributes="0"/>
+                                  <Component id="jLabel_PhCamDelayTime1" alignment="0" min="-2" max="-2" attributes="0"/>
+                                  <Component id="jLabel_EmccdNumFrames" alignment="0" min="-2" max="-2" attributes="0"/>
                               </Group>
                               <EmptySpace min="-2" pref="65" max="-2" attributes="0"/>
                               <Group type="103" groupAlignment="0" attributes="0">
+                                  <Component id="jTextField_EmccdNumFrames" max="32767" attributes="0"/>
+                                  <Component id="jTextField_CamAutoFocusDelayTimeMs" alignment="1" max="32767" attributes="0"/>
                                   <Component id="jTextField_PhCamName" alignment="1" max="32767" attributes="0"/>
                                   <Component id="jTextField_PhExposureTime" alignment="1" max="32767" attributes="0"/>
                                   <Component id="jTextField_PhCamDelayTime" alignment="1" max="32767" attributes="0"/>
                               </Group>
-                          </Group>
-                          <Group type="102" alignment="0" attributes="0">
-                              <EmptySpace min="-2" pref="10" max="-2" attributes="0"/>
-                              <Component id="jCheckBox_ConvertPhExposureMsToSec" min="-2" max="-2" attributes="0"/>
-                              <EmptySpace min="-2" pref="117" max="-2" attributes="0"/>
-                          </Group>
-                          <Group type="102" alignment="0" attributes="0">
-                              <Component id="jLabel_EmccdNumFrames" min="-2" max="-2" attributes="0"/>
-                              <EmptySpace min="-2" pref="75" max="-2" attributes="0"/>
-                              <Component id="jTextField_EmccdNumFrames" max="32767" attributes="0"/>
                           </Group>
                       </Group>
                       <EmptySpace max="-2" attributes="0"/>
@@ -318,9 +312,12 @@
                           <Component id="jLabel_PhCamDelayTime" alignment="3" min="-2" max="-2" attributes="0"/>
                           <Component id="jTextField_PhCamDelayTime" alignment="3" min="-2" max="-2" attributes="0"/>
                       </Group>
-                      <EmptySpace type="unrelated" max="-2" attributes="0"/>
-                      <Component id="jCheckBox_ConvertPhExposureMsToSec" min="-2" max="-2" attributes="0"/>
-                      <EmptySpace pref="160" max="32767" attributes="0"/>
+                      <EmptySpace max="-2" attributes="0"/>
+                      <Group type="103" groupAlignment="3" attributes="0">
+                          <Component id="jTextField_CamAutoFocusDelayTimeMs" alignment="3" min="-2" max="-2" attributes="0"/>
+                          <Component id="jLabel_PhCamDelayTime1" alignment="3" min="-2" max="-2" attributes="0"/>
+                      </Group>
+                      <EmptySpace pref="164" max="32767" attributes="0"/>
                   </Group>
               </Group>
             </DimensionLayout>
@@ -348,14 +345,8 @@
             </Component>
             <Component class="javax.swing.JLabel" name="jLabel_PhCamDelayTime">
               <Properties>
-                <Property name="text" type="java.lang.String" value="PH delay time (ms):"/>
+                <Property name="text" type="java.lang.String" value="Inter-movie delay time (ms):"/>
                 <Property name="toolTipText" type="java.lang.String" value="Time to wait after PH acquisition"/>
-              </Properties>
-            </Component>
-            <Component class="javax.swing.JCheckBox" name="jCheckBox_ConvertPhExposureMsToSec">
-              <Properties>
-                <Property name="text" type="java.lang.String" value="Convert PH exposure time to seconds"/>
-                <Property name="toolTipText" type="java.lang.String" value="Workaround to correct for TISCam bug"/>
               </Properties>
             </Component>
             <Component class="javax.swing.JTextField" name="jTextField_EmccdCamName">
@@ -391,6 +382,17 @@
             <Component class="javax.swing.JTextField" name="jTextField_EmccdNumFrames">
               <Properties>
                 <Property name="horizontalAlignment" type="int" value="11"/>
+              </Properties>
+            </Component>
+            <Component class="javax.swing.JTextField" name="jTextField_CamAutoFocusDelayTimeMs">
+              <Properties>
+                <Property name="horizontalAlignment" type="int" value="11"/>
+              </Properties>
+            </Component>
+            <Component class="javax.swing.JLabel" name="jLabel_PhCamDelayTime1">
+              <Properties>
+                <Property name="text" type="java.lang.String" value="Autofocus delay time (ms):"/>
+                <Property name="toolTipText" type="java.lang.String" value="Time to wait after PH acquisition"/>
               </Properties>
             </Component>
           </SubComponents>

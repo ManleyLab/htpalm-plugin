@@ -64,6 +64,9 @@ public class ConfigurationOptions {
    private int camEmccdNumFrames_;
    @Element
    private boolean camConvertPhExposureToSec_;
+   @Element
+   private double camAutoFocusDelayTimeMs_;
+   
    //Laser config
    @Element
    private double laserManualExPower_;
@@ -176,7 +179,8 @@ public class ConfigurationOptions {
       camPhExposureMs_=200;
       camPhDelayMs_=500;
       camEmccdNumFrames_ = 10000;
-      camConvertPhExposureToSec_=true;
+      camConvertPhExposureToSec_=false;
+      camAutoFocusDelayTimeMs_ = 500.;
       //File config
       fileAcqFolder_="."; 
       fileBaseName_="HTPALM_Acq";
@@ -725,6 +729,20 @@ public class ConfigurationOptions {
     */
    public void setFilterConf_(FovFilterConfig filterConf_) {
       this.filterConf_ = filterConf_;
+   }
+
+   /**
+    * @return the camAutoFocusDelayTimeMs_
+    */
+   public double getCamAutoFocusDelayTimeMs_() {
+      return camAutoFocusDelayTimeMs_;
+   }
+
+   /**
+    * @param camAutoFocusDelayTimeMs_ the camAutoFocusDelayTimeMs_ to set
+    */
+   public void setCamAutoFocusDelayTimeMs_(double camAutoFocusDelayTimeMs_) {
+      this.camAutoFocusDelayTimeMs_ = camAutoFocusDelayTimeMs_;
    }
 
 }
