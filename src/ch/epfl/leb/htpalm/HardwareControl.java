@@ -235,6 +235,22 @@ public class HardwareControl implements ImageListener{
       //TODO - if an acquisition was interupted, delete the metadata for that acquisition
    }
 
+   private void initializeAcqEngine() {
+      //DO NOTHING
+      //TODO: clear all the Acq Engine settings
+   }
+
+   private void closeAllAcqWindows(){
+      try {
+        String[] acqNames = gui_.getAcquisitionNames();
+         for(int ii = 0;ii < acqNames.length;ii++){
+            gui_.getAcquisition(acqNames[ii]).closeImageWindow();
+         }
+      } catch (MMScriptException ex) {
+         throw new RuntimeException(ex);
+      }
+   }
+   
    public void imageOpened(ImagePlus imp) {
       //DO NOTHING
    }
@@ -265,6 +281,8 @@ public class HardwareControl implements ImageListener{
          try {
             isRunning_ = true;
             //note - in manual mode we ignore skipCurrentFOV_
+            initializeAcqEngine();
+            closeAllAcqWindows();
 
             //sort out  the lasers
             if (configHW_.isLaserControlIsAutomatic_()){
@@ -335,6 +353,8 @@ public class HardwareControl implements ImageListener{
       public void run() {
          try{
             isRunning_=true;
+            initializeAcqEngine();
+            
             //sort out  the lasers
             core_.setProperty(configHW_.getLaserExDacName_(0),configHW_.getLaserExDacName_(1), configHW_.getLaserManualExPower_());
             core_.setProperty(configHW_.getLaserExTtlName_(0),configHW_.getLaserExTtlName_(1),1);
@@ -358,6 +378,9 @@ public class HardwareControl implements ImageListener{
             int ii=0;
             control_.gotoFOV(0);
             while (ii < nFov){
+               
+               closeAllAcqWindows();
+
                boolean phPreAcquire=true,phPostAcquire=true;// for now this is always the case
                int[] flCh={0};// for now, this is always the case
                if (control_.configHW_.isExcludeBadFov_()){
@@ -398,6 +421,7 @@ public class HardwareControl implements ImageListener{
             isInitialized_=false; //this makes sure the acquisition will not get overwritten
          }
       }
+
 
    }
 
@@ -463,28 +487,27 @@ public class HardwareControl implements ImageListener{
          acq_.setFrames(numFrames,intervalMs);
          acq_.setUpdateLiveWindow(true);
          core_.waitForSystem();
-         String[] oldAcqNames=null, newAcqNames= null;
-         String currentAcqName=null;
-         oldAcqNames = gui_.getAcquisitionNames();
+         //String[] oldAcqNames=null, newAcqNames= null;
+         //String currentAcqName=null;
+         //oldAcqNames = gui_.getAcquisitionNames();
          acq_.acquire();
          
          while(acq_.isAcquisitionRunning() ||!acq_.isFinished() ){
-            if (newAcqNames== null){ 
-               newAcqNames =gui_.getAcquisitionNames(); 
-               currentAcqName = getCurrentAcqName(newAcqNames,oldAcqNames);
-            }
+            //if (newAcqNames== null){ 
+            //   newAcqNames =gui_.getAcquisitionNames(); 
+            //   currentAcqName = getCurrentAcqName(newAcqNames,oldAcqNames);
+            //}
             Thread.sleep(200);
          }  
          
          core_.waitForSystem();
-         gui_.message("Acq finished");
          if (delayTime> 1){//ie if its not been set to 0 
             Thread.sleep(Math.round(delayTime));//give the cam time to sort itself out
          }
          
          if (closeOnExit==true){
             acq_.stop(true);//Workaround for weird race condition that sometimes fails to close acquisitions
-            gui_.closeAcquisitionWindow(currentAcqName);
+            //gui_.closeAcquisitionWindow(currentAcqName);
          }
          gui_.refreshGUI();
         
@@ -527,9 +550,9 @@ public class HardwareControl implements ImageListener{
          acq_.setFrames(numFrames,intervalMs);
          acq_.setUpdateLiveWindow(true);
          core_.waitForSystem();
-         String[] oldAcqNames=null, newAcqNames= null;
-         String currentAcqName=null;
-         oldAcqNames = gui_.getAcquisitionNames();
+         //String[] oldAcqNames=null, newAcqNames= null;
+         //String currentAcqName=null;
+         //oldAcqNames = gui_.getAcquisitionNames();
          acq_.acquire();
 
          //we dont want to run autolase before start of acquisition
@@ -543,10 +566,10 @@ public class HardwareControl implements ImageListener{
          }
          
          while(acq_.isAcquisitionRunning() ||!acq_.isFinished() ){
-            if (newAcqNames== null){ 
-               newAcqNames =gui_.getAcquisitionNames(); 
-               currentAcqName = getCurrentAcqName(newAcqNames,oldAcqNames);
-            }
+            //if (newAcqNames== null){ 
+            //   newAcqNames =gui_.getAcquisitionNames(); 
+            //   currentAcqName = getCurrentAcqName(newAcqNames,oldAcqNames);
+            //}
             Thread.sleep(200);
          }  
          
@@ -557,14 +580,13 @@ public class HardwareControl implements ImageListener{
          }
          
          core_.waitForSystem();
-         gui_.message("Acq finished");
          if (delayTime> 1){//ie if its not been set to 0 
             Thread.sleep(Math.round(delayTime));//give the cam time to sort itself out
          }
          
          if (closeOnExit==true){
             acq_.stop(true);//Workaround for weird race condition that sometimes fails to close acquisitions
-            gui_.closeAcquisitionWindow(currentAcqName);
+            //gui_.closeAcquisitionWindow(currentAcqName);
          }
          gui_.refreshGUI();
          
@@ -597,7 +619,6 @@ public class HardwareControl implements ImageListener{
    //      }  
    //      
    //      core_.waitForSystem();
-   //      gui_.message("Acq finished");
    //      if (delayTime> 1){//ie if its not been set to 0 
    //         Thread.sleep(Math.round(delayTime));//give the cam time to sort itself out
    //      }
