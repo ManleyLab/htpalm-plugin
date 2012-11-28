@@ -33,8 +33,6 @@ import org.micromanager.utils.MMException;
  */
 public class HardwareControl implements ImageListener{
 
-   private final int N_REPEATS = 5;
-   
    CMMCore core_;
    MMStudioMainFrame gui_;
    AcquisitionEngine acq_ ;
@@ -303,7 +301,7 @@ public class HardwareControl implements ImageListener{
 
       //NB this ii = 1 start is intentional - not a zero indexing bug! 
       // we have already acquired the 0th (first) FOV in acquireAllFirstSet
-      for (int ii = 1; ii<N_REPEATS;ii++ ){
+      for (int ii = 1; ii<configHW_.getMosaicNRepeats_() ;ii++ ){
          for (int jj =0;jj< nFov;jj++){
             int curFov = fovMetadataList.get(jj).getFovNum_();
             
@@ -433,7 +431,7 @@ public class HardwareControl implements ImageListener{
 
             //aquire all the Fovs
             control_.acquireAllFirstSet();
-            if (control_.N_REPEATS>1){
+            if (configHW_.getMosaicNRepeats_()>1){
                control_.acquireAllRepeats();
             }
             

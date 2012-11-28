@@ -46,6 +46,8 @@ public class ConfigurationOptions {
    private double mosaicStepSizeY_;
    @Element
    private int mosaicNFov_;
+   @Element
+   private int mosaicNRepeats_;
    //FOV analysis/segmenation config        
    @Element
    private boolean fovAnalysis_excludeBadFov_;
@@ -160,6 +162,7 @@ public class ConfigurationOptions {
       mosaicStepSizeX_=17.0;
       mosaicStepSizeY_=17.0;
       mosaicNFov_ = 100;
+      mosaicNRepeats_ = 1;
       //Laser config
       laserManualExPower_ = 3.0;
       laserManualActPower_ = 0.3;
@@ -743,6 +746,20 @@ public class ConfigurationOptions {
     */
    public void setCamAutoFocusDelayTimeMs_(double camAutoFocusDelayTimeMs_) {
       this.camAutoFocusDelayTimeMs_ = camAutoFocusDelayTimeMs_;
+   }
+
+   /**
+    * @return the mosaicNRepeats_
+    */
+   public int getMosaicNRepeats_() {
+      return mosaicNRepeats_;
+   }
+
+   /**
+    * @param mosaicNRepeats_ the mosaicNRepeats_ to set
+    */
+   public void setMosaicNRepeats_(int mosaicNRepeats_) {
+      this.mosaicNRepeats_ = mosaicNRepeats_;
    }
 
 }
