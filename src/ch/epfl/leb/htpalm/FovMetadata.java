@@ -14,11 +14,53 @@ import org.simpleframework.xml.ElementList;
  */
 public class FovMetadata {
    @Element
-   int fovNum_;
+   private int fovNum_;
    @Element
-   int nFovAcq_=0;
+   private int nAcq_=0;
    @ElementList
-   ArrayList<Integer> fovAcqNum_ = new ArrayList<Integer>();
+   private ArrayList<Integer> fovAcqNum_ = new ArrayList<Integer>();
 
    public FovMetadata(){}
+
+   /**
+    * @return the fovNum_
+    */
+   public int getFovNum_() {
+      return fovNum_;
+   }
+
+   /**
+    * @param fovNum_ the fovNum_ to set
+    */
+   public void setFovNum_(int fovNum_) {
+      this.fovNum_ = fovNum_;
+   }
+
+   /**
+    * @return the fovAcqNum_
+    */
+   public ArrayList<Integer> getFovAcqNum_() {
+      return fovAcqNum_;
+   }
+
+   /**
+    * @param fovAcqNum_ the fovAcqNum_ to set
+    */
+   public void setFovAcqNum_(ArrayList<Integer> fovAcqNum_) {
+      this.fovAcqNum_ = fovAcqNum_;
+   }
+
+   /**
+    * @return the nAcq_
+    */
+   public int getnAcq_() {
+      return nAcq_;
+   }
+
+   /**
+    * @param nAcq_ the nAcq_ to set
+    */
+   public void setnAcq_(int nAcq_) {
+      this.nAcq_ = nAcq_;
+   }
 }

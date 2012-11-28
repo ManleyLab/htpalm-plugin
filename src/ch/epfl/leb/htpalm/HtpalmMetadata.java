@@ -18,21 +18,21 @@ import static ch.epfl.leb.htpalm.Debug.DEBUG;
 public class HtpalmMetadata {
 
    @Element
-   String metaDataFileName_;
+   private String metaDataFileName_;
    @Element
-   String configFileName_;
+   private String configFileName_;
    @Element
-   String baseName_;
+   private String baseName_;
    @Element
-   String acqFolder_;
+   private String acqFolder_;
    @Element
-   int nAcq_=0;
+   private int nAcq_=0;
    @Element
-   int nFov_=0;
+   private int nFov_=0;
    @ElementList
-   ArrayList<AcqMetadata> acqMetadataList_;
+   private ArrayList<AcqMetadata> acqMetadataList_;
    @ElementList
-   ArrayList<FovMetadata> fovMetadataList_;
+   private ArrayList<FovMetadata> fovMetadataList_;
 
    
    
@@ -73,7 +73,7 @@ public class HtpalmMetadata {
       int ii = 0;
       while (isNewFov == true && ii<fovMetadataList_.size()){
          //if imaged before, implement the FOV count
-         if (fovNum == fovMetadataList_.get(ii).fovNum_){
+         if (fovNum == fovMetadataList_.get(ii).getFovNum_()){
             isNewFov = false;
             currentFovIndex = ii;
          }
@@ -82,14 +82,14 @@ public class HtpalmMetadata {
       if (isNewFov == true){
          currentFovIndex = fovMetadataList_.size();
          FovMetadata fovMetadata = new FovMetadata();
-         fovMetadata.fovNum_ = fovNum;
+         fovMetadata.setFovNum_(fovNum);
          fovMetadataList_.add(fovMetadata);
       }
 
       //update the fov metadatalist
-      fovMetadataList_.get(currentFovIndex).nFovAcq_++;
+      fovMetadataList_.get(currentFovIndex).setnAcq_(fovMetadataList_.get(currentFovIndex).getnAcq_() + 1);
       int currentAcqNum = acqMetadataList_.size();// even though its zero indexed, don't need to subtract 1 because have not added the new acq yet
-      fovMetadataList_.get(currentFovIndex).fovAcqNum_.add(currentAcqNum);
+      fovMetadataList_.get(currentFovIndex).getFovAcqNum_().add(currentAcqNum);
       return currentFovIndex;
    }
 
@@ -97,23 +97,23 @@ public class HtpalmMetadata {
       //update the acquisition list
       AcqMetadata acqMetadata = new AcqMetadata();
 
-      acqMetadata.phPreAcquire_ = phPreAcquire;
-      acqMetadata.phPostAcquire_ = phPostAcquire;
-      acqMetadata.flCh_ = flCh;
-      acqMetadata.fovNum_ = fovMetadataList_.get(currentFovIndex).fovNum_;
-      acqMetadata.fovAcqNum_ =fovMetadataList_.get(currentFovIndex).nFovAcq_-1;//-1 is due to zero indexing
+      acqMetadata.setPhPreAcquire_(phPreAcquire);
+      acqMetadata.setPhPostAcquire_(phPostAcquire);
+      acqMetadata.setFlCh_(flCh);
+      acqMetadata.setFovNum_(fovMetadataList_.get(currentFovIndex).getFovNum_());
+      acqMetadata.setFovAcqNum_(fovMetadataList_.get(currentFovIndex).getnAcq_()-1);//-1 is due to zero indexing
       
-      String fovNameStub = baseName_+"_FOV"+Integer.toString(acqMetadata.fovNum_)+"_Acq"+Integer.toString(acqMetadata.fovAcqNum_);
+      String fovNameStub = baseName_+"_FOV"+Integer.toString(acqMetadata.getFovNum_())+"_Acq"+Integer.toString(acqMetadata.getFovAcqNum_());
       
       if (phPreAcquire){
-         acqMetadata.acqNamePhPre_ = fovNameStub+"_phPre";
+         acqMetadata.setAcqNamePhPre_(fovNameStub+"_phPre");
       }
       if (phPostAcquire){
-         acqMetadata.acqNamePhPost_ = fovNameStub+"_phPost";
+         acqMetadata.setAcqNamePhPost_(fovNameStub+"_phPost");
       }
-      acqMetadata.acqNameFl = new String[flCh.length];
+      acqMetadata.setAcqNameFl(new String[flCh.length]);
       for( int jj=0;jj<flCh.length;jj++){
-         acqMetadata.acqNameFl[jj] = fovNameStub+"_flCh"+Integer.toString(jj);
+         acqMetadata.getAcqNameFl()[jj] = fovNameStub+"_flCh"+Integer.toString(jj);
       }
 
       acqMetadataList_.add(acqMetadata);
@@ -131,6 +131,69 @@ public class HtpalmMetadata {
     */
    public String getConfigFileName() {
       return configFileName_;
+   }
+
+   /**
+    * @return the metaDataFileName_
+    */
+   public String getMetaDataFileName_() {
+      return metaDataFileName_;
+   }
+
+   /**
+    * @return the configFileName_
+    */
+   public String getConfigFileName_() {
+      return configFileName_;
+   }
+
+   /**
+    * @return the baseName_
+    */
+   public String getBaseName_() {
+      return baseName_;
+   }
+
+   /**
+    * @return the acqFolder_
+    */
+   public String getAcqFolder_() {
+      return acqFolder_;
+   }
+
+   /**
+    * @return the nAcq_
+    */
+   public int getnAcq_() {
+      return nAcq_;
+   }
+
+   /**
+    * @return the nFov_
+    */
+   public int getnFov_() {
+      return nFov_;
+   }
+
+   /**
+    * @return the acqMetadataList_
+    */
+   public ArrayList<AcqMetadata> getAcqMetadataList_() {
+      return acqMetadataList_;
+   }
+
+   /**
+    * @return the fovMetadataList_
+    */
+   public ArrayList<FovMetadata> getFovMetadataList_() {
+      return fovMetadataList_;
+   }
+
+   /**
+    * @param acqFolder_ the acqFolder_ to set
+    */
+   public void setAcqFolder_(String acqFolder_) {
+      this.acqFolder_ = acqFolder_;
    }
 
 }

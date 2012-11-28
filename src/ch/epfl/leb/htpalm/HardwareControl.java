@@ -21,6 +21,7 @@ import ij.ImagePlus;
 import ij.process.ImageProcessor;
 import java.awt.Rectangle;
 import java.io.File;
+import java.util.ArrayList;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 import org.micromanager.utils.ImageUtils;
@@ -32,6 +33,8 @@ import org.micromanager.utils.MMException;
  */
 public class HardwareControl implements ImageListener{
 
+   private final int N_REPEATS = 5;
+   
    CMMCore core_;
    MMStudioMainFrame gui_;
    AcquisitionEngine acq_ ;
@@ -43,7 +46,7 @@ public class HardwareControl implements ImageListener{
    HtpalmMetadata metadata_;
    int currentFovNum_;
    double currentFovPosX_,currentFovPosY_;
-   boolean skipCurrentFOV_;
+   boolean skipCurrentFOV_=false;
    Thread currentAcqThread_=null;
    boolean isInitialized_ = false, isRunning_=false;
 
@@ -134,7 +137,7 @@ public class HardwareControl implements ImageListener{
       }
 
       configHW_.setFileAcqFolder_(acqName);
-      metadata_.acqFolder_ = acqName;
+      metadata_.setAcqFolder_(acqName);
       //setup the config files and were good to go
       //save a copy of the config in the acquisition folder
       configPath = acqName +File.separator+ metadata_.getConfigFileName();
@@ -160,13 +163,6 @@ public class HardwareControl implements ImageListener{
          ReportingUtils.logError(ex, "Could not move stage to FOV "+ Integer.toString(fovNum));
       }
 
-      //Check whether we will skip this FOV
-      if (configHW_.isFovAnalysis_excludeBadFov_()){
-         //TODO - detect the bacteria
-         skipCurrentFOV_=false;
-      } else {
-         skipCurrentFOV_ = false;
-      }
    }
 
    public void setCurrentPosAsOrigin(){
@@ -251,10 +247,12 @@ public class HardwareControl implements ImageListener{
       }
    }
    
+   @Override
    public void imageOpened(ImagePlus imp) {
       //DO NOTHING
    }
 
+   @Override
    public void imageClosed(ImagePlus imp) {
        if (imp == this.labelIm_){
          labelIm_ = null;
@@ -263,8 +261,69 @@ public class HardwareControl implements ImageListener{
       }
    }
 
+   @Override
    public void imageUpdated(ImagePlus imp) {
       //DO NOTHING
+   }
+
+   private void acquireAllFirstSet() {
+      // TODO : add a maxFOV as a hard limit
+      int nFov = configHW_.getMosaicNFov_();
+      int ii=0;
+      gotoFOV(0);
+      while (ii < nFov){
+         
+         closeAllAcqWindows();
+
+         boolean phPreAcquire=true,phPostAcquire=true;// for now this is always the case
+         int[] flCh={0};// for now, this is always the case
+         if (configHW_.isExcludeBadFov_()){
+            filterCurrentFov();
+         }
+
+         if (skipCurrentFOV_==false){
+            ii ++;
+            metadata_.addNewAcquisition(currentFovNum_, phPreAcquire, phPostAcquire, flCh);
+            metadata_.saveMetadata();
+            
+            //get last array acqMetadata
+            AcqMetadata acqMetadata =metadata_.getAcqMetadataList_().get(metadata_.getAcqMetadataList_().size()-1);
+            //acquire
+            acquire1FovAuto(acqMetadata);
+         }
+         gotoNextFov();
+
+      }
+   }
+
+   private void acquireAllRepeats() {
+      //get a list of the fov #s previously imaged
+      ArrayList<FovMetadata> fovMetadataList = metadata_.getFovMetadataList_();
+      int nFov = fovMetadataList.size();
+
+      //NB this ii = 1 start is intentional - not a zero indexing bug! 
+      // we have already acquired the 0th (first) FOV in acquireAllFirstSet
+      for (int ii = 1; ii<N_REPEATS;ii++ ){
+         for (int jj =0;jj< nFov;jj++){
+            int curFov = fovMetadataList.get(jj).getFovNum_();
+            
+            closeAllAcqWindows();
+            gotoFOV(curFov);
+            
+            boolean phPreAcquire=true,phPostAcquire=true;// for now this is always the case
+            int[] flCh={0};// for now, this is always the case
+            
+            metadata_.addNewAcquisition(curFov, phPreAcquire, phPostAcquire, flCh);
+            metadata_.saveMetadata();
+
+            //get last array acqMetadata
+            AcqMetadata acqMetadata =metadata_.getAcqMetadataList_().get(metadata_.getAcqMetadataList_().size()-1);
+            //acquire
+            acquire1FovAuto(acqMetadata);
+         }
+      }
+      
+      
    }
 
 
@@ -317,7 +376,7 @@ public class HardwareControl implements ImageListener{
                System.out.println("Acquiring FOV "+control_.currentFovNum_);
             }
             //get last array acqMetadata
-            AcqMetadata acqMetadata =control_.metadata_.acqMetadataList_.get(control_.metadata_.acqMetadataList_.size()-1);
+            AcqMetadata acqMetadata =control_.metadata_.getAcqMetadataList_().get(control_.metadata_.getAcqMetadataList_().size()-1);
 
       
             //Acquire
@@ -373,39 +432,11 @@ public class HardwareControl implements ImageListener{
             }
 
             //aquire all the Fovs
-            // TODO : add a maxFOV as a hard limit
-            int nFov = control_.configHW_.getMosaicNFov_();
-            int ii=0;
-            control_.gotoFOV(0);
-            while (ii < nFov){
-               
-               closeAllAcqWindows();
-
-               boolean phPreAcquire=true,phPostAcquire=true;// for now this is always the case
-               int[] flCh={0};// for now, this is always the case
-               if (control_.configHW_.isExcludeBadFov_()){
-                  control_.filterCurrentFov();
-               }
-
-               if (control_.skipCurrentFOV_==false){
-                  ii ++;
-                  control_.metadata_.addNewAcquisition(control_.currentFovNum_, phPreAcquire, phPostAcquire, flCh);
-                  control_.metadata_.saveMetadata();
-                  
-                  if (DEBUG){
-                     System.out.println("Acquiring FOV "+control_.currentFovNum_);
-                  }
-
-                  //get last array acqMetadata
-                  AcqMetadata acqMetadata =control_.metadata_.acqMetadataList_.get(control_.metadata_.acqMetadataList_.size()-1);
-                  //acquire
-                  acquire1FovAuto(acqMetadata);
-                  System.out.println("acquiring 1 fov");
-               }
-               control_.gotoNextFov();
-               System.out.println("moving fov");
-
+            control_.acquireAllFirstSet();
+            if (control_.N_REPEATS>1){
+               control_.acquireAllRepeats();
             }
+            
 
             //reset the autoshutter to its initial state
             if (!autoShutterOnBefore){
@@ -434,19 +465,19 @@ public class HardwareControl implements ImageListener{
             Thread.sleep(Math.round(configHW_.getCamAutoFocusDelayTimeMs_()));
          }
          
-         if (acqMetadata.phPreAcquire_=true){
+         if (acqMetadata.isPhPreAcquire_()){
             //acquire ph pre
-            acquire1Phase(acqMetadata.acqNamePhPre_);
+            acquire1Phase(acqMetadata.getAcqNamePhPre_());
          }
 
-         for (int ii: acqMetadata.flCh_){
+         for (int ii: acqMetadata.getFlCh_()){
             //TODO - multichannel logic to go here
-            acquire1Fl(acqMetadata.acqNameFl[ii]);
+            acquire1Fl(acqMetadata.getAcqNameFl()[ii]);
          }
       
-         if (acqMetadata.phPostAcquire_=true){
+         if (acqMetadata.isPhPostAcquire_()){
             //acquire ph post 
-            acquire1Phase(acqMetadata.acqNamePhPost_);
+            acquire1Phase(acqMetadata.getAcqNamePhPost_());
          }
       }
       catch (InterruptedException ex){

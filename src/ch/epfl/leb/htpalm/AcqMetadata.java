@@ -12,17 +12,133 @@ import org.simpleframework.xml.Element;
  */
 public class AcqMetadata {
    @Element
-   int fovNum_;
+   private int fovNum_;
    @Element
-   int fovAcqNum_;
+   private int fovAcqNum_;
    @Element
-   boolean phPreAcquire_, phPostAcquire_;
+   private boolean phPreAcquire_;
    @Element
-   int[] flCh_;
+   private boolean phPostAcquire_;
    @Element
-   String acqNamePhPre_, acqNamePhPost_;
+   private int[] flCh_;
    @Element
-   String[] acqNameFl;
+   private String acqNamePhPre_;
+   @Element
+   private String acqNamePhPost_;
+   @Element
+   private String[] acqNameFl;
 
    public AcqMetadata(){}
+
+   /**
+    * @return the fovNum_
+    */
+   public int getFovNum_() {
+      return fovNum_;
+   }
+
+   /**
+    * @param fovNum_ the fovNum_ to set
+    */
+   public void setFovNum_(int fovNum_) {
+      this.fovNum_ = fovNum_;
+   }
+
+   /**
+    * @return the fovAcqNum_
+    */
+   public int getFovAcqNum_() {
+      return fovAcqNum_;
+   }
+
+   /**
+    * @param fovAcqNum_ the fovAcqNum_ to set
+    */
+   public void setFovAcqNum_(int fovAcqNum_) {
+      this.fovAcqNum_ = fovAcqNum_;
+   }
+
+   /**
+    * @return the phPreAcquire_
+    */
+   public boolean isPhPreAcquire_() {
+      return phPreAcquire_;
+   }
+
+   /**
+    * @param phPreAcquire_ the phPreAcquire_ to set
+    */
+   public void setPhPreAcquire_(boolean phPreAcquire_) {
+      this.phPreAcquire_ = phPreAcquire_;
+   }
+
+   /**
+    * @return the phPostAcquire_
+    */
+   public boolean isPhPostAcquire_() {
+      return phPostAcquire_;
+   }
+
+   /**
+    * @param phPostAcquire_ the phPostAcquire_ to set
+    */
+   public void setPhPostAcquire_(boolean phPostAcquire_) {
+      this.phPostAcquire_ = phPostAcquire_;
+   }
+
+   /**
+    * @return the flCh_
+    */
+   public int[] getFlCh_() {
+      return flCh_;
+   }
+
+   /**
+    * @param flCh_ the flCh_ to set
+    */
+   public void setFlCh_(int[] flCh_) {
+      this.flCh_ = flCh_;
+   }
+
+   /**
+    * @return the acqNamePhPre_
+    */
+   public String getAcqNamePhPre_() {
+      return acqNamePhPre_;
+   }
+
+   /**
+    * @param acqNamePhPre_ the acqNamePhPre_ to set
+    */
+   public void setAcqNamePhPre_(String acqNamePhPre_) {
+      this.acqNamePhPre_ = acqNamePhPre_;
+   }
+
+   /**
+    * @return the acqNamePhPost_
+    */
+   public String getAcqNamePhPost_() {
+      return acqNamePhPost_;
+   }
+
+   /**
+    * @param acqNamePhPost_ the acqNamePhPost_ to set
+    */
+   public void setAcqNamePhPost_(String acqNamePhPost_) {
+      this.acqNamePhPost_ = acqNamePhPost_;
+   }
+
+   /**
+    * @return the acqNameFl
+    */
+   public String[] getAcqNameFl() {
+      return acqNameFl;
+   }
+
+   /**
+    * @param acqNameFl the acqNameFl to set
+    */
+   public void setAcqNameFl(String[] acqNameFl) {
+      this.acqNameFl = acqNameFl;
+   }
 }   
