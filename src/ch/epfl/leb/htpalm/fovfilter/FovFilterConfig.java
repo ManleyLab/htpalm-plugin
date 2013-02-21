@@ -12,8 +12,8 @@ import org.simpleframework.xml.*;
  */
 @Root
 public class FovFilterConfig {
-   public static final int LOG=0, LOCALTHRESH=1;
-   public static final String[] segAlgNames_ = {"LoG", "Local thresholding"};
+   public static final int LOG=0, LOCALTHRESH=1, SIMPLESEG=2;
+   public static final String[] segAlgNames_ = {"LoG", "Local thresholding","Simple"};
    
    @Element
    private LoGAlgParam logAlgParam_;

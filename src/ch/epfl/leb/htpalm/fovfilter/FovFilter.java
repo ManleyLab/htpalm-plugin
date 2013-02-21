@@ -119,7 +119,27 @@ public class FovFilter  {
          doLoGSeg();
       } else if (segAlg_ == FovFilterConfig.LOCALTHRESH){
          doLocalSeg();
+      } else if (segAlg_ == FovFilterConfig.SIMPLESEG){
+         doSimpleSeg();
       }
+   }
+
+   private void doSimpleSeg(){
+      /**todo - possibly multi level (3 level) otsu to account for 
+       * phase haloing
+       */
+      
+      LoGAlgParam logAlgParam = fovFilterConf_.getLogAlgParam_();
+      imSeg = makeOtsuBw(im,logAlgParam.smoothRadius_);
+      ImageConverter iconv = new ImageConverter(imSeg);
+      iconv.convertToGray8(); 
+      IJ.run(imSeg,"Make Binary",null);
+      /*make binary just applies an unverting lut - doesnt change 
+       * the image values but for some reason this inverts teh effect of 
+       * erode and dilate in imagej!@
+       * MUST run make binary to get sensible results.
+       */
+      
    }
 
   private void doLoGSeg(){
